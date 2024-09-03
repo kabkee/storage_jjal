@@ -2,7 +2,7 @@
     {
         "id": "1",
         "name": "뽀뽀",
-        "file": "/assets/gif/1.gif",
+        "file": "assets/gif/1.gif",
         "tag": "gif",
         "category_1": "감정",
         "category_2": "뽀뽀"
@@ -10,7 +10,7 @@
     {
         "id": "2",
         "name": "더락박수",
-        "file": "/assets/gif/2.gif",
+        "file": "assets/gif/2.gif",
         "tag": "gif",
         "category_1": "감정",
         "category_2": "박수"
@@ -18,7 +18,7 @@
     {
         "id": "3",
         "name": "김정은박수",
-        "file": "/assets/gif/3.gif",
+        "file": "assets/gif/3.gif",
         "tag": "gif",
         "category_1": "감정",
         "category_2": "박수"
@@ -26,7 +26,7 @@
     {
         "id": "4",
         "name": "브레드피트박수",
-        "file": "/assets/gif/4.gif",
+        "file": "assets/gif/4.gif",
         "tag": "gif",
         "category_1": "감정",
         "category_2": "박수"
@@ -34,7 +34,7 @@
     {
         "id": "5",
         "name": "팽수감사",
-        "file": "/assets/gif/5.gif",
+        "file": "assets/gif/5.gif",
         "tag": "gif",
         "category_1": "감정",
         "category_2": "감사"
@@ -42,7 +42,7 @@
     {
         "id": "6",
         "name": null,
-        "file": "/assets/gif/6.gif",
+        "file": "assets/gif/6.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -50,7 +50,7 @@
     {
         "id": "7",
         "name": null,
-        "file": "/assets/gif/7.gif",
+        "file": "assets/gif/7.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -58,7 +58,7 @@
     {
         "id": "8",
         "name": null,
-        "file": "/assets/gif/8.gif",
+        "file": "assets/gif/8.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -66,7 +66,7 @@
     {
         "id": "9",
         "name": null,
-        "file": "/assets/gif/9.gif",
+        "file": "assets/gif/9.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -74,7 +74,7 @@
     {
         "id": "10",
         "name": null,
-        "file": "/assets/gif/10.gif",
+        "file": "assets/gif/10.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -82,7 +82,7 @@
     {
         "id": "11",
         "name": null,
-        "file": "/assets/gif/11.gif",
+        "file": "assets/gif/11.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -90,7 +90,7 @@
     {
         "id": "12",
         "name": null,
-        "file": "/assets/gif/12.gif",
+        "file": "assets/gif/12.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -98,7 +98,7 @@
     {
         "id": "13",
         "name": null,
-        "file": "/assets/gif/13.gif",
+        "file": "assets/gif/13.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -106,7 +106,7 @@
     {
         "id": "14",
         "name": null,
-        "file": "/assets/gif/14.gif",
+        "file": "assets/gif/14.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -114,7 +114,7 @@
     {
         "id": "15",
         "name": null,
-        "file": "/assets/gif/15.gif",
+        "file": "assets/gif/15.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -122,7 +122,7 @@
     {
         "id": "16",
         "name": null,
-        "file": "/assets/gif/16.gif",
+        "file": "assets/gif/16.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -130,7 +130,7 @@
     {
         "id": "17",
         "name": null,
-        "file": "/assets/gif/17.gif",
+        "file": "assets/gif/17.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -138,7 +138,7 @@
     {
         "id": "18",
         "name": null,
-        "file": "/assets/gif/18.gif",
+        "file": "assets/gif/18.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -146,7 +146,7 @@
     {
         "id": "19",
         "name": null,
-        "file": "/assets/gif/19.gif",
+        "file": "assets/gif/19.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -154,7 +154,7 @@
     {
         "id": "20",
         "name": null,
-        "file": "/assets/gif/20.gif",
+        "file": "assets/gif/20.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -162,7 +162,7 @@
     {
         "id": "21",
         "name": null,
-        "file": "/assets/gif/21.gif",
+        "file": "assets/gif/21.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -170,7 +170,7 @@
     {
         "id": "22",
         "name": null,
-        "file": "/assets/gif/22.gif",
+        "file": "assets/gif/22.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -178,7 +178,7 @@
     {
         "id": "23",
         "name": null,
-        "file": "/assets/gif/23.gif",
+        "file": "assets/gif/23.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -186,7 +186,7 @@
     {
         "id": "24",
         "name": null,
-        "file": "/assets/gif/24.gif",
+        "file": "assets/gif/24.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -194,7 +194,7 @@
     {
         "id": "25",
         "name": null,
-        "file": "/assets/gif/25.gif",
+        "file": "assets/gif/25.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -202,7 +202,7 @@
     {
         "id": "26",
         "name": null,
-        "file": "/assets/gif/26.gif",
+        "file": "assets/gif/26.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -210,7 +210,7 @@
     {
         "id": "27",
         "name": null,
-        "file": "/assets/gif/27.gif",
+        "file": "assets/gif/27.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -218,7 +218,7 @@
     {
         "id": "28",
         "name": null,
-        "file": "/assets/gif/28.gif",
+        "file": "assets/gif/28.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -226,7 +226,7 @@
     {
         "id": "29",
         "name": null,
-        "file": "/assets/gif/29.gif",
+        "file": "assets/gif/29.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -234,7 +234,7 @@
     {
         "id": "30",
         "name": null,
-        "file": "/assets/gif/30.gif",
+        "file": "assets/gif/30.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -242,7 +242,7 @@
     {
         "id": "31",
         "name": null,
-        "file": "/assets/gif/31.gif",
+        "file": "assets/gif/31.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -250,7 +250,7 @@
     {
         "id": "32",
         "name": null,
-        "file": "/assets/gif/32.gif",
+        "file": "assets/gif/32.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -258,7 +258,7 @@
     {
         "id": "33",
         "name": null,
-        "file": "/assets/gif/33.gif",
+        "file": "assets/gif/33.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -266,7 +266,7 @@
     {
         "id": "34",
         "name": null,
-        "file": "/assets/gif/34.gif",
+        "file": "assets/gif/34.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -274,7 +274,7 @@
     {
         "id": "35",
         "name": null,
-        "file": "/assets/gif/35.gif",
+        "file": "assets/gif/35.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -282,7 +282,7 @@
     {
         "id": "36",
         "name": null,
-        "file": "/assets/gif/36.gif",
+        "file": "assets/gif/36.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -290,7 +290,7 @@
     {
         "id": "37",
         "name": null,
-        "file": "/assets/gif/37.gif",
+        "file": "assets/gif/37.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -298,7 +298,7 @@
     {
         "id": "38",
         "name": null,
-        "file": "/assets/gif/38.gif",
+        "file": "assets/gif/38.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -306,7 +306,7 @@
     {
         "id": "39",
         "name": null,
-        "file": "/assets/gif/39.gif",
+        "file": "assets/gif/39.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -314,7 +314,7 @@
     {
         "id": "40",
         "name": null,
-        "file": "/assets/gif/40.gif",
+        "file": "assets/gif/40.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -322,7 +322,7 @@
     {
         "id": "41",
         "name": null,
-        "file": "/assets/gif/41.gif",
+        "file": "assets/gif/41.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -330,7 +330,7 @@
     {
         "id": "42",
         "name": null,
-        "file": "/assets/gif/42.gif",
+        "file": "assets/gif/42.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -338,7 +338,7 @@
     {
         "id": "43",
         "name": null,
-        "file": "/assets/gif/43.gif",
+        "file": "assets/gif/43.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -346,7 +346,7 @@
     {
         "id": "44",
         "name": null,
-        "file": "/assets/gif/44.gif",
+        "file": "assets/gif/44.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -354,7 +354,7 @@
     {
         "id": "45",
         "name": null,
-        "file": "/assets/gif/45.gif",
+        "file": "assets/gif/45.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -362,7 +362,7 @@
     {
         "id": "46",
         "name": null,
-        "file": "/assets/gif/46.gif",
+        "file": "assets/gif/46.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -370,7 +370,7 @@
     {
         "id": "47",
         "name": null,
-        "file": "/assets/gif/47.gif",
+        "file": "assets/gif/47.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -378,7 +378,7 @@
     {
         "id": "48",
         "name": null,
-        "file": "/assets/gif/48.gif",
+        "file": "assets/gif/48.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -386,7 +386,7 @@
     {
         "id": "49",
         "name": null,
-        "file": "/assets/gif/49.gif",
+        "file": "assets/gif/49.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -394,7 +394,7 @@
     {
         "id": "50",
         "name": null,
-        "file": "/assets/gif/50.gif",
+        "file": "assets/gif/50.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -402,7 +402,7 @@
     {
         "id": "51",
         "name": null,
-        "file": "/assets/gif/51.gif",
+        "file": "assets/gif/51.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -410,7 +410,7 @@
     {
         "id": "52",
         "name": null,
-        "file": "/assets/gif/52.gif",
+        "file": "assets/gif/52.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -418,7 +418,7 @@
     {
         "id": "53",
         "name": null,
-        "file": "/assets/gif/53.gif",
+        "file": "assets/gif/53.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -426,7 +426,7 @@
     {
         "id": "54",
         "name": null,
-        "file": "/assets/gif/54.gif",
+        "file": "assets/gif/54.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -434,7 +434,7 @@
     {
         "id": "55",
         "name": null,
-        "file": "/assets/gif/55.gif",
+        "file": "assets/gif/55.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -442,7 +442,7 @@
     {
         "id": "56",
         "name": null,
-        "file": "/assets/gif/56.gif",
+        "file": "assets/gif/56.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -450,7 +450,7 @@
     {
         "id": "57",
         "name": null,
-        "file": "/assets/gif/57.gif",
+        "file": "assets/gif/57.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -458,7 +458,7 @@
     {
         "id": "58",
         "name": null,
-        "file": "/assets/gif/58.gif",
+        "file": "assets/gif/58.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -466,7 +466,7 @@
     {
         "id": "59",
         "name": null,
-        "file": "/assets/gif/59.gif",
+        "file": "assets/gif/59.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -474,7 +474,7 @@
     {
         "id": "60",
         "name": null,
-        "file": "/assets/gif/60.gif",
+        "file": "assets/gif/60.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -482,7 +482,7 @@
     {
         "id": "61",
         "name": null,
-        "file": "/assets/gif/61.gif",
+        "file": "assets/gif/61.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -490,7 +490,7 @@
     {
         "id": "62",
         "name": null,
-        "file": "/assets/gif/62.gif",
+        "file": "assets/gif/62.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -498,7 +498,7 @@
     {
         "id": "63",
         "name": null,
-        "file": "/assets/gif/63.gif",
+        "file": "assets/gif/63.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -506,7 +506,7 @@
     {
         "id": "64",
         "name": null,
-        "file": "/assets/gif/64.gif",
+        "file": "assets/gif/64.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -514,7 +514,7 @@
     {
         "id": "65",
         "name": null,
-        "file": "/assets/gif/65.gif",
+        "file": "assets/gif/65.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -522,7 +522,7 @@
     {
         "id": "66",
         "name": null,
-        "file": "/assets/gif/66.gif",
+        "file": "assets/gif/66.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -530,7 +530,7 @@
     {
         "id": "67",
         "name": null,
-        "file": "/assets/gif/67.gif",
+        "file": "assets/gif/67.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -538,7 +538,7 @@
     {
         "id": "68",
         "name": null,
-        "file": "/assets/gif/68.gif",
+        "file": "assets/gif/68.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
@@ -546,7 +546,7 @@
     {
         "id": "69",
         "name": null,
-        "file": "/assets/gif/69.gif",
+        "file": "assets/gif/69.gif",
         "tag": "gif",
         "category_1": null,
         "category_2": null
