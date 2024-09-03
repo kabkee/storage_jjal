@@ -30,8 +30,10 @@
             </v-row>
             <v-row no-gutters>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
-                    <v-img v-for='img in filteredImages' :key="img?.id" :width="100" max-width="100" min-width="100" aspect-ratio="1/1" cover
-                        class="elevation-3" :src="img?.file"></v-img>
+                    <template v-for='img in filteredImages' :key="img?.id">
+                        <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
+                            aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"></v-img>
+                    </template>
                 </v-col>
 
             </v-row>
@@ -51,14 +53,19 @@ const filteredImages = computed(() => {
     let filtered = images.value;
     if (catFilter.value) {
         filtered = filtered.filter(img => {
-            return img.category_1.indexOf(catFilter.value) != -1 || img.category_2.indexOf(catFilter.value) != -1
+            return (img.category_1 && img.category_1.indexOf(catFilter.value) != -1) ||
+                (img.category_2 && img.category_2.indexOf(catFilter.value) != -1)
         })
     }
     if (search.value) {
         filtered = filtered.filter(img => {
             const fileLower = img.file.toLowerCase();
             const searchLower = search.value.toLowerCase();
-            return img.name.indexOf(search.value) != -1 || img.tag.indexOf(search.value) != -1 || img.category_1.indexOf(search.value) != -1 || img.category_2.indexOf(search.value) != -1 || fileLower.indexOf(searchLower) != -1;
+            return (img.name && img.name.indexOf(search.value) != -1) ||
+                (img.tag && img.tag.indexOf(search.value) != -1) ||
+                (img.category_1 && img.category_1.indexOf(search.value) != -1) ||
+                (img.category_2 && img.category_2.indexOf(search.value) != -1) ||
+                (fileLower && fileLower.indexOf(searchLower) != -1);
         })
     }
     return filtered;
@@ -80,6 +87,9 @@ onMounted(async () => {
     // 카테고리
     let catSet = [];
     file.forEach(element => {
+        if(!element.category_1){
+            return;
+        }
         if (!catSet[element.category_1]) catSet[element.category_1] = []
         if (catSet[element.category_1].indexOf(element.category_2) == -1)
             catSet[element.category_1].push(element.category_2)
