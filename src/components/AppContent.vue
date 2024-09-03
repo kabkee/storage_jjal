@@ -79,7 +79,7 @@ const setCatFilter = (filter) => {
 }
 
 onMounted(async () => {
-    const response = await fetch("/assets/data/data.json");
+    const response = await fetch("assets/data/data.json");
     const file = await response.json();
     console.info('file', file)
     // 데이터

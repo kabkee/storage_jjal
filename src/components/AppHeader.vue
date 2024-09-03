@@ -19,7 +19,7 @@ import { onMounted, ref } from "vue";
 const appTitle = ref(null)
 
 onMounted(async () => {
-    const response = await fetch("/assets/data/config.json");
+    const response = await fetch("assets/data/config.json");
     const file = await response.json();
 
     // 데이터
