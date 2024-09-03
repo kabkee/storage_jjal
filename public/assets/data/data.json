@@ -1,0 +1,34 @@
+[
+    {
+        "id": "0",
+        "name": "Ham04",
+        "file": "/assets/hawaii/Hawaii_Tanning_Aloha_Ham04.png",
+        "tag": "햄",
+        "category_1": "하와이",
+        "category_2": "Ham"
+    },
+    {
+        "id": "1",
+        "name": "Ham05",
+        "file": "/assets/hawaii/Hawaii_Tanning_Aloha_Ham05.png",
+        "tag": "햄",
+        "category_1": "하와이",
+        "category_2": "Ham"
+    },
+    {
+        "id": "2",
+        "name": "Monkey",
+        "file": "/assets/hawaii/Hawaii_Tanning_Aloha_Monkey.png",
+        "tag": "원숭이",
+        "category_1": "와이키키",
+        "category_2": "Monkey"
+    },
+    {
+        "id": "3",
+        "name": "Monkey05",
+        "file": "/assets/hawaii/Hawaii_Tanning_Aloha_Monkey05.png",
+        "tag": "원숭이",
+        "category_1": "와이키키",
+        "category_2": "Monkey"
+    }
+]
