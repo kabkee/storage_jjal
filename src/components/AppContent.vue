@@ -28,18 +28,24 @@
             <v-row v-if='!isShowFav' no-gutters>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
                     <template v-for='img in filteredImages' :key="img?.id">
-                        <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                            aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"
-                            @click="copyImageToClipboard(img)"></v-img>
+                        <div class="image-container" >
+                            <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
+                                aspect-ratio="1/1" cover class="elevation-3" :src="img?.file" @click="copyImageToClipboard(img)"></v-img>
+                            <div class="hover-text">{{ img.name }}</div>
+
+                        </div>
                     </template>
                 </v-col>
             </v-row>
             <v-row v-else no-gutters>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
                     <template v-for='img in favImages' :key="img?.id">
-                        <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                            aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"
-                            @click="copyImageToClipboard(img)"></v-img>
+                        <div class="image-container" @click="copyImageToClipboard(img)">
+                            <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
+                                aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"></v-img>
+                            <div class="hover-text">{{ img.name }}</div>
+                            <div class="delete" @click="deleteFromFav($event, img)">X</div>
+                        </div>
                     </template>
                 </v-col>
             </v-row>
@@ -208,8 +214,62 @@ const downloadGIF = (image) => {
     document.body.removeChild(a);
 
     appSnackbars.value.showSnackbar(`"${image.name}" 를 다운로드 합니다.`)
-
 };
 
+const deleteFromFav = (event, image) => {
+    // Stop the click event from bubbling up
+    event.stopPropagation();
 
+    favImageIdxs.value = favImageIdxs.value.filter((idx)=>{
+        return idx != image.id
+    })
+    // Your logic for deleting the image
+}
 </script>
+
+
+<style scoped>
+.image-container {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+
+.hover-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    opacity: 0;
+    /* Initially hidden */
+    transition: opacity 0.3s ease-in-out;
+    font-size: 0.5em;
+}
+
+.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    /* Initially hidden */
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.image-container:hover .delete,
+.image-container:hover .hover-text {
+    opacity: 1;
+    /* Show the text on hover */
+}
+</style>
