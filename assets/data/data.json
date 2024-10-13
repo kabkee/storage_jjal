@@ -649,17 +649,9 @@
     },
     {
         "id": "82",
-        "name": "응",
-        "file": "assets/jpg/응.jpeg",
+        "name": "rabbit",
+        "file": "assets/jpg/rabbit.jpeg",
         "tag": "jpg,wood_rabbit,hare,malamute",
-        "category_1": "JPG",
-        "category_2": ""
-    },
-    {
-        "id": "83",
-        "name": "띠용",
-        "file": "assets/jpg/띠용.jpeg",
-        "tag": "jpg,CD_player,sunglass,face_powder",
         "category_1": "JPG",
         "category_2": ""
     },
