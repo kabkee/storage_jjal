@@ -118,6 +118,7 @@ const filteredImages = computed(() => {
     }
     if (search.value) {
         filtered = filtered.filter(img => {
+            if(!img.file) return;
             const fileLower = img.file.toLowerCase();
             const searchLower = search.value.toLowerCase();
             return (img.name && img.name.indexOf(search.value) != -1) ||
