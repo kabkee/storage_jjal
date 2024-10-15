@@ -152,7 +152,11 @@ const addFavImage = (imageId) => {
 const copyImageToClipboard = async (image) => {
 
     if (image.file.indexOf('gif') != -1) {
-        downloadGIF(image);
+        // downloadGIF(image);
+        appSnackbars.value.showSnackbar({
+            message: `안내 : "${image.name}" 를 Save As 로 다운 받으세요!!  `, type: 'warning'
+        })
+
         return;
     }
     addFavImage(image.id);
@@ -182,7 +186,9 @@ const copyImageToClipboard = async (image) => {
                 ]
             )
                 .then(() => {
-                    appSnackbars.value.showSnackbar(`"${image.name}" 를 클립보드에 복사되었습니다.`)
+                    appSnackbars.value.showSnackbar({
+                        message: `"${image.name}" 를 클립보드에 복사되었습니다.`
+                    })
                 })
                 .catch((e) => { console.log(e) })
         })
@@ -213,7 +219,9 @@ const downloadGIF = (image) => {
     // Clean up and remove the anchor element
     document.body.removeChild(a);
 
-    appSnackbars.value.showSnackbar(`"${image.name}" 를 다운로드 합니다.`)
+    appSnackbars.value.showSnackbar({
+        message: `"${image.name}" 를 다운로드 합니다.`
+    })
 };
 
 const deleteFromFav = (event, image) => {

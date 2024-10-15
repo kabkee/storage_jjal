@@ -18,7 +18,7 @@ import { ref } from 'vue';
 let nextId = 1;  // A unique ID for each snackbar
 const snackbars = ref([]);
 
-const showSnackbar = (message) => {
+const showSnackbar = ({ message, type = 'success', timeout = 3000 }) => {
     // Find the lowest available position
     const usedPositions = snackbars.value.map(snackbar => snackbar.position);
     let availablePosition = 0;
@@ -32,8 +32,8 @@ const showSnackbar = (message) => {
         id,
         message,
         show: true,
-        timeout: 3000,
-        color: 'success',
+        timeout: timeout,
+        color: type,
         position: availablePosition,
     });
 
