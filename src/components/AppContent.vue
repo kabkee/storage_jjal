@@ -152,6 +152,8 @@ const addFavImage = (imageId) => {
 }
 const copyImageToClipboard = async (image) => {
 
+    addFavImage(image.id);
+
     if (image.file.indexOf('gif') != -1) {
         // downloadGIF(image);
         appSnackbars.value.showSnackbar({
@@ -160,7 +162,6 @@ const copyImageToClipboard = async (image) => {
 
         return;
     }
-    addFavImage(image.id);
 
     function setCanvasImage(path, func) {
         const img = new Image
