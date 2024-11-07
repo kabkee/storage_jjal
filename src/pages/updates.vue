@@ -1,3 +1,4 @@
+
 <template>
     <v-container class="elevation-1 my-4">
         <AppHeader />
@@ -6,15 +7,10 @@
                 <template v-slot:opposite>
                     <div :class="`pt-1 headline font-weight-bold text-${data.color}`" v-text="data.date"></div>
                 </template>
-                <div>
-                    <!-- <h2 :class="`mt-n1 headline font-weight-light mb-4 text-${data.color}`">
-                        {{ data.date }}
-                    </h2> -->
-                    <div>
-                        <v-list lines="one">
-                            <v-list-item v-for="line in data.content" :key="line" :title="line"></v-list-item>
-                        </v-list>
-                    </div>
+                <div class='px-4'>
+                    <ol>
+                        <li v-for="line in data.content" :key="line" class="my-3">{{ line }}</li>
+                    </ol>
                 </div>
             </v-timeline-item>
         </v-timeline>
