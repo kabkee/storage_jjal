@@ -28,9 +28,10 @@
             <v-row v-if='!isShowFav' no-gutters>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
                     <template v-for='img in filteredImages' :key="img?.id">
-                        <div class="image-container" >
+                        <div class="image-container">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                                aspect-ratio="1/1" cover class="elevation-3" :src="img?.file" @click="copyImageToClipboard(img)"></v-img>
+                                aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"
+                                @click="copyImageToClipboard(img)"></v-img>
                             <div class="hover-text">{{ img.name }}</div>
 
                         </div>
@@ -57,6 +58,7 @@
 
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
+import { useRoute, useRouter } from 'vue-router';
 
 const category = ref([]);
 const search = ref(null);
@@ -66,7 +68,9 @@ const favImageIdxs = ref([]);
 const isShowFav = ref(false);
 const appSnackbars = ref(null);
 
-
+const route = useRoute();
+const router = useRouter();
+const searchQuery = ref(route.query.search || null);
 
 onMounted(async () => {
     const response = await fetch("assets/data/data.json");
@@ -88,8 +92,26 @@ onMounted(async () => {
 
     const favImageIdxsText = localStorage.getItem('favImageIdxs');
     favImageIdxs.value = favImageIdxsText ? favImageIdxsText?.split(',') : favImageIdxs.value;
+
+    search.value = searchQuery.value;
 });
 
+watch(searchQuery, (newQuery) => {
+    router.replace({
+        query: { search: newQuery || undefined } // Remove 'search' if empty
+    });
+});
+
+// Watch for changes in the route query and update searchQuery
+watch(
+    () => route.query.search,
+    (newSearch) => {
+        if (newSearch !== searchQuery.value) {
+            searchQuery.value = newSearch || null;
+            search.value = searchQuery.value;
+        }
+    }
+);
 
 watch(favImageIdxs, (newValue) => {
     newValue && Array.isArray(newValue) && localStorage.setItem('favImageIdxs', newValue.join(','));
@@ -118,7 +140,7 @@ const filteredImages = computed(() => {
     }
     if (search.value) {
         filtered = filtered.filter(img => {
-            if(!img.file) return;
+            if (!img.file) return;
             const fileLower = img.file.toLowerCase();
             const searchLower = search.value.toLowerCase();
             return (img.name && img.name.indexOf(search.value) != -1) ||
@@ -230,7 +252,7 @@ const deleteFromFav = (event, image) => {
     // Stop the click event from bubbling up
     event.stopPropagation();
 
-    favImageIdxs.value = favImageIdxs.value.filter((idx)=>{
+    favImageIdxs.value = favImageIdxs.value.filter((idx) => {
         return idx != image.id
     })
     // Your logic for deleting the image

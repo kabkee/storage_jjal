@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "preview": "vite preview",
+    "convert": "node public/assets/data/convert.js",
+    "build": "vite build",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "predeploy": "yarn build",
+    "predeploy": "yarn convert; yarn build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
