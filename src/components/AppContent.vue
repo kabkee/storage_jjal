@@ -26,6 +26,7 @@
                 </v-col>
             </v-row>
             <v-row v-if='!isShowFav' no-gutters>
+                <div style="margin-bottom: 0.5rem;">총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤</div>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
                     <template v-for='img in filteredImages' :key="img?.id">
                         <div class="image-container">
