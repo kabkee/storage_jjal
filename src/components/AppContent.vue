@@ -26,7 +26,18 @@
                 </v-col>
             </v-row>
             <v-row v-if='!isShowFav' no-gutters>
-                <div style="margin-bottom: 0.5rem;">총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤</div>
+                <div class="d-flex align-center justify-space-between">
+                    <!-- 왼쪽: 총 개수 -->
+                    <div class="mr-4">
+                        총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤
+                    </div>
+
+                    <!-- 오른쪽: 스위치 + 텍스트 나란히 -->
+                    <div class="d-flex align-center">
+                        <v-switch v-model="excludeGif" hide-details inset color="primary" class="mr-2" />
+                        <span>GIF 제외</span>
+                    </div>
+                </div>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
                     <template v-for='img in filteredImages' :key="img?.id">
                         <div class="image-container">
@@ -68,6 +79,7 @@ const images = ref([]);
 const favImageIdxs = ref([]);
 const isShowFav = ref(false);
 const appSnackbars = ref(null);
+const excludeGif = ref(null);
 
 const route = useRoute();
 const router = useRouter();
@@ -94,6 +106,9 @@ onMounted(async () => {
     const favImageIdxsText = localStorage.getItem('favImageIdxs');
     favImageIdxs.value = favImageIdxsText ? favImageIdxsText?.split(',') : favImageIdxs.value;
 
+    const stored = localStorage.getItem('excludeGif');
+    excludeGif.value = stored ? stored === '1' : false;
+
     search.value = searchQuery.value;
 });
 
@@ -116,6 +131,9 @@ watch(
 
 watch(favImageIdxs, (newValue) => {
     newValue && Array.isArray(newValue) && localStorage.setItem('favImageIdxs', newValue.join(','));
+})
+watch(excludeGif, (newValue) => {
+    localStorage.setItem('excludeGif', newValue ? '1' : '0');
 })
 
 const favImages = computed(() => {
@@ -149,6 +167,11 @@ const filteredImages = computed(() => {
                 (img.category_1 && img.category_1.indexOf(search.value) != -1) ||
                 (img.category_2 && img.category_2.indexOf(search.value) != -1) ||
                 (fileLower && fileLower.indexOf(searchLower) != -1);
+        })
+    }
+    if (excludeGif.value) {
+        filtered = filtered.filter(img => {
+            return img.file.indexOf('gif') == -1;
         })
     }
     return filtered;
