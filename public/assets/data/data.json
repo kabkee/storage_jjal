@@ -2302,5 +2302,21 @@
         "tag": "png, 우남쌩",
         "category_1": "PNG",
         "category_2": null
+    },
+    {
+        "id": "294",
+        "name": "kbs-우리말겨루기-남편-초성",
+        "file": "assets/png/kbs-우리말겨루기-남편-초성.png",
+        "tag": "png, 우남쌩",
+        "category_1": "PNG",
+        "category_2": null
+    },
+    {
+        "id": "295",
+        "name": "kbs-우리말겨루기-남편-초성-방송사고-1초전",
+        "file": "assets/png/kbs-우리말겨루기-남편-초성-방송사고-1초전.png",
+        "tag": "png, 우남쌩",
+        "category_1": "PNG",
+        "category_2": null
     }
 ]
