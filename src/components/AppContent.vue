@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
-                    <template v-for='img in filteredImages' :key="img?.id">
+                    <template v-for='img in filteredImages' :key="img?.file">
                         <div class="image-container">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"
@@ -52,7 +52,7 @@
             </v-row>
             <v-row v-else no-gutters>
                 <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
-                    <template v-for='img in favImages' :key="img?.id">
+                    <template v-for='img in favImages' :key="img?.file">
                         <div class="image-container" @click="copyImageToClipboard(img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1/1" cover class="elevation-3" :src="img?.file"></v-img>
@@ -105,6 +105,28 @@ onMounted(async () => {
 
     const favImageIdxsText = localStorage.getItem('favImageIdxs');
     favImageIdxs.value = favImageIdxsText ? favImageIdxsText?.split(',') : favImageIdxs.value;
+    // id -> file 로 마이그레이션 (기존 저장값이 숫자 id 형태라면)
+    if (favImageIdxs.value && Array.isArray(favImageIdxs.value) && favImageIdxs.value.length > 0) {
+        const needMigrate = favImageIdxs.value.some(v => v && v.indexOf('/') === -1);
+        if (needMigrate) {
+            const idToFile = {};
+            file.forEach(it => {
+                if (it && it.id && it.file) idToFile[String(it.id)] = it.file;
+            });
+            const migrated = favImageIdxs.value.map(v => idToFile[v] || v).filter(Boolean);
+            const hasValid = migrated.some(v => typeof v === 'string' && v.indexOf('/') !== -1);
+            if (hasValid) {
+                favImageIdxs.value = migrated.filter(v => v.indexOf('/') !== -1);
+                localStorage.setItem('favImageIdxs', favImageIdxs.value.join(','));
+            } else {
+                favImageIdxs.value = [];
+                localStorage.removeItem('favImageIdxs');
+                appSnackbars.value && appSnackbars.value.showSnackbar && appSnackbars.value.showSnackbar({
+                    message: '즐겨찾기 포맷이 변경되어 초기화되었습니다.'
+                });
+            }
+        }
+    }
 
     const stored = localStorage.getItem('excludeGif');
     excludeGif.value = stored ? stored === '1' : false;
@@ -138,15 +160,14 @@ watch(excludeGif, (newValue) => {
 
 const favImages = computed(() => {
     let filteredImages = images.value.filter(img => {
-        return favImageIdxs.value.includes(img.id) ? img : null;
+        return favImageIdxs.value.includes(img.file) ? img : null;
     })
-    function sortImagesByFavIds(images, favImageIdxs) {
+    function sortImagesByFavKeys(images, favKeys) {
         return images.sort((a, b) => {
-            // Compare the index of each image's id in the favImageIdxs array
-            return favImageIdxs.indexOf(a.id) - favImageIdxs.indexOf(b.id);
+            return favKeys.indexOf(a.file) - favKeys.indexOf(b.file);
         });
     }
-    const sortedImages = sortImagesByFavIds(filteredImages, favImageIdxs.value);
+    const sortedImages = sortImagesByFavKeys(filteredImages, favImageIdxs.value);
     return sortedImages;
 })
 const filteredImages = computed(() => {
@@ -185,10 +206,10 @@ const setCatFilter = (filter) => {
     isShowFav.value = false;
 }
 
-const addFavImage = (imageId) => {
-    const imgIdx = favImageIdxs.value && favImageIdxs.value.length > 0 ? favImageIdxs.value.indexOf(imageId) : -1;
+const addFavImage = (imageKey) => {
+    const imgIdx = favImageIdxs.value && favImageIdxs.value.length > 0 ? favImageIdxs.value.indexOf(imageKey) : -1;
     if (imgIdx == -1) {
-        favImageIdxs.value = [imageId, ...favImageIdxs.value,];
+        favImageIdxs.value = [imageKey, ...favImageIdxs.value,];
     } else {
         const newFavIdxs = [...favImageIdxs.value];
         const [item] = newFavIdxs.splice(imgIdx, 1);
@@ -198,7 +219,7 @@ const addFavImage = (imageId) => {
 }
 const copyImageToClipboard = async (image) => {
 
-    addFavImage(image.id);
+    addFavImage(image.file);
 
     if (image.file.indexOf('gif') != -1) {
         // downloadGIF(image);
@@ -277,7 +298,7 @@ const deleteFromFav = (event, image) => {
     event.stopPropagation();
 
     favImageIdxs.value = favImageIdxs.value.filter((idx) => {
-        return idx != image.id
+        return idx != image.file
     })
     // Your logic for deleting the image
 }
