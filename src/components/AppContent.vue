@@ -1,6 +1,7 @@
 <template>
     <v-row no-gutters>
-        <v-col cols="2" sm="2" class="elevation-1">
+        <!-- 데스크탑용 사이드바 (1024px 이하에서 숨김) -->
+        <v-col v-if="!isMobileCustom" cols="2" class="elevation-1">
             <v-list>
                 <v-list-item prepend-icon="mdi-home" title="전체" value='all' @click="setCatFilter()"></v-list-item>
                 <v-list-item prepend-icon="mdi-star" title="최근" value='fav' @click="isShowFav = true"></v-list-item>
@@ -11,9 +12,37 @@
                 </template>
             </v-list>
         </v-col>
-        <v-col cols="10" sm="10" class="pl-3">
+        <!-- 메인 컨텐츠 영역 (1024px 이하에서 전체 너비) -->
+        <v-col :cols="isMobileCustom ? 12 : 10" class="pl-3">
+            <!-- 모바일 전용 카테고리 UI (상단) -->
+            <div v-if="isMobileCustom" class="pa-2">
+                <v-slide-group show-arrows>
+                    <v-slide-group-item v-slot="{ toggle }">
+                        <v-chip class="ma-1" :color="(!catFilter && !isShowFav) ? 'primary' : undefined"
+                            @click="setCatFilter(); toggle">
+                            <v-icon start icon="mdi-home"></v-icon>
+                            전체
+                        </v-chip>
+                    </v-slide-group-item>
+                    <v-slide-group-item v-slot="{ toggle }">
+                        <v-chip class="ma-1" :color="isShowFav ? 'primary' : undefined"
+                            @click="isShowFav = true; toggle">
+                            <v-icon start icon="mdi-star"></v-icon>
+                            최근
+                        </v-chip>
+                    </v-slide-group-item>
+                    <v-slide-group-item v-for="cat in cat1" :key="cat" v-slot="{ toggle }">
+                        <v-chip class="ma-1" :color="(catFilter === cat) ? 'primary' : undefined"
+                            @click="setCatFilter(cat); toggle">
+                            <v-icon start icon="mdi-flower"></v-icon>
+                            {{ cat }}
+                        </v-chip>
+                    </v-slide-group-item>
+                </v-slide-group>
+            </div>
+
             <v-row no-gutters justify="center">
-                <v-col cols="5" sm="5">
+                <v-col :cols="isMobileCustom ? 12 : 5">
                     <v-sheet class="ma-2 pa-2 elevation-0">
                         <v-text-field v-model='search' align-self="center" hide-details="auto" label="검색">
                             <template v-slot:append>
@@ -26,19 +55,19 @@
                 </v-col>
             </v-row>
             <v-row v-if='!isShowFav' no-gutters>
-                <div class="d-flex align-center justify-space-between">
+                <div class="d-flex align-center justify-space-between w-100 pr-4">
                     <!-- 왼쪽: 총 개수 -->
-                    <div class="mr-4">
+                    <div class="mr-4 pl-2">
                         총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤
                     </div>
 
-                    <!-- 오른쪽: 스위치 + 텍스트 나란히 -->
-                    <div class="d-flex align-center">
+                    <!-- 오른쪽: 스위치 + 텍스트 나란히 (전체 카테고리일 때만 표시) -->
+                    <div class="d-flex align-center" v-if="!catFilter">
                         <v-switch v-model="excludeGif" hide-details inset color="primary" class="mr-2" />
                         <span>GIF 제외</span>
                     </div>
                 </div>
-                <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
+                <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in filteredImages' :key="img?.file">
                         <div class="image-container">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
@@ -51,7 +80,7 @@
                 </v-col>
             </v-row>
             <v-row v-else no-gutters>
-                <v-col cols="12" sm="12" class="d-flex align-content-center flex-wrap ga-2">
+                <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in favImages' :key="img?.file">
                         <div class="image-container" @click="copyImageToClipboard(img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
@@ -71,6 +100,10 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router';
+import { useDisplay } from 'vuetify';
+
+const { width } = useDisplay();
+const isMobileCustom = computed(() => width.value <= 1024);
 
 const category = ref([]);
 const search = ref(null);

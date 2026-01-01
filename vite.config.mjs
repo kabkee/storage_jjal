@@ -11,7 +11,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '',
+  base: './',
   plugins: [
     VueRouter(),
     Vue({
@@ -52,4 +52,12 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      }
+    },
+    assetsInlineLimit: 0,
+  }
 })

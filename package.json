@@ -5,6 +5,8 @@
     "dev": "vite",
     "preview": "vite preview",
     "generate:data": "node public/assets/data/generate-data.js",
+    "generate:tags": "node public/assets/data/generate-tags-gemini.js",
+    "add-images": "node public/assets/data/process-new-images.js",
     "split:data": "node public/assets/data/split-data_to_sources.js",
     "convert": "yarn generate:data && node public/assets/data/normalize-data_json.js && node public/assets/data/normalize-assets.js",
     "build": "vite build",
@@ -13,8 +15,10 @@
     "deploy": "yarn predeploy; gh-pages -d dist"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@mdi/font": "7.4.47",
     "core-js": "^3.37.1",
+    "dotenv": "^17.2.3",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
     "vuetify": "^3.6.11"
