@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 # /public/assets/
 public/assets/data/*.js
+public/assets/data/data.json
+
+# Yarn
+.yarn/install-state.gz

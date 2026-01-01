@@ -119,11 +119,16 @@ const router = useRouter();
 const searchQuery = ref(route.query.search || null);
 
 onMounted(async () => {
-    const response = await fetch("assets/data/data.json?v=" + new Date().getTime());
+    const response = await fetch("/assets/data/data.json?v=" + new Date().getTime());
     const file = await response.json();
 
     // 데이터
-    images.value = file;
+    images.value = file.map(img => ({
+        ...img,
+        file: img.file && !img.file.startsWith('/') && !img.file.startsWith('http') 
+            ? `/${img.file}` 
+            : img.file
+    }));
     // 카테고리
     let catSet = [];
     file.forEach(element => {
