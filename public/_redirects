@@ -1,6 +1,0 @@
-# Static assets should be served directly
-/assets/*  200
-/favicon.ico  200
-
-# SPA fallback - redirect all other requests to index.html
-/*    /index.html   200
