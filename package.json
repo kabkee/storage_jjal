@@ -9,7 +9,7 @@
     "add-images": "node public/assets/data/process-new-images.js",
     "split:data": "node public/assets/data/split-data_to_sources.js",
     "convert": "yarn generate:data && node public/assets/data/normalize-data_json.js && node public/assets/data/normalize-assets.js",
-    "build": "vite build",
+    "build": "yarn convert && vite build",
     "lint": "eslint . --fix --ignore-path .gitignore",
     "predeploy": "yarn convert; yarn build",
     "deploy": "yarn predeploy; gh-pages -d dist"
