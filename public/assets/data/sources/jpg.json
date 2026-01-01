@@ -1102,5 +1102,29 @@
         "tag": "jpg, 강아지, 만화, 사무실, 책임, 서류, 앙, Dog, Comic, Office, Responsibility, Document, Yum",
         "category_1": "JPG",
         "category_2": null
+    },
+    {
+        "id": "282",
+        "name": "KakaoTalk_Photo_2026-01-01-19-08-06",
+        "file": "assets/jpg/914d4bf3-365f-4df8-9efb-b9d9269aef60.jpeg",
+        "tag": "가자 가자, Gaja Gaja, 밈, Meme, 소리 지르기, Shouting, 흥분, Excited, 사람, Person, 남성, Male, 재킷, Jacket",
+        "category_1": "JPG",
+        "category_2": null
+    },
+    {
+        "id": "283",
+        "name": "사자야저거사자",
+        "file": "assets/jpg/750dda5b-db3e-4020-b3ef-25f1fb136722.jpeg",
+        "tag": "사자, 사자(2), 한국어, 밈, 귀여운, 형제, 야생, 초상화, 사파리, 코카콜라",
+        "category_1": "JPG",
+        "category_2": null
+    },
+    {
+        "id": "284",
+        "name": "자소서거짓말_직무내용거짓말",
+        "file": "assets/jpg/040cc93a-541f-41e1-b0b0-cd572241b5c2.jpeg",
+        "tag": "This image is a meme comparing the applicant's resume lies to the company's lies about job content., The top panel shows a man pointing a gun at another man. Text above them reads: \"The lies I wrote on my resume.\", The bottom panel shows the same two men, but now the roles are reversed, and the man who was previously being threatened is now pointing a gun at the other man. Text above them reads: \"The lies the company wrote about the job.\", Here are 5-10 relevant tags:, Meme, Korean, Lie, Resume, Job, Company, Threat, Gun, Escalation, Humor, 자소서",
+        "category_1": "JPG",
+        "category_2": null
     }
 ]
