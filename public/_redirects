@@ -1,0 +1,2 @@
+/<*>	/index.html	404
+/^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/	/index.html	200
