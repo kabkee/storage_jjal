@@ -119,7 +119,7 @@ const router = useRouter();
 const searchQuery = ref(route.query.search || null);
 
 onMounted(async () => {
-    const response = await fetch("assets/data/data.json");
+    const response = await fetch("assets/data/data.json?v=" + new Date().getTime());
     const file = await response.json();
 
     // 데이터
@@ -138,26 +138,53 @@ onMounted(async () => {
 
     const favImageIdxsText = localStorage.getItem('favImageIdxs');
     favImageIdxs.value = favImageIdxsText ? favImageIdxsText?.split(',') : favImageIdxs.value;
-    // id -> file 로 마이그레이션 (기존 저장값이 숫자 id 형태라면)
+    
+    // 즐겨찾기 데이터 마이그레이션 및 유효성 검사
     if (favImageIdxs.value && Array.isArray(favImageIdxs.value) && favImageIdxs.value.length > 0) {
-        const needMigrate = favImageIdxs.value.some(v => v && v.indexOf('/') === -1);
-        if (needMigrate) {
-            const idToFile = {};
-            file.forEach(it => {
-                if (it && it.id && it.file) idToFile[String(it.id)] = it.file;
-            });
-            const migrated = favImageIdxs.value.map(v => idToFile[v] || v).filter(Boolean);
-            const hasValid = migrated.some(v => typeof v === 'string' && v.indexOf('/') !== -1);
-            if (hasValid) {
-                favImageIdxs.value = migrated.filter(v => v.indexOf('/') !== -1);
-                localStorage.setItem('favImageIdxs', favImageIdxs.value.join(','));
-            } else {
-                favImageIdxs.value = [];
-                localStorage.removeItem('favImageIdxs');
-                appSnackbars.value && appSnackbars.value.showSnackbar && appSnackbars.value.showSnackbar({
-                    message: '즐겨찾기 포맷이 변경되어 초기화되었습니다.'
-                });
+        // 1. 빠른 조회를 위한 맵 생성 (id -> file, file -> exists, name -> file)
+        const idToFile = {};
+        const nameToFile = {};
+        const fileSet = new Set();
+        file.forEach(it => {
+            if (it.file) fileSet.add(it.file);
+            if (it.id && it.file) idToFile[String(it.id)] = it.file;
+            if (it.name && it.file) nameToFile[it.name] = it.file;
+        });
+
+        // 2. 마이그레이션 및 필터링 수행
+        const migrated = favImageIdxs.value.map(v => {
+            // 이미 유효한 파일 경로인 경우 그대로 유지
+            if (fileSet.has(v)) return v;
+            
+            // 유효하지 않은 경우 (한글 경로 등 예전 경로)
+            // 1) 숫자 ID인 경우 (기존 로직)
+            if (v.indexOf('/') === -1 && idToFile[v]) return idToFile[v];
+            
+            // 2) 파일 경로에서 이름 추출하여 매칭 시도
+            // 예: "assets/png/귀여워1.png" -> "귀여워1"
+            try {
+                const filename = v.split('/').pop(); // "귀여워1.png"
+                if (filename) {
+                    const name = filename.substring(0, filename.lastIndexOf('.')); // "귀여워1"
+                    if (name && nameToFile[name]) {
+                        return nameToFile[name];
+                    }
+                }
+            } catch (e) {
+                // ignore
             }
+            
+            return null; 
+        }).filter(Boolean);
+
+        // 변경사항이 있거나 길이가 줄어들었으면 업데이트
+        if (migrated.length !== favImageIdxs.value.length || migrated.some((v, i) => v !== favImageIdxs.value[i])) {
+             // 3. (추가 보완) 만약 file 경로 매칭에 실패했다면, 혹시 이름(name)으로 찾을 수 있을까?
+             // 하지만 이름은 중복될 수 있어 위험함.
+             // 일단 유효한 파일만 남깁니다.
+             favImageIdxs.value = migrated;
+             localStorage.setItem('favImageIdxs', favImageIdxs.value.join(','));
+             console.log('즐겨찾기 목록이 최신 파일 경로 기준으로 갱신되었습니다.');
         }
     }
 

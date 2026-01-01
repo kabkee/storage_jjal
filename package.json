@@ -2,7 +2,7 @@
   "name": "storage_jjal",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "yarn generate:data && vite",
     "preview": "vite preview",
     "generate:data": "node public/assets/data/generate-data.js",
     "generate:tags": "node public/assets/data/generate-tags-gemini.js",
