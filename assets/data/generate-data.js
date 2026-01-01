@@ -24,9 +24,9 @@ function mergeItemsFromSources(files) {
                 continue;
             }
             for (const it of data) {
-                // 최소 필드 보정: id 제거, file 필수 검사
+                // 최소 필드 보정: file 필수 검사
                 const item = { ...it };
-                if ('id' in item) delete item.id;
+                // if ('id' in item) delete item.id; // 앱에서 ID 기반 마이그레이션을 위해 ID 유지
                 if (!item.file || typeof item.file !== 'string') {
                     console.warn(`⚠️ ${f.filename} 항목에 file 이 없습니다. 스킵`);
                     continue;
