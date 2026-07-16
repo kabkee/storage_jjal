@@ -6,5 +6,34 @@
         "tag": "webp, 이명박, 전 대통령, 재판, 법원, SBS 뉴스, 정장, 안경, 마이크, South Korea, Lee Myung-bak, former president, trial, court, SBS News, suit, glasses, microphone",
         "category_1": "WEBP",
         "category_2": null
+    },
+    {
+        "id": "272",
+        "name": "니가그러고도사람이야",
+        "file": "assets/webp/781bc286-0967-4763-bd7c-cbd35e0d4191.webp",
+        "thumb": "assets/thumbs/781bc286-0967-4763-bd7c-cbd35e0d4191.webp",
+        "emotion": [
+            "분노",
+            "황당"
+        ],
+        "situation": [
+            "비난/지적"
+        ],
+        "tag": "너구리, Raccoon, 배신감, Betrayal, 이빨, Fangs, 화남, Angry animal"
+    },
+    {
+        "id": "273",
+        "name": "아싸호랑나비",
+        "file": "assets/webp/00cca880-df06-404c-8d8e-2dba0f4119e0.webp",
+        "thumb": "assets/thumbs/00cca880-df06-404c-8d8e-2dba0f4119e0.webp",
+        "emotion": [
+            "웃김",
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "축하",
+            "자랑"
+        ],
+        "tag": "아싸, Yes, 호랑나비, Tiger butterfly, 언어유희, Pun, 택배박스, Package box"
     }
 ]

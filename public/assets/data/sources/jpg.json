@@ -1126,5 +1126,55 @@
         "tag": "This image is a meme comparing the applicant's resume lies to the company's lies about job content., The top panel shows a man pointing a gun at another man. Text above them reads: \"The lies I wrote on my resume.\", The bottom panel shows the same two men, but now the roles are reversed, and the man who was previously being threatened is now pointing a gun at the other man. Text above them reads: \"The lies the company wrote about the job.\", Here are 5-10 relevant tags:, Meme, Korean, Lie, Resume, Job, Company, Threat, Gun, Escalation, Humor, 자소서",
         "category_1": "JPG",
         "category_2": null
+    },
+    {
+        "id": "285",
+        "name": "못들었어다시말해줄래",
+        "file": "assets/jpg/50025273-b6b8-4b83-aaba-e9688250b925.jpg",
+        "thumb": "assets/thumbs/50025273-b6b8-4b83-aaba-e9688250b925.webp",
+        "emotion": [
+            "지침/귀찮음"
+        ],
+        "situation": [
+            "거절/부정"
+        ],
+        "tag": "선글라스, Sunglasses, 헤드폰, Headphones, 못들은척, Pretend not to hear, 무시, Ignore"
+    },
+    {
+        "id": "286",
+        "name": "주인님얼른",
+        "file": "assets/jpg/c15bbf77-9fc9-4ccc-9ecd-c572e7df522c.jpg",
+        "thumb": "assets/thumbs/c15bbf77-9fc9-4ccc-9ecd-c572e7df522c.webp",
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ],
+        "tag": "개, Dog, 칼, Knife, 흑백, Black and white, 부조리, Absurd, 과장반응, Exaggerated reaction"
+    },
+    {
+        "id": "287",
+        "name": "허걱",
+        "file": "assets/jpg/459fa402-6b7b-4f76-b2f1-e60b9521c77f.jpg",
+        "thumb": "assets/thumbs/459fa402-6b7b-4f76-b2f1-e60b9521c77f.webp",
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [],
+        "tag": "Mr. Krabs, 미스터크랩스, 스폰지밥, Spongebob, 비명, Scream, 충격, Shocked"
+    },
+    {
+        "id": "288",
+        "name": "흡족",
+        "file": "assets/jpg/e198cf1e-da3c-439b-a8ad-bfe4fa3bfc1d.jpg",
+        "thumb": "assets/thumbs/e198cf1e-da3c-439b-a8ad-bfe4fa3bfc1d.webp",
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "자랑"
+        ],
+        "tag": "흡족, Satisfied, 미소, Smirk, 배우, Actor"
     }
 ]

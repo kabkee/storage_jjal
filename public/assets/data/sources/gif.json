@@ -654,5 +654,44 @@
         "tag": "Head explosion, 머리 폭발, Adult Swim, 어덜트 스윔, Mind blown, 정신 나감, Shocked, 충격, Universe, 우주, Realization, 깨달음, Enlightened, 깨우침",
         "category_1": "GIF",
         "category_2": null
+    },
+    {
+        "id": "290",
+        "name": "환한미소",
+        "file": "assets/gif/59d312be-cea3-4103-b430-fcdf2b44797e.gif",
+        "thumb": "assets/thumbs/59d312be-cea3-4103-b430-fcdf2b44797e.webp",
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "인사"
+        ],
+        "tag": "미소, Smile, 인사, Greeting, 밝은표정, Bright expression"
+    },
+    {
+        "id": "291",
+        "name": "내우산",
+        "file": "assets/gif/c76a7667-bef2-4175-bf12-8707f535ee74.gif",
+        "thumb": "assets/thumbs/c76a7667-bef2-4175-bf12-8707f535ee74.webp",
+        "emotion": [
+            "황당",
+            "놀람/충격"
+        ],
+        "situation": [],
+        "tag": "블랙박스, Dashcam, 무단횡단, Jaywalking, 우산, Umbrella, 위험, Danger, 비, Rain"
+    },
+    {
+        "id": "292",
+        "name": "카드받아라",
+        "file": "assets/gif/4cc7ee23-f4a4-4577-a6f6-c69b9d391c15.gif",
+        "thumb": "assets/thumbs/4cc7ee23-f4a4-4577-a6f6-c69b9d391c15.webp",
+        "emotion": [
+            "자신감/뿌듯",
+            "웃김"
+        ],
+        "situation": [
+            "한턱/쏘기"
+        ],
+        "tag": "카드, Card, 신용카드, Credit card, 결제, Payment, 한턱, Treat, 쏜다, I'll pay"
     }
 ]

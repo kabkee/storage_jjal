@@ -686,5 +686,33 @@
         "tag": "파괴, 건물, 잔해, 재난, 재건, 현수막, 안전, 복구, Demolition, Building, Rubble, Disaster, Reconstruction, Banner, Safety, Recovery",
         "category_1": "PNG",
         "category_2": null
+    },
+    {
+        "id": "298",
+        "name": "주가에따라바뀌는내직업1",
+        "file": "assets/png/97eeec99-eb9a-4241-ad1f-3a72db521e24.png",
+        "thumb": "assets/thumbs/97eeec99-eb9a-4241-ad1f-3a72db521e24.webp",
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "신세한탄"
+        ],
+        "tag": "주식, Stock, 투자, Investing, 밈툰, Webtoon meme, 분석가, Analyst, 경제전문가, Economist, 예언가, Prophet"
+    },
+    {
+        "id": "299",
+        "name": "주가에따라바뀌는내직업2",
+        "file": "assets/png/a5b215b6-236e-4272-921f-c0d2148bce7b.png",
+        "thumb": "assets/thumbs/a5b215b6-236e-4272-921f-c0d2148bce7b.webp",
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "신세한탄"
+        ],
+        "tag": "주식, Stock, 손절, Stop-loss, 장기투자자, Long-term investor, 성직자, Priest, 철학자, Philosopher"
     }
 ]
