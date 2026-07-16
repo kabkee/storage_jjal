@@ -30,12 +30,18 @@ function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag }) {
     };
 }
 
-function getNextId(data) {
-    if (!data || data.length === 0) return 1;
-    return data.reduce((max, item) => {
-        const id = parseInt(item.id, 10);
-        return isNaN(id) ? max : Math.max(max, id);
-    }, 0) + 1;
+function getGlobalNextId(sourcesDir) {
+    let max = 0;
+    for (const config of Object.values(EXT_MAP)) {
+        const jsonPath = path.join(sourcesDir, config.json);
+        if (!fs.existsSync(jsonPath)) continue;
+        const data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+        max = Math.max(max, data.reduce((m, item) => {
+            const id = parseInt(item.id, 10);
+            return isNaN(id) ? m : Math.max(m, id);
+        }, 0));
+    }
+    return max + 1;
 }
 
 async function importAll() {
@@ -44,6 +50,7 @@ async function importAll() {
         process.exit(1);
     }
     const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+    let nextId = getGlobalNextId(SOURCES_DIR);
 
     for (const entry of manifest) {
         const ext = path.extname(entry.sourceFilename).toLowerCase();
@@ -71,7 +78,7 @@ async function importAll() {
         const jsonPath = path.join(SOURCES_DIR, config.json);
         const jsonData = fs.existsSync(jsonPath) ? JSON.parse(fs.readFileSync(jsonPath, 'utf8')) : [];
         const record = buildRecord({
-            id: getNextId(jsonData), uuid, ext, folder: config.folder,
+            id: nextId++, uuid, ext, folder: config.folder,
             name: entry.name, emotion: entry.emotion, situation: entry.situation, tag: entry.tag
         });
         jsonData.push(record);
@@ -84,7 +91,7 @@ async function importAll() {
     console.log('모든 이미지 반영 완료. `yarn generate:data`로 data.json을 재생성하세요.');
 }
 
-module.exports = { buildRecord, getNextId };
+module.exports = { buildRecord, getGlobalNextId };
 
 if (require.main === module) {
     importAll().catch(err => { console.error(err); process.exit(1); });

@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "yarn generate:data && vite",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "vitest run && yarn test:scripts",
+    "test:scripts": "node public/assets/data/generate-thumbnail.smoketest.js && node public/assets/data/import-tagged-images.smoketest.js",
     "generate:data": "node public/assets/data/generate-data.js",
     "import-images": "node public/assets/data/import-tagged-images.js",
     "split:data": "node public/assets/data/split-data_to_sources.js",

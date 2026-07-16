@@ -46,12 +46,12 @@
                 <v-slide-group show-arrows>
                     <v-slide-group-item v-slot="{ toggle }">
                         <v-chip class="ma-1" :color="!isShowFav ? 'primary' : undefined"
-                            @click="isShowFav = false; toggle">
+                            @click="isShowFav = false; toggle()">
                             <v-icon start icon="mdi-home"></v-icon>전체
                         </v-chip>
                     </v-slide-group-item>
                     <v-slide-group-item v-slot="{ toggle }">
-                        <v-chip class="ma-1" :color="isShowFav ? 'primary' : undefined" @click="isShowFav = true; toggle">
+                        <v-chip class="ma-1" :color="isShowFav ? 'primary' : undefined" @click="isShowFav = true; toggle()">
                             <v-icon start icon="mdi-star"></v-icon>최근
                         </v-chip>
                     </v-slide-group-item>
@@ -72,7 +72,7 @@
                     <template v-for='img in filteredImages' :key="img?.file">
                         <div class="image-container">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                                aspect-ratio="1" cover eager :transition="false" class="elevation-3" :src="img.thumb || img.file"
+                                aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"
                                 @click="copyImageToClipboard(img)"></v-img>
                             <div class="hover-text">{{ img.name }}</div>
                         </div>
@@ -84,7 +84,7 @@
                     <template v-for='img in favImages' :key="img?.file">
                         <div class="image-container" @click="copyImageToClipboard(img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                                aspect-ratio="1" cover eager :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
+                                aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
                             <div class="hover-text">{{ img.name }}</div>
                             <div class="delete" @click="deleteFromFav($event, img)">X</div>
                         </div>
