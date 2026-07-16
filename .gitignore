@@ -28,3 +28,6 @@ public/assets/data/data.json
 
 # Yarn
 .yarn/install-state.gz
+
+# Superpowers brainstorm companion
+.superpowers/
