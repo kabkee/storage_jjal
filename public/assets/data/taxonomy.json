@@ -1,0 +1,37 @@
+{
+    "emotion": [
+        { "ko": "웃김", "en": ["Funny", "Hilarious", "LOL"] },
+        { "ko": "황당", "en": ["Absurd", "WTF", "Dumbfounded"] },
+        { "ko": "분노", "en": ["Angry", "Furious", "Rage"] },
+        { "ko": "슬픔", "en": ["Sad", "Sorrow"] },
+        { "ko": "놀람/충격", "en": ["Shocked", "Surprised"] },
+        { "ko": "소름/무서움", "en": ["Creeped out", "Scared"] },
+        { "ko": "부끄러움/민망", "en": ["Embarrassed", "Awkward"] },
+        { "ko": "지침/귀찮음", "en": ["Exhausted", "Annoyed"] },
+        { "ko": "자신감/뿌듯", "en": ["Confident", "Proud"] },
+        { "ko": "무표정/시크", "en": ["Deadpan", "Nonchalant"] },
+        { "ko": "불신/의심", "en": ["Doubtful", "Suspicious"] },
+        { "ko": "사랑/설렘", "en": ["Affection", "Excited (romance)"] },
+        { "ko": "귀여움", "en": ["Cute"] },
+        { "ko": "기쁨/행복", "en": ["Happy", "Joyful"] },
+        { "ko": "혐오/역겨움", "en": ["Disgust", "Gross"] }
+    ],
+    "situation": [
+        { "ko": "인사", "en": ["Greeting"] },
+        { "ko": "동의/긍정", "en": ["Agree", "Positive"] },
+        { "ko": "거절/부정", "en": ["Refuse", "Negative"] },
+        { "ko": "질문/궁금", "en": ["Question", "Curious"] },
+        { "ko": "축하", "en": ["Congrats", "Celebration"] },
+        { "ko": "위로/공감", "en": ["Comfort", "Empathy"] },
+        { "ko": "감사", "en": ["Thanks"] },
+        { "ko": "사과", "en": ["Apology"] },
+        { "ko": "재촉/독촉", "en": ["Urging", "Nagging"] },
+        { "ko": "놀리기/드립", "en": ["Teasing", "Joke"] },
+        { "ko": "자랑", "en": ["Bragging"] },
+        { "ko": "신세한탄", "en": ["Complaining", "Venting"] },
+        { "ko": "회사/업무", "en": ["Work", "Office"] },
+        { "ko": "밥/먹방/술", "en": ["Food", "Mukbang", "Drinking"] },
+        { "ko": "비난/지적", "en": ["Criticism", "Calling out"] },
+        { "ko": "한턱/쏘기", "en": ["Treating", "Paying for others"] }
+    ]
+}
