@@ -70,7 +70,7 @@
                 </div>
                 <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in filteredImages' :key="img?.file">
-                        <div class="image-container">
+                        <div class="image-container" :data-file="img.file">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"
                                 @click="copyImageToClipboard(img)"></v-img>
@@ -83,7 +83,7 @@
             <v-row v-else no-gutters>
                 <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in favImages' :key="img?.file">
-                        <div class="image-container" @click="copyImageToClipboard(img)">
+                        <div class="image-container" :data-file="img.file" @click="copyImageToClipboard(img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
                             <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
