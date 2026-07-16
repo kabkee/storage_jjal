@@ -17,13 +17,16 @@ async function run() {
     assert.strictEqual(jpgMeta.height, THUMB_SIZE, `expected height ${THUMB_SIZE}, got ${jpgMeta.height}`);
     assert.strictEqual(jpgMeta.format, 'webp', `expected webp format, got ${jpgMeta.format}`);
 
-    // GIF 원본 → 정지 이미지(애니메이션 아님) 썸네일
+    // GIF 원본 → 움직이는(애니메이션) webp 썸네일, 프레임 수 보존
     const gifFixture = path.join(__dirname, '../gif/2efb353937ce31638ab5e9bf2c428e88.gif');
     const gifOut = path.join(tmpDir, 'thumb-gif.webp');
     await generateThumbnail(gifFixture, gifOut);
     assert.ok(fs.existsSync(gifOut), 'gif thumbnail was not created');
-    const gifMeta = await sharp(gifOut).metadata();
-    assert.strictEqual(gifMeta.pages, undefined, 'gif thumbnail should be a single static frame, not animated');
+    const gifSourceMeta = await sharp(gifFixture, { animated: true }).metadata();
+    const gifMeta = await sharp(gifOut, { animated: true }).metadata();
+    assert.strictEqual(gifMeta.format, 'webp', `expected webp format, got ${gifMeta.format}`);
+    assert.strictEqual(gifMeta.pageHeight, THUMB_SIZE, `expected page height ${THUMB_SIZE}, got ${gifMeta.pageHeight}`);
+    assert.strictEqual(gifMeta.pages, gifSourceMeta.pages, `expected all ${gifSourceMeta.pages} source frames preserved, got ${gifMeta.pages}`);
 
     fs.rmSync(tmpDir, { recursive: true, force: true });
     console.log('✅ generate-thumbnail smoke test passed');
