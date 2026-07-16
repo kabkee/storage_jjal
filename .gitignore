@@ -23,7 +23,6 @@ pnpm-debug.log*
 *.sw?
 
 # /public/assets/
-public/assets/data/*.js
 public/assets/data/data.json
 
 # Yarn
