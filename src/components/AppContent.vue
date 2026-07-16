@@ -41,8 +41,8 @@
                 </v-col>
             </v-row>
 
-            <!-- 모바일: 전체/최근 전환 -->
-            <div v-if="isMobileCustom" class="pa-2">
+            <!-- 전체/최근 전환 (PC+모바일) -->
+            <div class="pa-2">
                 <v-slide-group show-arrows>
                     <v-slide-group-item v-slot="{ toggle }">
                         <v-chip class="ma-1" :color="!isShowFav ? 'primary' : undefined"
