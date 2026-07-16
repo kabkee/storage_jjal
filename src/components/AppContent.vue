@@ -72,7 +72,7 @@
                     <template v-for='img in filteredImages' :key="img?.file">
                         <div class="image-container">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                                aspect-ratio="1/1" cover class="elevation-3" :src="img.thumb || img.file"
+                                aspect-ratio="1" cover eager :transition="false" class="elevation-3" :src="img.thumb || img.file"
                                 @click="copyImageToClipboard(img)"></v-img>
                             <div class="hover-text">{{ img.name }}</div>
                         </div>
@@ -84,7 +84,7 @@
                     <template v-for='img in favImages' :key="img?.file">
                         <div class="image-container" @click="copyImageToClipboard(img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
-                                aspect-ratio="1/1" cover class="elevation-3" :src="img.thumb || img.file"></v-img>
+                                aspect-ratio="1" cover eager :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
                             <div class="hover-text">{{ img.name }}</div>
                             <div class="delete" @click="deleteFromFav($event, img)">X</div>
                         </div>
