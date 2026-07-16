@@ -6,8 +6,8 @@
         cols="12"
         sm="12"
       >
-        <v-sheet class="ma-2 pa-2 text-center" min-height="150" style="align-content: center;">
-            <h1>{{ appTitle }}</h1>
+        <v-sheet class="ma-2 pa-4 pa-sm-6 text-center">
+            <h1 class="app-title">{{ appTitle }}</h1>
         </v-sheet>
       </v-col>
     </v-row>
@@ -27,3 +27,10 @@ onMounted(async () => {
     document.title = file.name;
 });
 </script>
+
+<style scoped>
+.app-title {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    margin: 0;
+}
+</style>
