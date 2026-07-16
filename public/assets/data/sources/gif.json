@@ -5,7 +5,14 @@
         "file": "assets/gif/95ef5c13-a7a4-427d-94c9-d5a1593b7e98.gif",
         "tag": "gif, Surprised, 놀란, Excited, 흥분한, Manga, 만화, Shocked, 충격 받은, Zoom lines, 줌 라인, Open mouth, 벌린 입, Beard, 턱수염, Black and white, 흑백",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "분노",
+            "놀람/충격"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "198",
@@ -13,7 +20,13 @@
         "file": "assets/gif/80655a9e-d5ef-4fdd-a151-e88b870989b5.gif",
         "tag": "gif, Wrestling, 레슬링, Brock Lesnar, 브록 레스너, Carrying, 옮기기, WWE, WWE, Suplex City, 슈플렉스 시티, Action, 액션, Sports, 스포츠, Dominance, 지배력",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "199",
@@ -21,7 +34,13 @@
         "file": "assets/gif/hue_jjal.gif",
         "tag": "gif, Antonio Banderas, Antonio Banderas, Surprised, 놀란, Computer, 컴퓨터, Looking at screen, 화면 보기, \"Internet is for porn\", \"인터넷은 포르노를 위한 것\", Meme, 밈, 90s Movie, 90년대 영화",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "200",
@@ -29,7 +48,14 @@
         "file": "assets/gif/tenor.gif",
         "tag": "gif, Here are some relevant tags for the image, in Korean and English:, 김성수, Kim Sung-soo, 분노, Anger, 드라마, Drama, 슬픔, Sadness, 클로즈업, Close-up, 연기, Acting, 집중, Concentration, KBS2",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크",
+            "불신/의심"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "201",
@@ -37,7 +63,14 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-06-09-14-39-54.gif",
         "tag": "gif, SBS HD, SBS HD, Discomfort, 불편, Confusion, 혼란, Suspicion, 의심, Korean Drama, 한국 드라마, Man, 남자, Serious, 심각한",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격",
+            "황당"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "202",
@@ -45,7 +78,13 @@
         "file": "assets/gif/b0f3afbf-8be6-47cd-a847-a16e5668cc91.gif",
         "tag": "gif, Aritaum, 아리따움, taxi, 택시, getting out of car, 차에서 내리기, blue shirt, 파란 셔츠, busy street, 복잡한 거리, unloading, 짐 내리기.",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "203",
@@ -53,7 +92,13 @@
         "file": "assets/gif/0ad66525-d62b-4ab1-bc2a-b90887da4ad5.gif",
         "tag": "gif, Dancing, 춤, Man, 남자, White outfit, 흰 옷, Stage, 무대, Kpop, 케이팝, 90s, 90년대",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "자랑"
+        ]
     },
     {
         "id": "204",
@@ -61,7 +106,13 @@
         "file": "assets/gif/76dc168a-f4fa-483c-ba8a-d11213c3fce7.gif",
         "tag": "gif, Arriving at work, 출근, Work, 직장, High heels, 하이힐, Animation, 애니메이션, Shoe, 신발, Meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "지침/귀찮음"
+        ],
+        "situation": [
+            "회사/업무"
+        ]
     },
     {
         "id": "205",
@@ -69,7 +120,13 @@
         "file": "assets/gif/KakaoTalk_20210331_090601353.gif",
         "tag": "gif, Suspicious look, 의심스러운 표정, smirk, 능글맞은 웃음, Asian man, 아시아 남자, sweater, 스웨터, awkward, 어색함, nervous, 불안함, reaction image, 반응 이미지",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "206",
@@ -77,7 +134,13 @@
         "file": "assets/gif/3qa733k74ju91.gif",
         "tag": "gif, Meme, 밈, Art, 예술, Drawing, 그림, Criticism, 비판, John Wick, 존 윅, Determination, 결단력",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "자랑"
+        ]
     },
     {
         "id": "207",
@@ -85,7 +148,13 @@
         "file": "assets/gif/yay-yes.gif",
         "tag": "gif, Yeahhh, 예, child, 아이, dancing, 춤추는, sunglasses, 선글라스, confidence, 자신감, celebration, 축하, meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "동의/긍정"
+        ]
     },
     {
         "id": "208",
@@ -93,7 +162,13 @@
         "file": "assets/gif/72254152-9ab6-4d5c-ae90-28977be8766d.gif",
         "tag": "gif, 댄스, Dance, 즐거움, Joy, 레트로, Retro, 가족, Family, 복고 춤, Retro dance, 한국 드라마, Korean drama, 웃음, Laughter, 흥, Excitement",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "축하"
+        ]
     },
     {
         "id": "209",
@@ -101,7 +176,13 @@
         "file": "assets/gif/3aeec21e-c19d-4f1b-b95b-61faacf41cb6.gif",
         "tag": "gif, Smiling, 미소, Man, 남자, Historical Drama, 역사 드라마, Traditional Korean Clothing, 전통 한복, Suspicious, 의심스러운, Conspiracy, 음모, Plotting, 계획, King, 왕",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "210",
@@ -109,7 +190,13 @@
         "file": "assets/gif/yes.gif",
         "tag": "gif, Korean wedding, 한국 결혼식, Hanbok, 한복, Giving a speech, 연설, Tradition, 전통, Alcohol bottles, 술병, Man explaining, 설명하는 남자",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "한턱/쏘기"
+        ]
     },
     {
         "id": "211",
@@ -117,7 +204,13 @@
         "file": "assets/gif/avatar-the-way-of-water_i_see_you.gif",
         "tag": "gif, Avatar, 아바타, I see you, 내가 당신을 봅니다, Neytiri, 네이티리, Na'vi, 나비족, Understanding, 이해, Connection, 연결",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "사랑/설렘"
+        ],
+        "situation": [
+            "위로/공감"
+        ]
     },
     {
         "id": "212",
@@ -125,7 +218,13 @@
         "file": "assets/gif/801dddc7-5e66-42c5-851f-7b7eb941d9ae.gif",
         "tag": "gif, Coffin Dance, 관짝소년단, Pallbearers, 운반자, Meme, 밈, Funeral, 장례식, Ghana, 가나, Carrying coffin, 관 운반",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "213",
@@ -133,7 +232,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-08-24-22-19-51.gif",
         "tag": "gif, zipper, 지퍼, pants, 바지, clothing, 의류, awkwardness, 어색함, adjustment, 조정, wardrobe malfunction, 옷장 고장, zipper stuck, 지퍼가 끼임",
         "category_1": "GIF",
-        "category_2": ""
+        "category_2": "",
+        "emotion": [
+            "부끄러움/민망"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "215",
@@ -141,7 +246,13 @@
         "file": "assets/gif/dance-happy.gif",
         "tag": "gif, Dancing, 춤, Boy, 소년, Chair, 의자, Happiness, 행복, Excitement, 흥분, Laughing, 웃음, Student, 학생, Party, 파티",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "축하"
+        ]
     },
     {
         "id": "216",
@@ -149,7 +260,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-06-16-17-14-54.gif",
         "tag": "gif, Suspicious, 의심스러운, Microphones, 마이크, Ministry of Environment, 환경부, Side Eye, 옆눈질, Skeptical, 회의적인",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "217",
@@ -157,7 +274,13 @@
         "file": "assets/gif/54677589-5d8c-4178-815c-810df1f0fb28.gif",
         "tag": "gif, John Cena, 존 시나, smile, 미소, meme, 밈, invisible, 보이지 않는, wrestling, 레슬링, you can't see me, 넌 날 볼 수 없어, SKY Sports, 스카이 스포츠",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "218",
@@ -165,7 +288,13 @@
         "file": "assets/gif/30933acc-0822-44ed-a45b-42a9f82abd18.gif",
         "tag": "gif, Archer, 양궁 선수, Archery, 양궁, Korean flag, 태극기, Bow, 활, Serious, 진지함, Concentration, 집중력",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "거절/부정"
+        ]
     },
     {
         "id": "219",
@@ -173,7 +302,14 @@
         "file": "assets/gif/1bb87db9-40ac-4e16-b4dc-3c6f4422c972.gif",
         "tag": "gif, Avengers, 어벤져스, Battle, 전투, Black Panther, 블랙 팬서, Outriders, 아웃라이더스, Action, 액션, Superhero, 슈퍼히어로",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격",
+            "황당"
+        ],
+        "situation": [
+            "신세한탄"
+        ]
     },
     {
         "id": "220",
@@ -181,7 +317,14 @@
         "file": "assets/gif/bfa5f0d8-cbc5-495f-bce3-c07663bf236b.gif",
         "tag": "gif, Crying, 울음, JYP, JYP, Disappointed, 실망한, Park Jin-young, 박진영, The Feeling, 더 필링, K-Pop, 케이팝, Meme, 밈, Entertainment, 엔터테인먼트",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "부끄러움/민망",
+            "불신/의심"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "221",
@@ -189,7 +332,13 @@
         "file": "assets/gif/e171b45b-6f34-4d16-acf1-9603f5589543.gif",
         "tag": "gif, AfreecaTV, 아프리카TV, Streaming, 스트리밍, Drinking, 음주, Soju, 소주, Beer, 맥주, Mukbang, 먹방",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "밥/먹방/술"
+        ]
     },
     {
         "id": "222",
@@ -197,7 +346,13 @@
         "file": "assets/gif/cd783384-1c69-4b44-a935-c5543c01dcd8.gif",
         "tag": "gif, Tom Hardy, 톰 하디, Concern, 걱정, Disgust, 역겨움, Looking down, 아래를 보는, Movie still, 영화 스틸컷, Mad Max: Fury Road, 매드맥스: 분노의 도로, Contempt, 경멸",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "동의/긍정"
+        ]
     },
     {
         "id": "223",
@@ -205,7 +360,14 @@
         "file": "assets/gif/11594157-ffee-4d42-b53b-325c6c84ed17.gif",
         "tag": "gif, Transformers, 트랜스포머, Optimus Prime, 옵티머스 프라임, Megatron, 메가트론, Defeat, 패배, Confrontation, 대결, Robot, 로봇, 80s Cartoon, 80년대 만화",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크",
+            "분노"
+        ],
+        "situation": [
+            "거절/부정"
+        ]
     },
     {
         "id": "224",
@@ -213,7 +375,14 @@
         "file": "assets/gif/6ad16a75-c736-417d-9861-8fc88be91f63.gif",
         "tag": "gif, Korean streamers, 한국 스트리머, Bandisoft, ㅋㅋㅋㅋㅋ, Laughing, 당황, Embarrassed, Red outline, 빨간 윤곽, 여성, Women",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "부끄러움/민망",
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "225",
@@ -221,7 +390,14 @@
         "file": "assets/gif/magic.gif",
         "tag": "gif, Confident, 자신감 있는, Hair flip, 머리 넘기기, Unicorn, 유니콘, Mustache, 콧수염, Pink shirt, 핑크 셔츠, Arrogant, 거만한, \"I don't care\" meme, \"신경 안 써\" 밈, Adam Sandler, 아담 샌들러",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "226",
@@ -229,7 +405,13 @@
         "file": "assets/gif/22d98a04-f880-42de-a33d-11bc04fb138d.gif",
         "tag": "gif, Confused, 당황, Man in Suit, 정장 남자, Shocked, 충격 받은, Restaurant, 레스토랑, 꽃, Flowers, water glasses, 물 잔",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "227",
@@ -237,7 +419,13 @@
         "file": "assets/gif/036761b1-7de6-4ec4-b2a8-ec3f90975d46.gif",
         "tag": "gif, Cat, 고양이, Hat, 모자, Driving, 운전, Happy, 행복한, Vacation, 휴가, Smug, 득의양양, 농부 모자, straw hat, 농촌, countryside",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "지침/귀찮음"
+        ],
+        "situation": [
+            "신세한탄"
+        ]
     },
     {
         "id": "228",
@@ -245,7 +433,13 @@
         "file": "assets/gif/07f17457-96e3-4a54-ab4d-1968a4898a5f.gif",
         "tag": "gif, Will Smith, 윌 스미스, Men in Black, 맨인블랙, Agent J, 에이전트 J, Suit, 정장, confident, 자신감 있는, Crossing arms, 팔짱, 90s movie, 90년대 영화",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "거절/부정"
+        ]
     },
     {
         "id": "229",
@@ -253,7 +447,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-07-06-15-12-33.gif",
         "tag": "gif, Green parrots, 녹색 앵무새, Birds, 새, Screaming, 비명, Meme, 밈, Hungry, 배고픈, Nest, 둥지, Open mouth, 입 벌림",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "분노"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "230",
@@ -261,7 +461,13 @@
         "file": "assets/gif/33740bf3-07be-4623-be47-0271527e934e.gif",
         "tag": "gif, Let's analyze the image and generate some Korean/English tags:, *   바둑, Go game, *   앉아 있다, Sitting, *   대화, Conversation, *   영화, Movie, *   전통적인, Traditional, *   오래된, Old, *   침착한, Calm, *   Go (board game), 바둑, *   Conversation, 대화, *   Traditional Korean setting, 한국 전통적인 배경, *   Movie scene, 영화 장면",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "위로/공감"
+        ]
     },
     {
         "id": "231",
@@ -269,7 +475,13 @@
         "file": "assets/gif/8a57c7de-b619-4eeb-802a-45876794efa5.gif",
         "tag": "gif, Excited, 신남, Enthusiasm, 열광, Gun, 총, Shooting a gun, 총 쏘기, Meme, 밈, \"Rich People Shooting Guns at Basketball Games\" meme, 농구 경기장 총 밈, Basketball game, 농구 경기, Wealth, 부, Celebratory, 축하",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "축하"
+        ]
     },
     {
         "id": "232",
@@ -277,7 +489,13 @@
         "file": "assets/gif/0d398b75-9782-4c5d-90c7-ab8b9bf60d83.gif",
         "tag": "gif, Stare, 쳐다보기, Disbelief, 불신, Man, 남자, Suit, 정장, Judging, 판단하는, Doubt, 의심, 심영, Sim Young",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "233",
@@ -285,7 +503,13 @@
         "file": "assets/gif/KakaoTalk_20171129_110449056.gif",
         "tag": "gif, Star Trek, 스타 트렉, Dr. McCoy, 닥터 맥코이, DeForest Kelley, 디포레스트 켈리, concern, 걱정, frowning, 찡그림, \"Dammit Jim, I'm a doctor, not a...\", \"젠장, 짐, 난 의사지, ...이 아니야.\", classic TV, 고전 TV",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "불신/의심"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "234",
@@ -293,7 +517,13 @@
         "file": "assets/gif/251f72ff-f00d-4e0f-9dc1-6c0006906899.gif",
         "tag": "gif, 배신, Betrayal, 실망, Disappointment, 슬픔, Sadness, 내 이럴줄 알았다, \"I knew this would happen\", 후회, Regret, 씁쓸함, Bitterness, \"Honeycam\"",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "235",
@@ -301,7 +531,13 @@
         "file": "assets/gif/20171211_5a2e1a7378396.gif",
         "tag": "gif, Leonardo DiCaprio, 레오나르도 디카프리오, The Wolf of Wall Street, 월스트리트의 늑대, Clapping, 박수, Sarcasm, 비꼬기, Sarcastic applause, 비꼬는 박수, Meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "236",
@@ -309,7 +545,13 @@
         "file": "assets/gif/653e6b06-3818-4aea-ba75-d0b11a217694.gif",
         "tag": "gif, Kim Jong-un, 김정은, 북한, North Korea, Meme, 밈, 헤헷! 흐름 나두 좋아하는 뎅!!, Hehet! I like the flow, Disapproving look, 못마땅한 표정",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "동의/긍정"
+        ]
     },
     {
         "id": "237",
@@ -317,7 +559,13 @@
         "file": "assets/gif/9080efad-7d38-49fe-b7dd-ef87fe980cea.gif",
         "tag": "gif, Cat, 고양이, Pounce, 덮치다, Big Eyes, 큰 눈, Meme, 밈, Cute, 귀여운, 4GIFs.com",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "귀여움"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "238",
@@ -325,7 +573,13 @@
         "file": "assets/gif/8dcfda39-86b1-4f31-854d-83c350170192.gif",
         "tag": "gif, Naked Gun, 총알탄 사나이, Covering eyes, 눈 가리기, Police, 경찰, Leslie Nielsen, 레슬리 닐슨, Comedy, 코미디, Shame, 부끄러움, Cringe, 오글거림",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "239",
@@ -333,7 +587,13 @@
         "file": "assets/gif/mine-bam.gif",
         "tag": "gif, Taylor Swift, 테일러 스위프트, Dancing, 춤추는, BAM, 빰, Meme, 밈, Sass, 새침함, Attitude, 태도",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "자랑"
+        ]
     },
     {
         "id": "240",
@@ -341,7 +601,13 @@
         "file": "assets/gif/Daaaaaaaaaamn.gif",
         "tag": "gif, Friday, 금요일, Ice Cube, 아이스 큐브, Chris Tucker, 크리스 터커, meme, 밈, Chill, 휴식, What up?, 무슨 일이야?, movie scene, 영화 장면, Waiting, 기다림",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "241",
@@ -349,7 +615,13 @@
         "file": "assets/gif/3ab335da-f880-4c25-86fe-71a2288a6a94.gif",
         "tag": "gif, Red button, 빨간 버튼, anime, 애니메이션, pressing, 누르기, white glove, 흰 장갑, cockpit, 조종석, emergency stop, 비상 정지, action, 액션",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "재촉/독촉"
+        ]
     },
     {
         "id": "242",
@@ -357,7 +629,13 @@
         "file": "assets/gif/e5d04a37-75ee-41a9-acc6-b8a42bdb4146.gif",
         "tag": "gif, Surprised, 놀란, Excited, 신나는, 깔깔, Kkal Kkal, Laughing, 웃음, Korean Variety Show, 한국 예능, Open Mouth, 벌린 입, Girl Group, 걸그룹, AOA, K-pop, 케이팝",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "243",
@@ -365,7 +643,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-08-03-00-17-58.gif",
         "tag": "gif, Manual transmission, 수동 변속기, shifting gears, 기어 변속, driving, 운전, car interior, 자동차 내부, hand, 손, gear stick, 기어 스틱, gear knob, 기어 노브",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "부끄러움/민망"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "244",
@@ -373,7 +657,14 @@
         "file": "assets/gif/d96cdf06-934d-4ab3-9c95-decbb3e38ca8.gif",
         "tag": "gif, Cat, 고양이, Knocking over glass, 유리 엎기, Mischievous, 장난스러운, Cat meme, 고양이 밈, Curiosity, 호기심, Clumsy cat, 어설픈 고양이, Table, 탁자, GIFak.net, GIFak.net",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "245",
@@ -381,7 +672,14 @@
         "file": "assets/gif/3637f579-26f1-4b7b-a96c-85e46a8c127e.gif",
         "tag": "gif, Dog, 개, White, 흰색, Looking at camera, 카메라 보기, Head tilt, 고개 갸우뚱, Confusion, 혼란, Pet, 애완 동물, Cute, 귀여운",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "혐오/역겨움",
+            "불신/의심"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "246",
@@ -389,7 +687,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-06-16-17-16-12.gif",
         "tag": "gif, Driving, 운전, Manual transmission, 수동 변속기, Car interior, 자동차 내부, Love, 사랑, Affection, 애정, Hold hands, 손 잡다, Relationship goals, 관계 목표, Touch, 접촉, Couple, 커플",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "부끄러움/민망"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "247",
@@ -397,7 +701,14 @@
         "file": "assets/gif/dance-girl-happy.gif",
         "tag": "gif, Dancing, 춤추다, Child, 아이, Sunglasses, 선글라스, Confident, 자신감 있는, Meme, 밈, imgPlay, ImgPlay, Swag, 스웨그, Success, 성공",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복",
+            "귀여움"
+        ],
+        "situation": [
+            "자랑"
+        ]
     },
     {
         "id": "248",
@@ -405,7 +716,13 @@
         "file": "assets/gif/73fac05f-7943-452d-bd5f-9576fef8ce69.gif",
         "tag": "gif, 감사합니다, Thank you, Korean Text, 실내, Indoor, Window, 창문, Appreciation, 감사",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "감사"
+        ]
     },
     {
         "id": "249",
@@ -413,7 +730,13 @@
         "file": "assets/gif/1bf37a90-9951-473d-aeed-ca6d247fc019.gif",
         "tag": "gif, Laughing, 웃음, SBS, HD SBS, Korean drama, 한국 드라마, Full laugh, 크게 웃음, Woman, 여자, Meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "250",
@@ -421,7 +744,13 @@
         "file": "assets/gif/79c32931-01b1-42d7-859b-de8aae8a5b68.gif",
         "tag": "gif, Ash Ketchum, 지우, Throwing, 던지기, Pokémon, 포켓몬, Determined, 결의에 찬, Action pose, 액션 포즈, Gotta Catch 'Em All, 모두 잡아라, 90s anime, 90년대 애니메이션",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "자랑"
+        ]
     },
     {
         "id": "251",
@@ -429,7 +758,13 @@
         "file": "assets/gif/14da6c75-c258-48a3-bbb6-d79faa932144.gif",
         "tag": "gif, Frustration, 좌절, White Suit, 흰 양복, Song Hye-kyo, 송혜교, Exasperated, 분통함, Hands in the air, 손을 들다, Korean Drama, 한국 드라마, meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "252",
@@ -437,7 +772,14 @@
         "file": "assets/gif/7af49049-b338-432c-8417-9a060609dc3c.gif",
         "tag": "gif, King of the Hill, 킹 오브 더 힐, Spatula, 뒤집개, Belly, 배, Grill, 그릴, Pain, 고통, Cartoon, 만화, Memes, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "253",
@@ -445,7 +787,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-06-09-14-40-12.gif",
         "tag": "gif, 저는 관심없습니다, I don't care, 한국 정치, Korean politics, 무관심, indifference, 윤석열, Yoon Suk-yeol, 마이크, microphone, Meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "거절/부정"
+        ]
     },
     {
         "id": "254",
@@ -453,7 +801,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-08-20-20-13-07.gif",
         "tag": "gif, Pointing, 손가락질, Finger pointing, You too?, 야 너두?, Ya neodu?, Questioning, 의문, Surprise, 놀람, Korean Meme, 한국 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "255",
@@ -461,7 +815,13 @@
         "file": "assets/gif/5391553c-6dab-4854-85e5-4c776ef7371e.gif",
         "tag": "gif, Fighting, 격투, Video game, 비디오 게임, Tekken, 철권, Action, 액션, Motorcycle, 오토바이, Cars, 자동차",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "분노"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "256",
@@ -469,7 +829,13 @@
         "file": "assets/gif/10f88bca-f9a3-4daf-a273-0fea700503c9.gif",
         "tag": "gif, Zach Galifianakis, 자크 갈리피아나키스, The Hangover, 행오버, Confused, 혼란스러움, Double Take, 더블 테이크, Meme, 밈, Driving, 운전, WTF, 뭥미",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "동의/긍정"
+        ]
     },
     {
         "id": "257",
@@ -477,7 +843,13 @@
         "file": "assets/gif/101_5516a01b4f15d_2695.gif",
         "tag": "gif, Dwayne Johnson, 드웨인 존슨, The Rock, 더 락, Shocked, 충격, Applause, 박수, Reaction, 반응, Meme, 밈, Crowd, 군중",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "축하"
+        ]
     },
     {
         "id": "258",
@@ -485,7 +857,13 @@
         "file": "assets/gif/363ec031-d164-413b-99dd-413a3ee647b8.gif",
         "tag": "gif, Drawing, 그림, Portrait, 초상화, Sketch, 스케치, Will Poulter, 윌 폴터, You guys are getting paid, 월급 받으세요?, Meme, 밈, Art, 예술",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "동의/긍정"
+        ]
     },
     {
         "id": "259",
@@ -493,7 +871,13 @@
         "file": "assets/gif/12f9b32c-67a0-4452-b23e-9b5cff5964e8.gif",
         "tag": "gif, AfreecaTV, 아프리카TV, Drinking, 술 마시기, Cass Beer, 카스 맥주, Soju, 소주, Mukbang, 먹방, Korean Food, 한국 음식, Beer, 맥주, 혼술, Solo Drinking",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "밥/먹방/술"
+        ]
     },
     {
         "id": "260",
@@ -501,7 +885,13 @@
         "file": "assets/gif/i013393601496.gif",
         "tag": "gif, Kim Jong-un, 김정은, Speaking, 말하기, Gesture, 몸짓, Confused, 당황한, Disbelief, 불신, North Korea, 북한, Unsure, 불확실한",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "자신감/뿌듯"
+        ],
+        "situation": [
+            "재촉/독촉"
+        ]
     },
     {
         "id": "261",
@@ -509,7 +899,14 @@
         "file": "assets/gif/chloe.gif",
         "tag": "gif, Distracted Boyfriend Meme, 황당한 표정, Side Eyeing Chloe, 초조, Discomfort, 불편함, Skepticism, 회의적인, Girl, 여자아이",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "불신/의심",
+            "황당"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "262",
@@ -517,7 +914,13 @@
         "file": "assets/gif/60837334-4e32-4592-8cc2-542e8a10611f.gif",
         "tag": "gif, Shower, 샤워, men, 남자, soap, 비누, affection, 애정, Andrew Christian, 앤드류 크리스찬, tattoo, 문신, physical intimacy, 육체적 친밀감.",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "부끄러움/민망"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "263",
@@ -525,7 +928,13 @@
         "file": "assets/gif/b27cd15d-00cf-4bed-886e-c2065bea38c0.gif",
         "tag": "gif, Bus driver, 버스 운전사, driving, 운전, bus, 버스, serious, 심각한, focused, 집중, in transit, 이동 중, meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "회사/업무"
+        ]
     },
     {
         "id": "264",
@@ -533,7 +942,13 @@
         "file": "assets/gif/6700b034-fcf1-4042-9ec5-6671b96c4791.gif",
         "tag": "gif, Sleeping, 자는, Alarm clock, 자명종, Slap, 때림, Wake-up machine, 기상 기계, DIY, 수제, Hand, 손, Irritated, 짜증난, Rube Goldberg machine, 루브 골드버그 장치, Inventions, 발명품, Funny, 웃긴",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "지침/귀찮음"
+        ],
+        "situation": [
+            "신세한탄"
+        ]
     },
     {
         "id": "265",
@@ -541,7 +956,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-06-09-14-40-01.gif",
         "tag": "gif, Facial expression, 표정, Puffing cheeks, 볼 부풀리기, Disgust, 혐오, Korean, 한국인, Confused, 혼란스러움, Woman, 여자, \"What?\", \"뭐?\", \"Huh?\", \"어?\"",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "불신/의심"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "266",
@@ -549,7 +970,13 @@
         "file": "assets/gif/whatsgoingon.gif",
         "tag": "gif, Dwight Schrute, The Office, What is going on?, 당황, 무슨 일이야?, Confusion, 의아함, Surprise, 놀람, Meme, 밈",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "267",
@@ -557,7 +984,13 @@
         "file": "assets/gif/KakaoTalk_Photo_2021-08-30-18-03-21.gif",
         "tag": "gif, 줄퇴, 퇴근, 피슝, 퇴사, leaving work, 퇴근 밈, firing, pishung, 회사 탈출, leaving company",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "회사/업무"
+        ]
     },
     {
         "id": "268",
@@ -565,7 +998,13 @@
         "file": "assets/gif/20161111_58248f5bbdfba.gif",
         "tag": "gif, Kim Jong-un, 김정은, laughter, 웃음, excitement, 흥분, clapping, 박수, celebration, 축하, victory, 승리, reaction, 반응, approval, 승인.",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "기쁨/행복"
+        ],
+        "situation": [
+            "축하"
+        ]
     },
     {
         "id": "269",
@@ -573,7 +1012,13 @@
         "file": "assets/gif/6e20373c-df06-44e0-8de8-e158717aedcd.gif",
         "tag": "gif, 나는 용서하마, I forgive you, Bandicam, Man, Jesus, 슬픔, Sadness, 연극, Play, www.bandicam.com",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "사과"
+        ]
     },
     {
         "id": "270",
@@ -581,7 +1026,13 @@
         "file": "assets/gif/2efb353937ce31638ab5e9bf2c428e88.gif",
         "tag": "gif, Pepe, 페페, Feels good man, 기분 좋다, My Little Pony, 마이 리틀 포니, Holding, 들고 있다, Ponies, 조랑말, Twilight Sparkle, 트와일라잇 스파클, Pinkie Pie, 핑키 파이",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "272",
@@ -589,7 +1040,13 @@
         "file": "assets/gif/ab7f0cf7-898c-43ea-94d3-be64452efe26.gif",
         "tag": "gif, 우남쌩, Confused face, 당황한 표정, Disbelief, 불신, Basketball, 농구, COM TV Sports Live, 걱정, Worry, Blank stare, 멍한 시선, Scared, 무서워",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "분노"
+        ],
+        "situation": [
+            "비난/지적"
+        ]
     },
     {
         "id": "273",
@@ -597,7 +1054,13 @@
         "file": "assets/gif/20431689-f18a-456a-89ee-9e29305aca21.gif",
         "tag": "gif, 우남쌩, 다람쥐, Squirrel, Acorn, 도토리, Cute, 귀여움, Holding, 잡고 있는, Nature, 자연, Scrat's acorn obsession, 스크랫 도토리 집착",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "신세한탄"
+        ]
     },
     {
         "id": "274",
@@ -605,7 +1068,13 @@
         "file": "assets/gif/2218df92-8bd4-4485-a864-3c8f875ebe7c.gif",
         "tag": "gif, 우남쌩, Nathan Fillion, 네이선 필리언, disbelief, 불신, surprised, 놀란, reaction gif, 반응 GIF, shocked, 충격 받은, gifbin.com, 남자, man",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "288",
@@ -613,7 +1082,13 @@
         "file": "assets/gif/b4f39b7f-bd6e-4eeb-9768-c41e88dd671a.gif",
         "tag": "gif, Given the image is almost completely black, it is impossible to extract any meaningful information. I can only provide vague tags., 검은색, 검정, 어둠, Black, darkness, monochrome, 단색, silhouette, 실루엣",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "질문/궁금"
+        ]
     },
     {
         "id": "288",
@@ -621,7 +1096,13 @@
         "file": "assets/gif/0ba363dc-5c52-45cb-8525-6ef884425795.gif",
         "tag": "gif, Locker room, 탈의실, Changing clothes, 옷 갈아입기, Suit, 정장, Man, 남자, Awkward moment, 어색한 순간, Shorts, 반바지, Business meeting, 비즈니스 회의",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "회사/업무"
+        ]
     },
     {
         "id": "288",
@@ -629,7 +1110,13 @@
         "file": "assets/gif/eb06cff0-cf92-4121-8bdf-95a0efc0f1ae.gif",
         "tag": "gif, 우남쌩, Korean drama, 한국 드라마, \"Apologize to me!!!\", \"사과해요 나한테!!!\", anger, 분노, shouting, 외침, man, 남자, meme, 밈.",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "분노"
+        ],
+        "situation": [
+            "사과"
+        ]
     },
     {
         "id": "288",
@@ -637,7 +1124,13 @@
         "file": "assets/gif/b28eed50-1acb-4a1b-9cdb-6729c0de4aa8.gif",
         "tag": "gif, 우남쌩, Son Heung-min, 손흥민, football, 축구, World Cup, 월드컵, mask, 마스크, injury, 부상, South Korea, 대한민국, Uruguay, 우루과이",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "무표정/시크"
+        ],
+        "situation": [
+            "회사/업무"
+        ]
     },
     {
         "id": "288",
@@ -645,7 +1138,14 @@
         "file": "assets/gif/ab6efa8a-5c36-44af-8ffe-b0ec825f98ee.gif",
         "tag": "gif, Skimboarding, 스킴보드, beach, 해변, fail, 실패, wipeout, 전멸, ocean, 바다, summer, 여름",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "289",
@@ -653,7 +1153,14 @@
         "file": "assets/gif/e3ad324d-2526-4356-b294-ab49b9a2e186.gif",
         "tag": "Head explosion, 머리 폭발, Adult Swim, 어덜트 스윔, Mind blown, 정신 나감, Shocked, 충격, Universe, 우주, Realization, 깨달음, Enlightened, 깨우침",
         "category_1": "GIF",
-        "category_2": null
+        "category_2": null,
+        "emotion": [
+            "황당",
+            "놀람/충격"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ]
     },
     {
         "id": "300",
@@ -677,7 +1184,9 @@
             "황당",
             "놀람/충격"
         ],
-        "situation": [],
+        "situation": [
+            "비난/지적"
+        ],
         "tag": "블랙박스, Dashcam, 무단횡단, Jaywalking, 우산, Umbrella, 위험, Danger, 비, Rain"
     },
     {

@@ -28,13 +28,13 @@
                     <div class="mb-1">
                         <v-chip class="ma-1" size="small" :color="activeFilterCount === 0 ? 'primary' : undefined"
                             @click="clearFilters()">전체</v-chip>
-                        <v-chip v-for="t in taxonomy.emotion" :key="'e-' + t.ko" class="ma-1" size="small"
+                        <v-chip v-for="t in visibleEmotionTags" :key="'e-' + t.ko" class="ma-1" size="small"
                             :color="selectedEmotion.includes(t.ko) ? 'primary' : undefined"
                             @click="toggleEmotion(t.ko)">{{ t.ko }}</v-chip>
                     </div>
                     <div class="chip-row-label">상황</div>
                     <div class="mb-2">
-                        <v-chip v-for="t in taxonomy.situation" :key="'s-' + t.ko" class="ma-1" size="small"
+                        <v-chip v-for="t in visibleSituationTags" :key="'s-' + t.ko" class="ma-1" size="small"
                             :color="selectedSituation.includes(t.ko) ? 'primary' : undefined"
                             @click="toggleSituation(t.ko)">{{ t.ko }}</v-chip>
                     </div>
@@ -74,6 +74,7 @@
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"
                                 @click="copyImageToClipboard(img)"></v-img>
+                            <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
                             <div class="hover-text">{{ img.name }}</div>
                         </div>
                     </template>
@@ -85,6 +86,7 @@
                         <div class="image-container" @click="copyImageToClipboard(img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
+                            <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
                             <div class="hover-text">{{ img.name }}</div>
                             <div class="delete" @click="deleteFromFav($event, img)">X</div>
                         </div>
@@ -102,13 +104,13 @@
             </div>
             <div class="chip-row-label">감정</div>
             <div class="mb-2">
-                <v-chip v-for="t in taxonomy.emotion" :key="'me-' + t.ko" class="ma-1"
+                <v-chip v-for="t in visibleEmotionTags" :key="'me-' + t.ko" class="ma-1"
                     :color="selectedEmotion.includes(t.ko) ? 'primary' : undefined"
                     @click="toggleEmotion(t.ko)">{{ t.ko }}</v-chip>
             </div>
             <div class="chip-row-label">상황</div>
             <div class="mb-2">
-                <v-chip v-for="t in taxonomy.situation" :key="'ms-' + t.ko" class="ma-1"
+                <v-chip v-for="t in visibleSituationTags" :key="'ms-' + t.ko" class="ma-1"
                     :color="selectedSituation.includes(t.ko) ? 'primary' : undefined"
                     @click="toggleSituation(t.ko)">{{ t.ko }}</v-chip>
             </div>
@@ -252,6 +254,23 @@ const filteredImages = computed(() => {
 
 const activeFilterCount = computed(() => selectedEmotion.value.length + selectedSituation.value.length);
 
+const emotionCounts = computed(() => {
+    const counts = {};
+    images.value.forEach(img => {
+        (img.emotion || []).forEach(e => { counts[e] = (counts[e] || 0) + 1; });
+    });
+    return counts;
+});
+const situationCounts = computed(() => {
+    const counts = {};
+    images.value.forEach(img => {
+        (img.situation || []).forEach(s => { counts[s] = (counts[s] || 0) + 1; });
+    });
+    return counts;
+});
+const visibleEmotionTags = computed(() => taxonomy.value.emotion.filter(t => emotionCounts.value[t.ko] > 0));
+const visibleSituationTags = computed(() => taxonomy.value.situation.filter(t => situationCounts.value[t.ko] > 0));
+
 const toggleEmotion = (tag) => {
     selectedEmotion.value = selectedEmotion.value.includes(tag)
         ? selectedEmotion.value.filter(t => t !== tag)
@@ -367,6 +386,20 @@ const deleteFromFav = (event, image) => {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     font-size: 0.5em;
+}
+
+.gif-badge {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 0.55em;
+    font-weight: bold;
+    letter-spacing: .03em;
+    padding: 1px 4px;
+    border-radius: 3px;
+    pointer-events: none;
 }
 
 .delete {
