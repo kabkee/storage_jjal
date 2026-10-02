@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { parseFilterQuery, buildFilterQuery } from './urlState'
+import { parseFilterQuery, buildFilterQuery, recentIds, orderByIds } from './urlState'
 
 const taxonomy = {
   emotion: [{ ko: '웃김' }, { ko: '놀람/충격' }],
@@ -9,7 +9,7 @@ const taxonomy = {
 describe('parseFilterQuery', () => {
   it('returns empty state for empty query', () => {
     expect(parseFilterQuery({}, taxonomy)).toEqual({
-      search: null, emotion: [], situation: [], excludeGif: null
+      search: null, emotion: [], situation: [], excludeGif: null, ids: []
     })
   })
 
@@ -17,7 +17,7 @@ describe('parseFilterQuery', () => {
     expect(parseFilterQuery({
       search: '카드', emotion: '웃김,놀람/충격', situation: '한턱/쏘기', nogif: '1'
     }, taxonomy)).toEqual({
-      search: '카드', emotion: ['웃김', '놀람/충격'], situation: ['한턱/쏘기'], excludeGif: true
+      search: '카드', emotion: ['웃김', '놀람/충격'], situation: ['한턱/쏘기'], excludeGif: true, ids: []
     })
   })
 
@@ -46,7 +46,34 @@ describe('buildFilterQuery', () => {
   })
 
   it('round-trips through parseFilterQuery', () => {
-    const state = { search: '카드', emotion: ['놀람/충격'], situation: ['한턱/쏘기', '인사'], excludeGif: true }
+    const state = { search: '카드', emotion: ['놀람/충격'], situation: ['한턱/쏘기', '인사'], excludeGif: true, ids: ['311', '9'] }
     expect(parseFilterQuery(buildFilterQuery(state), taxonomy)).toEqual(state)
+  })
+})
+
+describe('ids', () => {
+  it('parses ids keeping order, dropping junk and duplicates', () => {
+    expect(parseFilterQuery({ ids: '311, 9,abc,,311,-1' }, taxonomy).ids).toEqual(['311', '9'])
+  })
+
+  it('builds ids param only when non-empty', () => {
+    expect(buildFilterQuery({ ids: [] })).toEqual({})
+    expect(buildFilterQuery({ ids: ['309', '310'] })).toEqual({ ids: '309,310' })
+  })
+})
+
+describe('recentIds', () => {
+  const images = [{ id: '9' }, { id: '311' }, { id: '100' }, { id: '310' }]
+
+  it('picks the N largest ids numerically (not as strings)', () => {
+    expect(recentIds(images, 2)).toEqual(['311', '310'])
+    expect(recentIds(images, 10)).toEqual(['311', '310', '100', '9'])
+  })
+})
+
+describe('orderByIds', () => {
+  it('returns images in the order of ids, skipping unknown ids', () => {
+    const images = [{ id: '1' }, { id: '2' }, { id: '3' }]
+    expect(orderByIds(images, ['3', '99', '1']).map(i => i.id)).toEqual(['3', '1'])
   })
 })

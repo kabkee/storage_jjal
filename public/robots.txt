@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jjal-kabkee.d271z96h7lorpb.amplifyapp.com/sitemap.xml

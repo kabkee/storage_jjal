@@ -11,6 +11,12 @@
                                     <v-icon color="gray">mdi-magnify</v-icon>
                                 </template>
                             </v-text-field>
+                            <v-btn :variant="selectMode ? 'flat' : 'outlined'" :color="selectMode ? 'primary' : undefined"
+                                :aria-label="selectMode ? '선택 끝' : '골라서 공유'"
+                                @click="selectMode ? exitSelectMode() : startSelectMode()">
+                                <v-icon :start="!isMobileCustom" icon="mdi-share-variant"></v-icon>
+                                <span v-if="!isMobileCustom">{{ selectMode ? '선택 끝' : '골라서 공유' }}</span>
+                            </v-btn>
                             <v-btn v-if="isMobileCustom" variant="outlined" @click="showFilterSheet = true">
                                 필터
                                 <v-badge v-if="activeFilterCount > 0" :content="activeFilterCount" color="primary"
@@ -59,6 +65,13 @@
             </div>
 
             <v-row v-if='!isShowFav' no-gutters>
+                <v-alert v-if="sharedIds.length" type="info" variant="tonal" density="compact" class="mx-2 mb-2 w-100"
+                    icon="mdi-gift-outline">
+                    <div class="d-flex align-center justify-space-between flex-wrap ga-2">
+                        <span>공유된 짤 <b>{{ sharedIds.length }}</b>개를 보고 있어요</span>
+                        <v-btn size="small" variant="outlined" @click="clearShared()">전체 보기</v-btn>
+                    </div>
+                </v-alert>
                 <div class="d-flex align-center justify-space-between w-100 pr-4">
                     <div class="mr-4 pl-2">
                         총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤
@@ -70,10 +83,14 @@
                 </div>
                 <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in filteredImages' :key="img?.file">
-                        <div class="image-container" :data-file="img.file">
+                        <div class="image-container" :class="{ 'is-selected': selectMode && selectedIds.includes(img.id) }"
+                            :data-file="img.file">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"
-                                @click="copyImageToClipboard(img)"></v-img>
+                                @click="onImageClick(img)"></v-img>
+                            <div v-if="selectMode" class="select-mark">
+                                <v-icon size="18" :icon="selectedIds.includes(img.id) ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline'"></v-icon>
+                            </div>
                             <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
                             <div class="hover-text">{{ img.name }}</div>
                         </div>
@@ -120,6 +137,22 @@
         </v-sheet>
     </v-bottom-sheet>
 
+    <div v-if="selectMode" class="select-bar elevation-8">
+        <div class="d-flex align-center flex-wrap ga-2 justify-center">
+            <span class="text-no-wrap mr-2"><b>{{ selectedIds.length }}</b>개 선택</span>
+            <div class="d-flex align-center ga-1">
+                <span class="text-caption text-no-wrap">최근 추가</span>
+                <input v-model.number="recentCount" type="number" min="1" max="50" class="recent-count" />
+                <span class="text-caption">개</span>
+                <v-btn size="small" variant="tonal" @click="selectRecent()">선택</v-btn>
+            </div>
+            <v-btn size="small" variant="text" :disabled="!selectedIds.length" @click="selectedIds = []">선택 해제</v-btn>
+            <v-btn size="small" color="primary" :disabled="!selectedIds.length" @click="copyShareLink()">
+                <v-icon start icon="mdi-link-variant"></v-icon>링크 복사
+            </v-btn>
+        </div>
+    </div>
+
     <AppSnackbars ref="appSnackbars" />
 </template>
 
@@ -128,7 +161,7 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
 import { matchesSearch, matchesFacetFilters } from '@/utils/imageFilter';
-import { parseFilterQuery, buildFilterQuery } from '@/utils/urlState';
+import { parseFilterQuery, buildFilterQuery, recentIds, orderByIds } from '@/utils/urlState';
 
 const { width } = useDisplay();
 const isMobileCustom = computed(() => width.value <= 1024);
@@ -143,6 +176,12 @@ const isShowFav = ref(false);
 const appSnackbars = ref(null);
 const excludeGif = ref(null);
 const showFilterSheet = ref(false);
+// 공유 링크(#/?ids=...)로 들어왔을 때 보여줄 짤 id 목록 (URL과 동기화)
+const sharedIds = ref([]);
+// 골라서 공유: 선택 모드에선 짤 클릭이 복사 대신 선택이 된다
+const selectMode = ref(false);
+const selectedIds = ref([]);
+const recentCount = ref(3);
 
 const route = useRoute();
 const router = useRouter();
@@ -219,13 +258,16 @@ const applyFilterQuery = (query, { initial = false } = {}) => {
     selectedSituation.value = parsed.situation;
     if (parsed.excludeGif !== null) excludeGif.value = parsed.excludeGif;
     else if (!initial) excludeGif.value = false;
+    sharedIds.value = parsed.ids;
+    if (parsed.ids.length) isShowFav.value = false;
 };
 
 const currentFilterQuery = () => buildFilterQuery({
     search: search.value,
     emotion: selectedEmotion.value,
     situation: selectedSituation.value,
-    excludeGif: excludeGif.value
+    excludeGif: excludeGif.value,
+    ids: sharedIds.value
 });
 
 const sameQuery = (a, b) => {
@@ -234,7 +276,7 @@ const sameQuery = (a, b) => {
 };
 
 // 화면 상태 -> URL (검색어 입력/칩 클릭/GIF 스위치 모두 반영, 히스토리는 쌓지 않음)
-watch([search, selectedEmotion, selectedSituation, excludeGif], () => {
+watch([search, selectedEmotion, selectedSituation, excludeGif, sharedIds], () => {
     if (!urlSyncReady.value) return;
     const query = currentFilterQuery();
     if (!sameQuery(query, route.query)) router.replace({ query });
@@ -264,13 +306,17 @@ const favImages = computed(() => {
 })
 
 const filteredImages = computed(() => {
-    let filtered = images.value.filter(img =>
+    const isShared = sharedIds.value.length > 0;
+    // 공유 링크면 고른 순서대로 그 짤만
+    const base = isShared ? orderByIds(images.value, sharedIds.value) : images.value;
+    let filtered = base.filter(img =>
         matchesFacetFilters(img, { emotion: selectedEmotion.value, situation: selectedSituation.value })
     );
     if (search.value) {
         filtered = filtered.filter(img => matchesSearch(img, search.value));
     }
-    if (excludeGif.value) {
+    // 공유받은 짤은 받는 사람의 'GIF 제외' 설정 때문에 숨겨지지 않게 한다
+    if (excludeGif.value && !isShared) {
         filtered = filtered.filter(img => img.file.indexOf('gif') == -1);
     }
     return filtered;
@@ -308,6 +354,41 @@ const toggleSituation = (tag) => {
 const clearFilters = () => {
     selectedEmotion.value = [];
     selectedSituation.value = [];
+};
+
+const clearShared = () => {
+    sharedIds.value = [];
+};
+
+const startSelectMode = () => {
+    selectMode.value = true;
+    isShowFav.value = false;
+    // 공유받은 화면에서 시작하면 그 짤들을 미리 골라 둔다 (일부 빼고 다시 공유하기 쉽게)
+    selectedIds.value = [...sharedIds.value];
+};
+const exitSelectMode = () => {
+    selectMode.value = false;
+    selectedIds.value = [];
+};
+const onImageClick = (img) => {
+    if (!selectMode.value) return copyImageToClipboard(img);
+    selectedIds.value = selectedIds.value.includes(img.id)
+        ? selectedIds.value.filter(id => id !== img.id)
+        : [...selectedIds.value, img.id];
+};
+const selectRecent = () => {
+    const count = Math.min(Math.max(Number(recentCount.value) || 3, 1), 50);
+    selectedIds.value = recentIds(images.value, count);
+};
+const copyShareLink = async () => {
+    const url = `${location.origin}${location.pathname}#/?ids=${selectedIds.value.join(',')}`;
+    try {
+        await navigator.clipboard.writeText(url);
+        appSnackbars.value.showSnackbar({ message: `짤 ${selectedIds.value.length}개 공유 링크를 복사했어요.` });
+    } catch (e) {
+        console.error('링크 복사 실패:', e);
+        appSnackbars.value.showSnackbar({ message: `복사에 실패했어요. 직접 복사하세요: ${url}`, type: 'warning' });
+    }
 };
 
 const addFavImage = (imageKey) => {
@@ -440,6 +521,48 @@ const deleteFromFav = (event, image) => {
     width: 25px;
     height: 25px;
     cursor: pointer;
+}
+
+.select-mark {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 50%;
+    line-height: 0;
+    pointer-events: none;
+}
+
+.image-container.is-selected {
+    outline: 3px solid rgb(var(--v-theme-primary));
+    outline-offset: -3px;
+}
+
+.image-container.is-selected .select-mark {
+    color: rgb(var(--v-theme-primary));
+    background-color: white;
+}
+
+.select-bar {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    background: rgb(var(--v-theme-surface));
+    border-radius: 12px;
+    padding: 10px 16px;
+}
+
+.recent-count {
+    width: 44px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 4px;
+    text-align: center;
 }
 
 .image-container:hover .delete,
