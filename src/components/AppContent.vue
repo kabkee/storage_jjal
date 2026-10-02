@@ -128,6 +128,7 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
 import { matchesSearch, matchesFacetFilters } from '@/utils/imageFilter';
+import { parseFilterQuery, buildFilterQuery } from '@/utils/urlState';
 
 const { width } = useDisplay();
 const isMobileCustom = computed(() => width.value <= 1024);
@@ -145,7 +146,8 @@ const showFilterSheet = ref(false);
 
 const route = useRoute();
 const router = useRouter();
-const searchQuery = ref(route.query.search || null);
+// 데이터/taxonomy 로딩 전에는 URL을 덮어쓰지 않도록 막는 플래그
+const urlSyncReady = ref(false);
 
 const withLeadingSlash = (p) => (p && !p.startsWith('/') && !p.startsWith('http')) ? `/${p}` : p;
 
@@ -203,24 +205,46 @@ onMounted(async () => {
     const stored = localStorage.getItem('excludeGif');
     excludeGif.value = stored ? stored === '1' : false;
 
-    search.value = searchQuery.value;
+    applyFilterQuery(route.query, { initial: true });
+    urlSyncReady.value = true;
 });
 
-watch(searchQuery, (newQuery) => {
-    router.replace({
-        query: { search: newQuery || undefined }
-    });
+// URL(#/?search=카드&emotion=웃김,황당&situation=한턱/쏘기&nogif=1) -> 화면 상태
+// initial: 첫 진입 때만 nogif가 없으면 저장된(localStorage) GIF 설정을 유지한다.
+// 그 이후엔 상태가 항상 URL에 반영돼 있으므로 nogif가 없으면 꺼진 것이다 (뒤로가기 대응).
+const applyFilterQuery = (query, { initial = false } = {}) => {
+    const parsed = parseFilterQuery(query, taxonomy.value);
+    search.value = parsed.search;
+    selectedEmotion.value = parsed.emotion;
+    selectedSituation.value = parsed.situation;
+    if (parsed.excludeGif !== null) excludeGif.value = parsed.excludeGif;
+    else if (!initial) excludeGif.value = false;
+};
+
+const currentFilterQuery = () => buildFilterQuery({
+    search: search.value,
+    emotion: selectedEmotion.value,
+    situation: selectedSituation.value,
+    excludeGif: excludeGif.value
 });
 
-watch(
-    () => route.query.search,
-    (newSearch) => {
-        if (newSearch !== searchQuery.value) {
-            searchQuery.value = newSearch || null;
-            search.value = searchQuery.value;
-        }
-    }
-);
+const sameQuery = (a, b) => {
+    const norm = q => JSON.stringify(Object.keys(q).sort().map(k => [k, String(q[k]).normalize('NFC')]));
+    return norm(a) === norm(b);
+};
+
+// 화면 상태 -> URL (검색어 입력/칩 클릭/GIF 스위치 모두 반영, 히스토리는 쌓지 않음)
+watch([search, selectedEmotion, selectedSituation, excludeGif], () => {
+    if (!urlSyncReady.value) return;
+    const query = currentFilterQuery();
+    if (!sameQuery(query, route.query)) router.replace({ query });
+});
+
+// 주소창 직접 수정/뒤로가기 -> 화면 상태
+watch(() => route.query, (query) => {
+    if (!urlSyncReady.value || sameQuery(currentFilterQuery(), query)) return;
+    applyFilterQuery(query);
+});
 
 watch(favImageIdxs, (newValue) => {
     newValue && Array.isArray(newValue) && localStorage.setItem('favImageIdxs', newValue.join(','));
