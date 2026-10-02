@@ -2219,5 +2219,33 @@
             "자랑"
         ],
         "tag": "흡족, Satisfied, 미소, Smirk, 배우, Actor"
+    },
+    {
+        "id": "309",
+        "name": "괜찮아요? 많이 놀랐죠?",
+        "file": "assets/jpg/3db49155-82e9-4634-b767-44a20a0fc82d.jpeg",
+        "thumb": "assets/thumbs/3db49155-82e9-4634-b767-44a20a0fc82d.webp",
+        "emotion": [
+            "놀람/충격"
+        ],
+        "situation": [
+            "위로/공감",
+            "질문/궁금"
+        ],
+        "tag": "괜찮아요, Are you okay, 많이 놀랐죠, Surprised, 걱정, Worried, 드라마, Drama, 배우, Actor"
+    },
+    {
+        "id": "311",
+        "name": "카드 결제",
+        "file": "assets/jpg/125efadf-e31c-4f98-a3e6-b1e635c55cb2.jpg",
+        "thumb": "assets/thumbs/125efadf-e31c-4f98-a3e6-b1e635c55cb2.webp",
+        "emotion": [
+            "자신감/뿌듯",
+            "웃김"
+        ],
+        "situation": [
+            "한턱/쏘기"
+        ],
+        "tag": "카드, Card, 결제, Payment, 카드긁기, Card swipe, 플렉스, Flex, 애니, Anime"
     }
 ]
