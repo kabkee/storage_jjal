@@ -17,7 +17,10 @@ const EXT_MAP = {
     '.webp': { folder: 'webp', json: 'webp.json' },
 };
 
-function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag }) {
+// 'YYYY-MM-DD' (로컬 날짜). '최근 추가' 판단용 — id는 옛 데이터 중복 정리로 재번호된 게 있어 순서를 믿을 수 없다.
+const today = () => new Date().toLocaleDateString('sv-SE');
+
+function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag, added = today() }) {
     const normalize = (s) => (s || '').normalize('NFC');
     return {
         id: String(id),
@@ -26,7 +29,8 @@ function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag }) {
         thumb: `assets/thumbs/${uuid}.webp`,
         emotion: (emotion || []).map(normalize),
         situation: (situation || []).map(normalize),
-        tag: normalize(tag)
+        tag: normalize(tag),
+        added
     };
 }
 

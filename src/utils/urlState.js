@@ -51,12 +51,14 @@ export function buildFilterQuery({ search, emotion, situation, excludeGif, ids }
   return query
 }
 
-// id는 전역 최대값+1로 채번되므로 큰 id = 최근 추가. 문자열 비교('9' > '311') 함정 주의.
+// 최근 추가 = added(YYYY-MM-DD) 최신순, 같은 날(또는 둘 다 없음)이면 id 큰 순.
+// id만으론 안 된다: 옛 데이터 중복 id 정리 때 오래된 짤이 큰 번호(312~329)를 받았다.
+// 문자열 비교('9' > '311') 함정 때문에 id는 숫자로 비교한다.
 export function recentIds(images, count) {
-  return images
-    .map(img => String(img.id))
-    .sort((a, b) => Number(b) - Number(a))
+  return [...images]
+    .sort((a, b) => (b.added || '').localeCompare(a.added || '') || Number(b.id) - Number(a.id))
     .slice(0, count)
+    .map(img => String(img.id))
 }
 
 export function orderByIds(images, ids) {

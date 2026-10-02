@@ -9,14 +9,12 @@
                                 class="flex-grow-1">
                                 <template v-slot:append>
                                     <v-icon color="gray">mdi-magnify</v-icon>
+                                    <v-icon class="ml-2 share-toggle" :color="selectMode ? 'primary' : 'gray'"
+                                        role="button" tabindex="0" :aria-label="selectMode ? '선택 끝' : '골라서 공유'"
+                                        :title="selectMode ? '선택 끝' : '골라서 공유'"
+                                        @click="toggleSelectMode()" @keydown.enter="toggleSelectMode()">mdi-share-variant</v-icon>
                                 </template>
                             </v-text-field>
-                            <v-btn :variant="selectMode ? 'flat' : 'outlined'" :color="selectMode ? 'primary' : undefined"
-                                :aria-label="selectMode ? '선택 끝' : '골라서 공유'"
-                                @click="selectMode ? exitSelectMode() : startSelectMode()">
-                                <v-icon :start="!isMobileCustom" icon="mdi-share-variant"></v-icon>
-                                <span v-if="!isMobileCustom">{{ selectMode ? '선택 끝' : '골라서 공유' }}</span>
-                            </v-btn>
                             <v-btn v-if="isMobileCustom" variant="outlined" @click="showFilterSheet = true">
                                 필터
                                 <v-badge v-if="activeFilterCount > 0" :content="activeFilterCount" color="primary"
@@ -150,6 +148,7 @@
             <v-btn size="small" color="primary" :disabled="!selectedIds.length" @click="copyShareLink()">
                 <v-icon start icon="mdi-link-variant"></v-icon>링크 복사
             </v-btn>
+            <v-btn size="small" variant="text" icon="mdi-close" aria-label="선택 끝" @click="exitSelectMode()"></v-btn>
         </div>
     </div>
 
@@ -370,6 +369,7 @@ const exitSelectMode = () => {
     selectMode.value = false;
     selectedIds.value = [];
 };
+const toggleSelectMode = () => (selectMode.value ? exitSelectMode() : startSelectMode());
 const onImageClick = (img) => {
     if (!selectMode.value) return copyImageToClipboard(img);
     selectedIds.value = selectedIds.value.includes(img.id)
@@ -381,7 +381,10 @@ const selectRecent = () => {
     selectedIds.value = recentIds(images.value, count);
 };
 const copyShareLink = async () => {
-    const url = `${location.origin}${location.pathname}#/?ids=${selectedIds.value.join(',')}`;
+    // 1개면 그 짤이 미리보기에 뜨는 정적 페이지(/s/<id>.html, 빌드 때 생성), 여러 개면 SPA 링크
+    const url = selectedIds.value.length === 1
+        ? `${location.origin}/s/${selectedIds.value[0]}.html`
+        : `${location.origin}${location.pathname}#/?ids=${selectedIds.value.join(',')}`;
     try {
         await navigator.clipboard.writeText(url);
         appSnackbars.value.showSnackbar({ message: `짤 ${selectedIds.value.length}개 공유 링크를 복사했어요.` });
@@ -520,6 +523,10 @@ const deleteFromFav = (event, image) => {
     border-radius: 50%;
     width: 25px;
     height: 25px;
+    cursor: pointer;
+}
+
+.share-toggle {
     cursor: pointer;
 }
 

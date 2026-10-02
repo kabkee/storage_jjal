@@ -16,6 +16,8 @@ assert.strictEqual(record.file, 'assets/jpg/abc-123.jpg', 'file path must be UUI
 assert.strictEqual(record.thumb, 'assets/thumbs/abc-123.webp', 'thumb path must be UUID.webp under thumbs/');
 assert.deepStrictEqual(record.emotion, ['웃김']);
 assert.deepStrictEqual(record.situation, ['거절/부정']);
+assert.match(record.added, /^\d{4}-\d{2}-\d{2}$/, 'added must default to today as YYYY-MM-DD');
+assert.strictEqual(buildRecord({ id: 1, uuid: 'y', ext: '.png', folder: 'png', added: '2026-10-02' }).added, '2026-10-02');
 
 const empty = buildRecord({ id: 1, uuid: 'x', ext: '.png', folder: 'png', name: '', emotion: undefined, situation: undefined, tag: undefined });
 assert.deepStrictEqual(empty.emotion, [], 'missing emotion defaults to empty array, not undefined');

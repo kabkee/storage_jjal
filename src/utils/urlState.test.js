@@ -69,6 +69,14 @@ describe('recentIds', () => {
     expect(recentIds(images, 2)).toEqual(['311', '310'])
     expect(recentIds(images, 10)).toEqual(['311', '310', '100', '9'])
   })
+
+  it('prefers added date over id (renumbered old images have big ids but no date)', () => {
+    const mixed = [
+      { id: '329' }, { id: '312' },
+      { id: '309', added: '2026-10-02' }, { id: '311', added: '2026-10-02' }, { id: '200', added: '2026-09-01' }
+    ]
+    expect(recentIds(mixed, 3)).toEqual(['311', '309', '200'])
+  })
 })
 
 describe('orderByIds', () => {

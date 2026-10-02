@@ -1052,7 +1052,7 @@
         "thumb": "assets/thumbs/45ce166d-20a9-4afc-b92d-ea0554adb78c.webp"
     },
     {
-        "id": "282",
+        "id": "323",
         "name": "아아아아아아",
         "file": "assets/png/d703d824-fb30-485c-8d9f-eb08bab9161c.png",
         "tag": "png, 우남쌩, 아, crying, pain, anguish, grief, manga, anime, sound effect, expression, anguish, 아, crying, pain, anguish, grief, manga, anime, sound effect, expression",
@@ -1067,7 +1067,7 @@
         "thumb": "assets/thumbs/d703d824-fb30-485c-8d9f-eb08bab9161c.webp"
     },
     {
-        "id": "283",
+        "id": "324",
         "name": "애인이되어줄래물론장애인",
         "file": "assets/png/62028f53-0fa3-4c38-8c2c-60a3a1c84f95.png",
         "tag": "png, 우남쌩, 애인... 되어줄래?, 좋... 좋아!!, 물론 장애인, Love proposal, Excited, Kicking, Comic strip, Korean meme, Funny comic, Absurdity, Korean, English",
@@ -1083,7 +1083,7 @@
         "thumb": "assets/thumbs/62028f53-0fa3-4c38-8c2c-60a3a1c84f95.webp"
     },
     {
-        "id": "284",
+        "id": "325",
         "name": "어휴저관종또왔네",
         "file": "assets/png/2f2e125e-f01d-4fdb-96f6-5c5a6116517c.png",
         "tag": "png, 우남쌩, Drawing, Korean text, Funny face, Shocked, Annoyance, Oh no, Oh my god, It's here again, meme, cartoon",
@@ -1146,7 +1146,7 @@
         "thumb": "assets/thumbs/ae9cf775-2a4e-4ef5-95d3-50313cbeb49b.webp"
     },
     {
-        "id": "289",
+        "id": "326",
         "name": "뭐지",
         "file": "assets/png/8db715d5-cbdb-451f-befe-9df3fb9117b6.png",
         "tag": "png, 우남쌩, 고양이, 귀여움, 놀람, 밈, 펫, 고양이 밈, Scottish Fold, Cat, Cute, Surprise, Meme, Pet, Cat Meme",
@@ -1254,7 +1254,7 @@
         "thumb": "assets/thumbs/3c04631b-d374-4085-90f4-3c1acebab89d.webp"
     },
     {
-        "id": "295",
+        "id": "327",
         "name": "나너무많은일이있었어힘들다진짜",
         "file": "assets/png/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.png",
         "tag": "png, Roronoa Zoro, ONE PIECE, manga panel, struggle, exhaustion, determination, pain, sweat, intense, hardship, 롤로노아 조로, 원피스, 만화 장면, 고군분투, 탈진, 결의, 고통, 땀, 강렬한, 어려움",
@@ -1270,7 +1270,7 @@
         "thumb": "assets/thumbs/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.webp"
     },
     {
-        "id": "295",
+        "id": "328",
         "name": "우리식당정상영업합니다",
         "file": "assets/png/33af1d26-d1a5-4497-8185-751a34da78dc.png",
         "tag": "png, 건물 붕괴, 재난, 재해, 철거, 폐허, 재건, 재개, 안전, 재난 대비, 복구, Building collapse, Disaster, Calamity, Demolition, Ruins, Reconstruction, Reopening, Safety, Disaster preparedness, Recovery",
@@ -1285,7 +1285,7 @@
         "thumb": "assets/thumbs/33af1d26-d1a5-4497-8185-751a34da78dc.webp"
     },
     {
-        "id": "295",
+        "id": "329",
         "name": "좋아쒀",
         "file": "assets/png/4d443886-8283-4268-834c-f2417d8feb06.png",
         "tag": "png, 놀라운 토요일, 황제성, 권혁수, 기세로 승부하는 경영자들, 좋아, 쭙, tvN, Korean variety show, funny faces, meme, reaction",
@@ -1370,6 +1370,7 @@
         "situation": [
             "신세한탄"
         ],
-        "tag": "피곤, Tired, 여우, Fox, 티베트여우, Tibetan fox, 잠, Sleep, 내셔널지오그래픽, National Geographic"
+        "tag": "피곤, Tired, 여우, Fox, 티베트여우, Tibetan fox, 잠, Sleep, 내셔널지오그래픽, National Geographic",
+        "added": "2026-10-02"
     }
 ]

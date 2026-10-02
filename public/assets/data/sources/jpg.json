@@ -2013,7 +2013,7 @@
         "thumb": "assets/thumbs/cc8b1a84-f045-4b25-8388-f34a251d12c7.webp"
     },
     {
-        "id": "281",
+        "id": "316",
         "name": "가지마",
         "file": "assets/jpg/90f47c28-1a14-461a-a39d-c3ed37c831f4.jpg",
         "tag": "jpg, 고양이, 웃음, 밈, 귀여운, 오렌지색 고양이, 짤, paw, high five, Cat, funny, meme, cute, orange cat, ginger cat, funny cat",
@@ -2028,7 +2028,7 @@
         "thumb": "assets/thumbs/90f47c28-1a14-461a-a39d-c3ed37c831f4.webp"
     },
     {
-        "id": "281",
+        "id": "317",
         "name": "무슨샴프써",
         "file": "assets/jpg/125637cb-1b90-4721-9a76-5f591c108cda.jpg",
         "tag": "jpg, I've been meaning to ask you, What is it?, What shampoo do you use?, Captain America, Marvel, Meme, Korean, English, Humour",
@@ -2044,7 +2044,7 @@
         "thumb": "assets/thumbs/125637cb-1b90-4721-9a76-5f591c108cda.webp"
     },
     {
-        "id": "281",
+        "id": "318",
         "name": "미안하다",
         "file": "assets/jpg/ef9e4c6f-e19f-4779-9a77-40debfeea4fb.jpg",
         "tag": "jpg, 죄송합니다, Sorry, Korean drama, Man, Close-up, Dialogue, Bald, Grateful, Memes",
@@ -2059,7 +2059,7 @@
         "thumb": "assets/thumbs/ef9e4c6f-e19f-4779-9a77-40debfeea4fb.webp"
     },
     {
-        "id": "281",
+        "id": "319",
         "name": "사자야저거사자",
         "file": "assets/jpg/0705ccc0-e10d-4448-a61f-33bdbd3f156e.jpg",
         "tag": "jpg, 사자, 맹수, 초원, 아기 사자, 친구, 포옹, 웃음, 한국어 텍스트, \"야 저거 사자\", 사자(2) / 사자, Lion cubs, Wild animal, Grassland, Friendship, Hug, Cute, Korean text, \"Hey, look at that lion\"",
@@ -2075,7 +2075,7 @@
         "thumb": "assets/thumbs/0705ccc0-e10d-4448-a61f-33bdbd3f156e.webp"
     },
     {
-        "id": "281",
+        "id": "320",
         "name": "자소서거짓말_직무내용거짓말",
         "file": "assets/jpg/b8141690-3fa3-443a-8701-48add60d2a17.jpg",
         "tag": "jpg, Meme, Dramatic, Gun, Threat, Lie, Resume, Job, Corporate, Cover-up, Deception, 밈, 드라마틱, 총, 위협, 거짓말, 이력서, 직업, 기업, 은폐, 속임수",
@@ -2091,7 +2091,7 @@
         "thumb": "assets/thumbs/b8141690-3fa3-443a-8701-48add60d2a17.webp"
     },
     {
-        "id": "281",
+        "id": "321",
         "name": "장군님눈좀붙이시지요",
         "file": "assets/jpg/b3dde318-d26e-498b-ac8f-f9ff62f1b725.jpg",
         "tag": "jpg, 장군, 곰인형, 횃불, 밤, 장난감, 낡음, General, teddy bear, torch, night, toys, old",
@@ -2107,7 +2107,7 @@
         "thumb": "assets/thumbs/b3dde318-d26e-498b-ac8f-f9ff62f1b725.webp"
     },
     {
-        "id": "281",
+        "id": "322",
         "name": "책임을물을것이야",
         "file": "assets/jpg/24b275f1-e97b-4952-aeb7-59a8323f6e7f.jpg",
         "tag": "jpg, 강아지, 만화, 사무실, 책임, 서류, 앙, Dog, Comic, Office, Responsibility, Document, Yum",
@@ -2232,7 +2232,8 @@
             "위로/공감",
             "질문/궁금"
         ],
-        "tag": "괜찮아요, Are you okay, 많이 놀랐죠, Surprised, 걱정, Worried, 드라마, Drama, 배우, Actor"
+        "tag": "괜찮아요, Are you okay, 많이 놀랐죠, Surprised, 걱정, Worried, 드라마, Drama, 배우, Actor",
+        "added": "2026-10-02"
     },
     {
         "id": "311",
@@ -2246,6 +2247,7 @@
         "situation": [
             "한턱/쏘기"
         ],
-        "tag": "카드, Card, 결제, Payment, 카드긁기, Card swipe, 플렉스, Flex, 애니, Anime"
+        "tag": "카드, Card, 결제, Payment, 카드긁기, Card swipe, 플렉스, Flex, 애니, Anime",
+        "added": "2026-10-02"
     }
 ]
