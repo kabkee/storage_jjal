@@ -45,12 +45,12 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 
 ## URL 파라미터 (공유 링크)
 
-hash 라우터라 `#/?...` 형태. 상태↔URL 변환은 `src/utils/urlState.js`(테스트 있음).
+history 라우터라 `/?...` 형태(2026-10-02 해시 라우터에서 전환 — 카카오톡이 `#` 들어간 링크는 미리보기를 안 만든다. 예전 `#/?...` 링크는 `src/router/index.js` 가 해시 없는 주소로 바꿔 준다). 상태↔URL 변환은 `src/utils/urlState.js`(테스트 있음).
 
 - `search=카드` 검색어 / `emotion=웃김,황당` · `situation=한턱/쏘기` 칩 필터(쉼표 구분, taxonomy에 없는 값은 무시) / `nogif=1` GIF 제외
 - `ids=309,310,311` 골라서 공유한 짤만 그 순서대로 표시. 검색창의 공유 아이콘 → 선택 모드 → "링크 복사". "최근 추가 N개"는 id 큰 순(= 최근 추가).
-- 1개만 골라 공유하면 `/s/<id>.html` 링크가 복사된다. `yarn build` 마지막에 `generate-share-pages.js` 가 짤마다 그 짤을 og:image 로 넣은 정적 페이지를 `dist/s/`에 만들고, 열면 `/#/?ids=<id>` 로 넘어간다. **Amplify 재작성 규칙의 예외 확장자에 `html|xml` 이 있어야 동작**(없으면 index.html 로 덮임, 2026-10-02 추가).
-- 링크 미리보기(OG 태그)는 `index.html`에 정적으로 있음. 크롤러는 `#` 뒤를 안 읽으므로 `#` 링크(검색·필터·여러 개 공유)는 모두 같은 대표 카드(`public/og-image.jpg`, 1200x630)를 쓴다.
+- 1개만 골라 공유하면 `/s/<id>.html` 링크가 복사된다. `yarn build` 마지막에 `generate-share-pages.js` 가 짤마다 그 짤을 og:image 로 넣은 정적 페이지를 `dist/s/`에 만들고, 열면 `/?ids=<id>` 로 넘어간다. **Amplify 재작성 규칙의 예외 확장자에 `html|xml` 이 있어야 동작**(없으면 index.html 로 덮임, 2026-10-02 추가).
+- 링크 미리보기(OG 태그)는 `index.html`에 정적으로 있음. 검색·필터·여러 개 공유 링크는 모두 같은 대표 카드(`public/og-image.jpg`, 1200x630)를 쓴다.
 
 ## 알아둘 것
 

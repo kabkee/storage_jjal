@@ -175,7 +175,7 @@ const isShowFav = ref(false);
 const appSnackbars = ref(null);
 const excludeGif = ref(null);
 const showFilterSheet = ref(false);
-// 공유 링크(#/?ids=...)로 들어왔을 때 보여줄 짤 id 목록 (URL과 동기화)
+// 공유 링크(/?ids=...)로 들어왔을 때 보여줄 짤 id 목록 (URL과 동기화)
 const sharedIds = ref([]);
 // 골라서 공유: 선택 모드에선 짤 클릭이 복사 대신 선택이 된다
 const selectMode = ref(false);
@@ -247,7 +247,7 @@ onMounted(async () => {
     urlSyncReady.value = true;
 });
 
-// URL(#/?search=카드&emotion=웃김,황당&situation=한턱/쏘기&nogif=1) -> 화면 상태
+// URL(/?search=카드&emotion=웃김,황당&situation=한턱/쏘기&nogif=1) -> 화면 상태
 // initial: 첫 진입 때만 nogif가 없으면 저장된(localStorage) GIF 설정을 유지한다.
 // 그 이후엔 상태가 항상 URL에 반영돼 있으므로 nogif가 없으면 꺼진 것이다 (뒤로가기 대응).
 const applyFilterQuery = (query, { initial = false } = {}) => {
@@ -384,7 +384,7 @@ const copyShareLink = async () => {
     // 1개면 그 짤이 미리보기에 뜨는 정적 페이지(/s/<id>.html, 빌드 때 생성), 여러 개면 SPA 링크
     const url = selectedIds.value.length === 1
         ? `${location.origin}/s/${selectedIds.value[0]}.html`
-        : `${location.origin}${location.pathname}#/?ids=${selectedIds.value.join(',')}`;
+        : `${location.origin}/?ids=${selectedIds.value.join(',')}`;
     try {
         await navigator.clipboard.writeText(url);
         appSnackbars.value.showSnackbar({ message: `짤 ${selectedIds.value.length}개 공유 링크를 복사했어요.` });

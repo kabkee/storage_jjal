@@ -1,6 +1,6 @@
 // 짤 1개 공유용 정적 페이지 생성: dist/s/<id>.html
 // 미리보기 봇은 #뒤를 못 읽고 JS도 실행하지 않으므로, 짤마다 OG 태그가 박힌 HTML을 빌드 때 만들어 둔다.
-// 사람이 열면 바로 SPA(/#/?ids=<id>)로 넘어간다.
+// 사람이 열면 바로 SPA(/?ids=<id>)로 넘어간다.
 // 주의: Amplify 재작성 규칙의 예외 확장자에 html 이 있어야 이 파일이 index.html 로 덮이지 않는다.
 const fs = require('fs');
 const path = require('path');
@@ -21,7 +21,7 @@ function buildSharePage(img, siteUrl = SITE_URL) {
     const name = escapeHtml((img.name || SITE_NAME).normalize('NFC'));
     const imageUrl = `${siteUrl}/${String(img.file).replace(/^\//, '')}`;
     const pageUrl = `${siteUrl}/s/${id}.html`;
-    const appUrl = `/#/?ids=${id}`;
+    const appUrl = `/?ids=${id}`;
     return `<!DOCTYPE html>
 <html lang="ko">
 <head>
