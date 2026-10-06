@@ -409,6 +409,8 @@ const copyImageToClipboard = async (image) => {
     addFavImage(image.file);
 
     if (image.file.indexOf('gif') != -1) {
+        // 짤톡 확장 프로그램이 설치돼 있으면(<html data-jjaltok>) 더블클릭으로 바로 저장되므로 안내하지 않는다
+        if (document.documentElement.dataset.jjaltok) return;
         appSnackbars.value.showSnackbar({
             message: `안내 : "${image.name}" 를 Save As 로 다운 받으세요!!  `, type: 'warning'
         })
