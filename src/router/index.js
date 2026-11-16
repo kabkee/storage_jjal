@@ -21,6 +21,11 @@ const router = createRouter({
   routes,
 })
 
+// 로컬 관리 화면: dev 서버에서만 등록한다. 프로덕션 빌드에서는 import.meta.env.DEV 가 false 라 코드째 빠진다.
+if (import.meta.env.DEV) {
+  router.addRoute({ path: '/admin', component: () => import('@/admin/AdminPage.vue') })
+}
+
 // Workaround for https://github.com/vitejs/vite/issues/11804
 router.onError((err, to) => {
   if (err?.message?.includes?.('Failed to fetch dynamically imported module')) {

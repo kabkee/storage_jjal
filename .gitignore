@@ -30,3 +30,5 @@ public/assets/data/data.json
 
 # Superpowers brainstorm companion
 .superpowers/
+# 로컬 관리 화면: 등록 전 업로드 대기열
+/.admin-staging/
