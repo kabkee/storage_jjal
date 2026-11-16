@@ -1303,7 +1303,7 @@
     },
     {
         "id": "332",
-        "name": "마술 숙임수 국자 반전",
+        "name": "마술 속임수 국자 반전",
         "file": "assets/gif/f0fe19bc-4bd3-411f-8b70-d8f082c3315c.gif",
         "thumb": "assets/thumbs/f0fe19bc-4bd3-411f-8b70-d8f082c3315c.webp",
         "emotion": [
@@ -1313,7 +1313,7 @@
         "situation": [
             "놀리기/드립"
         ],
-        "tag": "마술, Magic, 마술사, Magician, 숙임수, Trick, 국자, Ladle, 반전, Twist, 주방, Kitchen, 곱슬머리, Long curly hair",
+        "tag": "마술, Magic, 마술사, Magician, 속임수, Trick, 국자, Ladle, 반전, Twist, 주방, Kitchen, 곱슬머리, Long curly hair",
         "added": "2026-11-16"
     }
 ]
