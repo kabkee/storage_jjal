@@ -1284,5 +1284,36 @@
             "한턱/쏘기"
         ],
         "tag": "카드, Card, 신용카드, Credit card, 결제, Payment, 한턱, Treat, 쏜다, I'll pay"
+    },
+    {
+        "id": "330",
+        "name": "이사간다",
+        "file": "assets/gif/0230c321-c86d-47bd-9e8b-c269380ad2b3.gif",
+        "thumb": "assets/thumbs/0230c321-c86d-47bd-9e8b-c269380ad2b3.webp",
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립",
+            "신세한탄"
+        ],
+        "tag": "이사, Moving, 이삿짐, Moving stuff, 자동차, Car, 짐, Luggage, 고속도로, Highway, 과적, Overloaded, 지붕, Roof",
+        "added": "2026-11-16"
+    },
+    {
+        "id": "332",
+        "name": "마술 숙임수 국자 반전",
+        "file": "assets/gif/f0fe19bc-4bd3-411f-8b70-d8f082c3315c.gif",
+        "thumb": "assets/thumbs/f0fe19bc-4bd3-411f-8b70-d8f082c3315c.webp",
+        "emotion": [
+            "웃김",
+            "황당"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ],
+        "tag": "마술, Magic, 마술사, Magician, 숙임수, Trick, 국자, Ladle, 반전, Twist, 주방, Kitchen, 곱슬머리, Long curly hair",
+        "added": "2026-11-16"
     }
 ]

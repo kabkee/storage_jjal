@@ -2249,5 +2249,19 @@
         ],
         "tag": "카드, Card, 결제, Payment, 카드긁기, Card swipe, 플렉스, Flex, 애니, Anime",
         "added": "2026-10-02"
+    },
+    {
+        "id": "331",
+        "name": "씰룩~ 씰룩~",
+        "file": "assets/jpg/0c758412-2f67-4ae1-8093-40cd8b167820.jpg",
+        "thumb": "assets/thumbs/0c758412-2f67-4ae1-8093-40cd8b167820.webp",
+        "emotion": [
+            "웃김"
+        ],
+        "situation": [
+            "놀리기/드립"
+        ],
+        "tag": "씰룩, Twitch, 웃참, Holding laughter, 웃음참기, Suppress laughter, 입꼬리, Smirk, 예능, Variety show, 남자, Man",
+        "added": "2026-11-16"
     }
 ]
