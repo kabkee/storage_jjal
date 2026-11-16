@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "yarn generate:data && vite",
-    "admin": "yarn generate:data && vite --port 3010 --strictPort",
+    "admin": "yarn generate:data && vite --port 3010 --strictPort --host ${JJAL_ADMIN_HOST:-127.0.0.1}",
     "preview": "vite preview",
     "test": "vitest run && yarn test:scripts",
     "test:scripts": "node public/assets/data/generate-thumbnail.smoketest.js && node public/assets/data/import-tagged-images.smoketest.js && node public/assets/data/generate-share-pages.smoketest.js",

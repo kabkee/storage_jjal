@@ -2,7 +2,11 @@
 
 Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS Amplify(`jjal_kabkee` 브랜치, push 시 자동 배포)로 서비스 중.
 
-## 로컬 관리 화면 (`yarn admin` → http://127.0.0.1:3010/admin)
+## 로컬 관리 화면 (http://100.64.25.50:3010/admin · Tailscale 전용)
+
+- 상시 실행: PM2 `storage-jjal-admin` (`JJAL_ADMIN_HOST=100.64.25.50 pm2 start yarn --name storage-jjal-admin --cwd <repo> -- admin`). 재시작은 `pm2 restart storage-jjal-admin`.
+- 🔴 관리 API 에는 인증이 없다. 그래서 **Tailscale IP 에만 바인딩**한다(127.0.0.1·LAN·0.0.0.0 에는 열지 않음). 오너는 외부에서 Tailscale 로만 접속한다(2026-11-16).
+- `yarn admin` 을 환경변수 없이 실행하면 127.0.0.1 에만 열린다. 서버 코드(`admin/server/*`)를 고치면 PM2 재시작이 필요하다(Vite 가 플러그인 모듈을 다시 읽지 않음).
 
 2026-11-16 추가. 짤 올리기·태그 확인/수정·배포를 브라우저에서 한다. **이 컴퓨터의 dev 서버에서만** 열린다(오너 결정: 온라인 관리 화면은 만들지 않음).
 
