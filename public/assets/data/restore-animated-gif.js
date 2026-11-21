@@ -3,7 +3,7 @@
 // 원본은 webp 전환 직전 커밋(e9a565f)의 git 기록에서 꺼낸다 — 다시 인코딩하지 않으므로 화질 손실 없음.
 //   node public/assets/data/restore-animated-gif.js            → 미리보기(무엇을 바꿀지 + 용량)
 //   node public/assets/data/restore-animated-gif.js --apply    → assets/gif/<uuid>.gif 생성 + sources 갱신 + 움짤 webp 삭제
-// 파일 이름은 지금 webp 와 같은 UUID 를 쓴다(옛 이름 중 yes.gif 같은 비 UUID 이름 30개도 UUID 로 통일).
+// 파일 이름은 지금 webp 의 이름을 그대로 쓴다(확장자만 .gif). 옛 짤 중엔 yes.gif 같은 UUID 가 아닌 영문 이름이 남아 있다(한글 없음, 동작엔 문제없음).
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');

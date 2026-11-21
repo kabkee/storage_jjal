@@ -173,23 +173,6 @@
         "animated": true
     },
     {
-        "id": "207",
-        "name": "선글라스 꼬마 예에",
-        "file": "assets/gif/yay-yes.gif",
-        "tag": "gif, Yeahhh, 예, child, 아이, dancing, 춤추는, sunglasses, 선글라스, confidence, 자신감, celebration, 축하, meme, 밈",
-        "category_1": "GIF",
-        "category_2": null,
-        "emotion": [
-            "기쁨/행복"
-        ],
-        "situation": [
-            "동의/긍정"
-        ],
-        "thumb": "assets/thumbs/yay-yes.webp",
-        "md5": "6a178d5ccbebbd44786ef5a6d59825b9",
-        "animated": true
-    },
-    {
         "id": "208",
         "name": "춤",
         "file": "assets/gif/72254152-9ab6-4d5c-ae90-28977be8766d.gif",
@@ -846,7 +829,7 @@
         "id": "247",
         "name": "선글라스 꼬마 댄스",
         "file": "assets/gif/dance-girl-happy.gif",
-        "tag": "gif, Dancing, 춤추다, Child, 아이, Sunglasses, 선글라스, Confident, 자신감 있는, Meme, 밈, imgPlay, ImgPlay, Swag, 스웨그, Success, 성공",
+        "tag": "gif, Dancing, 춤추다, Child, 아이, Sunglasses, 선글라스, Confident, 자신감 있는, Meme, 밈, imgPlay, ImgPlay, Swag, 스웨그, Success, 성공, Yeahhh, 예, child, dancing, 춤추는, sunglasses, confidence, 자신감, celebration, 축하, meme",
         "category_1": "GIF",
         "category_2": null,
         "emotion": [
@@ -854,7 +837,8 @@
             "귀여움"
         ],
         "situation": [
-            "자랑"
+            "자랑",
+            "동의/긍정"
         ],
         "thumb": "assets/thumbs/dance-girl-happy.webp",
         "md5": "4fad0ea08fcc90f0c06d9a5245bfd6c1",
