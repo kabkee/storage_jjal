@@ -38,7 +38,7 @@ namespace JjalCopy
         public const int Port = 47321;
         public const string SiteUrl = "https://jjal-kabkee.d271z96h7lorpb.amplifyapp.com/";
         public static readonly string[] AllowedHosts =
-            { "jjal-kabkee.d271z96h7lorpb.amplifyapp.com", "100.64.25.50", "localhost", "127.0.0.1" };
+            { "jjal-kabkee.d271z96h7lorpb.amplifyapp.com", "kabkee-main.tailfe017f.ts.net", "100.64.25.50", "localhost", "127.0.0.1" };
 
         public static string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         public static readonly string AppDir = Path.GetDirectoryName(Application.ExecutablePath);
@@ -58,7 +58,7 @@ namespace JjalCopy
             if (args.Length >= 1 && args[0] == "--selftest")
             {
                 int secs = args.Length > 1 && int.TryParse(args[1], out var s) ? s : 20;
-                var b = new Bridge(getPath => getPath().ContinueWith(t => Path.GetFileName(t.Result)));
+                var b = new Bridge((getPath, preview) => getPath().ContinueWith(t => Path.GetFileName(t.Result)));
                 b.Start();
                 Thread.Sleep(secs * 1000);
                 return 0;
@@ -247,7 +247,8 @@ namespace JjalCopy
         void Notify(string text, ToolTipIcon icon) => tray.ShowBalloonTip(5000, Program.DisplayName, text, icon);
 
         /// 원본 다운로드 또는 사이트가 보낸 파일(GIF 모드) 저장(백그라운드) → 클립보드(UI 스레드)
-        async Task<string> CopyToClipboard(Func<Task<string>> getPath)
+        /// preview: 사이트가 보낸 미리보기 그림(JPEG/PNG). 윈도우에 webp 코덱이 없으면 원본(webp)으로는 미리보기를 못 그려서 쓴다
+        async Task<string> CopyToClipboard(Func<Task<string>> getPath, byte[] preview)
         {
             var path = await getPath();
             ui.Invoke((Action)(() =>
@@ -262,7 +263,7 @@ namespace JjalCopy
                 }
                 if (Prefs.ShowDragPopup)
                 {
-                    try { DragPopup.ShowFor(path); }
+                    try { DragPopup.ShowFor(path, preview); }
                     catch (Exception e) { Notify("미리보기 창을 띄우지 못했어요: " + e.Message, ToolTipIcon.Warning); }
                 }
             }));
@@ -298,10 +299,10 @@ namespace JjalCopy
         Point downAt;
         bool pressed;
 
-        public static void ShowFor(string path)
+        public static void ShowFor(string path, byte[] preview = null)
         {
             current?.Close();
-            current = new DragPopup(path);
+            current = new DragPopup(path, preview);
             current.Show();
         }
 
@@ -316,7 +317,7 @@ namespace JjalCopy
             }
         }
 
-        DragPopup(string path)
+        DragPopup(string path, byte[] preview)
         {
             this.path = path;
             FormBorderStyle = FormBorderStyle.None;
@@ -328,7 +329,8 @@ namespace JjalCopy
             using (var g = CreateGraphics()) k = g.DpiX / 96f;
             int S(int v) => (int)Math.Round(v * k);
 
-            var img = LoadPreview(path);   // webp 는 GDI+ 가 못 읽어서 WIC 로 첫 프레임을 연다. 못 열면 null(그림 없이 표시)
+            // webp 는 GDI+ 가 못 읽어서 WIC 로 첫 프레임을 연다. WIC webp 코덱이 없는 PC 면 사이트가 보낸 미리보기(JPEG)를 쓴다
+            var img = LoadPreview(path) ?? LoadPreviewBytes(preview);
             int box = S(150);
             pic = new PictureBox
             {
@@ -385,6 +387,13 @@ namespace JjalCopy
         }
 
         /// 미리보기 이미지 열기: ① GDI+(GIF·PNG·JPG, GIF 는 움직임) ② WIC(윈도우 webp 코덱, 첫 프레임) ③ 실패 시 null
+        static Image LoadPreviewBytes(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length == 0) return null;
+            try { return Image.FromStream(new MemoryStream(bytes)); }
+            catch { return null; }
+        }
+
         static Image LoadPreview(string path)
         {
             var bytes = File.ReadAllBytes(path);
@@ -509,21 +518,23 @@ namespace JjalCopy
     }
 
     /// 127.0.0.1 전용 최소 HTTP 서버. 허용 Origin 에만 CORS 로 응답한다.
-    ///   GET  /ping               → {"app":"JjalCopy","version":"1.0.0","os":"windows"}
-    ///   POST /copy {"url","name"} → {"ok":true,"name":"이름.gif"}
+    ///   GET  /ping               → {"app":"JjalCopy","version":"1.5.0","os":"windows","features":["copy-data"],"popup":true}
+    ///        popup = 「복사 후 끌어다 놓기 창」 설정. 꺼져 있으면 사이트가 움짤 복사 대신 Save As 를 안내한다 (윈도우 카톡은 파일 붙여넣기를 안 받음)
+    ///   POST /copy {"url","name","preview"?} → {"ok":true,"name":"이름.gif"}
+    ///        preview = "data:image/jpeg;base64,…" 끌어다 놓기 창 미리보기 (WIC webp 코덱이 없는 PC 대비, v1.5+)
     ///   POST /copy-data?name=<이름.gif>  (본문 = 이미지 바이트, Content-Type: image/*) → 같은 응답
     ///        사이트의 「GIF 모드」가 브라우저에서 webp 움짤을 GIF 로 바꿔 보낸다 (텔레그램은 webp 를 파일로만 보여줌)
     sealed class Bridge
     {
-        const int MaxJsonBody = 64 * 1024;
+        const int MaxJsonBody = 2 * 1024 * 1024;   // /copy 에 미리보기 JPEG(base64)가 실려 온다
         const int MaxDataBody = 100 * 1024 * 1024;
         static readonly string[] Features = { "copy-data" };
-        // 인자: 클립보드에 올릴 파일의 경로를 만들어 주는 함수 (다운로드 또는 받은 바이트 저장)
-        readonly Func<Func<Task<string>>, Task<string>> onCopy;
+        // 인자: 클립보드에 올릴 파일의 경로를 만들어 주는 함수 (다운로드 또는 받은 바이트 저장), 미리보기 그림(없으면 null)
+        readonly Func<Func<Task<string>>, byte[], Task<string>> onCopy;
         readonly JavaScriptSerializer json = new JavaScriptSerializer();
         TcpListener listener;
 
-        public Bridge(Func<Func<Task<string>>, Task<string>> onCopy) { this.onCopy = onCopy; }
+        public Bridge(Func<Func<Task<string>>, byte[], Task<string>> onCopy) { this.onCopy = onCopy; }
 
         public void Start()
         {
@@ -623,7 +634,7 @@ namespace JjalCopy
             if (origin == null) return (403, new { error = "origin not allowed" }, null);
             if (method == "OPTIONS") return (204, null, origin);
             if (method == "GET" && path == "/ping")
-                return (200, new { app = Program.AppName, version = Program.Version, os = "windows", features = Features }, origin);
+                return (200, new { app = Program.AppName, version = Program.Version, os = "windows", features = Features, popup = Prefs.ShowDragPopup }, origin);
             if (method == "POST" && path == "/copy-data")
             {
                 var type = h.TryGetValue("Content-Type", out var ct) ? ct.Split(';')[0].Trim() : "";
@@ -637,7 +648,7 @@ namespace JjalCopy
                 var name = Copier.SafeName(rawName, new Uri("http://local/file." + (ext == "jpeg" ? "jpg" : ext)));
                 try
                 {
-                    var saved = await onCopy(() => Task.Run(() => Copier.Save(rawBody, name)));
+                    var saved = await onCopy(() => Task.Run(() => Copier.Save(rawBody, name)), null);
                     return (200, new { ok = true, name = saved, hint = Prefs.ShowDragPopup ? "drag" : "paste" }, origin);
                 }
                 catch (Exception e) { return (502, new { ok = false, error = (e.InnerException ?? e).Message }, origin); }
@@ -656,12 +667,26 @@ namespace JjalCopy
                 var name = Copier.SafeName(req.TryGetValue("name", out var n) ? n as string : null, src);
                 try
                 {
-                    var saved = await onCopy(() => Copier.Download(src, name));
+                    var saved = await onCopy(() => Copier.Download(src, name), DecodePreview(req));
                     return (200, new { ok = true, name = saved, hint = Prefs.ShowDragPopup ? "drag" : "paste" }, origin);
                 }
                 catch (Exception e) { return (502, new { ok = false, error = (e.InnerException ?? e).Message }, origin); }
             }
             return (404, new { error = "not found" }, origin);
+        }
+
+        /// /copy 의 "preview": "data:image/jpeg;base64,..." → 바이트 (1MB 이하, 이상하면 null)
+        static byte[] DecodePreview(Dictionary<string, object> req)
+        {
+            if (!(req.TryGetValue("preview", out var p) && p is string s)) return null;
+            int comma = s.IndexOf(',');
+            if (!s.StartsWith("data:image/", StringComparison.Ordinal) || comma < 0) return null;
+            try
+            {
+                var bytes = Convert.FromBase64String(s.Substring(comma + 1));
+                return bytes.Length <= 1024 * 1024 ? bytes : null;
+            }
+            catch { return null; }
         }
 
         async Task Send(NetworkStream s, int status, object payload, string origin)

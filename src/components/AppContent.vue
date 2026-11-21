@@ -736,9 +736,11 @@ const probeWebPCap = async () => {
         const j = await r.json();
         webpcapReady.value = HELPER_APPS.includes(j?.app);
         helperFeatures.value = Array.isArray(j?.features) ? j.features : [];
+        helperInfo.value = { os: j?.os || '', version: String(j?.version || ''), popup: j?.popup };
     } catch {
         webpcapReady.value = false;
         helperFeatures.value = [];
+        helperInfo.value = { os: '', version: '', popup: undefined };
     }
 };
 onMounted(() => {
@@ -748,6 +750,39 @@ onMounted(() => {
 onUnmounted(() => window.removeEventListener('focus', probeWebPCap));
 
 let lastWebPCapCopy = { file: '', at: 0 };
+// 윈도우 도우미 정보: popup = 「복사 후 끌어다 놓기 창」 설정(v1.5+). 꺼져 있으면 윈도우 카톡엔 움짤을 보낼 길이 없어 Save As 를 안내한다
+const helperInfo = ref({ os: '', version: '', popup: undefined });
+const helperAtLeast = (want) => {
+    const a = helperInfo.value.version.split('.').map(Number), b = want.split('.').map(Number);
+    for (let i = 0; i < 3; i++) if ((a[i] || 0) !== b[i]) return (a[i] || 0) > b[i];
+    return true;
+};
+const winHelperNoPopup = () => isWindows && helperInfo.value.os !== 'mac' && helperInfo.value.popup === false;
+const showSaveAsNotice = (image, extra = '') => {
+    appSnackbars.value.showSnackbar({ message: `안내 : "${image.name}" 를 Save As 로 다운 받으세요!!${extra}`, type: 'warning' });
+};
+// 끌어다 놓기 창 미리보기용 작은 JPEG (윈도우에 webp 코덱이 없으면 도우미가 원본으로 미리보기를 못 그림)
+const makePreview = (image) => new Promise((resolve) => {
+    const timer = setTimeout(() => resolve(null), 1500);
+    const img = new Image();
+    img.onload = () => {
+        try {
+            const k = Math.min(1, 300 / Math.max(img.naturalWidth, img.naturalHeight));
+            const c = document.createElement('canvas');
+            c.width = Math.max(1, Math.round(img.naturalWidth * k));
+            c.height = Math.max(1, Math.round(img.naturalHeight * k));
+            const ctx = c.getContext('2d');
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, 0, 0, c.width, c.height);
+            resolve(c.toDataURL('image/jpeg', 0.85));
+        } catch { resolve(null); }
+        clearTimeout(timer);
+    };
+    img.onerror = () => { clearTimeout(timer); resolve(null); };
+    img.src = withLeadingSlash(image.file);
+});
+
 const copyViaWebPCap = async (image, where) => {
     // 짤톡 확장의 더블클릭 저장과 겹치면 클릭이 두 번 들어오므로 같은 짤 연속 요청은 무시
     const now = Date.now();
@@ -760,10 +795,18 @@ const copyViaWebPCap = async (image, where) => {
         const r = await fetch(`${WEBPCAP}/copy`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url, name: `${image.name || 'jjal'}.${ext}` }),
+            body: JSON.stringify({
+                url, name: `${image.name || 'jjal'}.${ext}`,
+                // v1.5 미만 도우미는 본문 64KB 제한이라 미리보기를 보내면 요청이 끊긴다 → 1.5+ 에만
+                ...(isWindows && helperAtLeast('1.5.0') ? { preview: await makePreview(image) } : {}),
+            }),
         });
         const j = await r.json().catch(() => ({}));
         if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
+        // 윈도우 + 끌어다 놓기 창 꺼짐(옛 도우미): 파일은 클립보드에 들어갔지만 윈도우 카톡은 받지 않는다 → Save As 안내
+        if (isWindows && j.hint === 'paste') {
+            return showSaveAsNotice(image, ' (도우미의 「끌어다 놓기 창」이 꺼져 있어 카톡엔 바로 못 보내요. Slack·탐색기는 Ctrl+V)');
+        }
         // 윈도우 카톡은 클립보드 파일 붙여넣기를 안 받아서, 도우미가 띄운 미리보기 창을 끌어다 놓게 안내
         const how = j.hint === 'drag'
             ? `옆에 뜬 창을 카톡으로 끌어다 놓기 (탐색기·Slack은 ${pasteKey})`
@@ -890,6 +933,10 @@ const copyImageToClipboard = async (image, where = 'g') => {
     if (isAnimated(image) && settings.value.gifMode) return copyAsGif(image, where);
     if (isAnimated(image)) {
         // 움짤만 도우미로: 원본 파일을 클립보드에 넣고 「끌어다 놓기」 창을 띄운다 (윈도우 카톡은 파일 붙여넣기를 안 받음)
+        // 윈도우 도우미의 끌어다 놓기 창이 꺼져 있으면 복사해 봐야 카톡에 못 붙인다 → 예전처럼 Save As 안내
+        if (webpcapReady.value && winHelperNoPopup()) {
+            return showSaveAsNotice(image, ' (도우미 트레이 메뉴에서 「복사 후 끌어다 놓기 창 띄우기」를 켜면 바로 보낼 수 있어요)');
+        }
         if (webpcapReady.value) return copyViaWebPCap(image, where);
         // 짤톡 확장 프로그램이 설치돼 있으면(<html data-jjaltok>) 더블클릭으로 바로 저장되므로 안내하지 않는다
         if (document.documentElement.dataset.jjaltok) return;
