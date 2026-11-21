@@ -362,23 +362,6 @@
         "animated": true
     },
     {
-        "id": "221",
-        "name": "잡솨솨_헤딩",
-        "file": "assets/gif/e171b45b-6f34-4d16-acf1-9603f5589543.gif",
-        "tag": "gif, AfreecaTV, 아프리카TV, Streaming, 스트리밍, Drinking, 음주, Soju, 소주, Beer, 맥주, Mukbang, 먹방",
-        "category_1": "GIF",
-        "category_2": null,
-        "emotion": [
-            "자신감/뿌듯"
-        ],
-        "situation": [
-            "밥/먹방/술"
-        ],
-        "thumb": "assets/thumbs/e171b45b-6f34-4d16-acf1-9603f5589543.webp",
-        "md5": "819f4496c1672067ce998f928a80ced7",
-        "animated": true
-    },
-    {
         "id": "222",
         "name": "따봉",
         "file": "assets/gif/cd783384-1c69-4b44-a935-c5543c01dcd8.gif",
@@ -1019,11 +1002,12 @@
         "id": "259",
         "name": "잡쏴솨솨",
         "file": "assets/gif/12f9b32c-67a0-4452-b23e-9b5cff5964e8.gif",
-        "tag": "gif, AfreecaTV, 아프리카TV, Drinking, 술 마시기, Cass Beer, 카스 맥주, Soju, 소주, Mukbang, 먹방, Korean Food, 한국 음식, Beer, 맥주, 혼술, Solo Drinking",
+        "tag": "gif, AfreecaTV, 아프리카TV, Drinking, 술 마시기, Cass Beer, 카스 맥주, Soju, 소주, Mukbang, 먹방, Korean Food, 한국 음식, Beer, 맥주, 혼술, Solo Drinking, Streaming, 스트리밍, 음주",
         "category_1": "GIF",
         "category_2": null,
         "emotion": [
-            "무표정/시크"
+            "무표정/시크",
+            "자신감/뿌듯"
         ],
         "situation": [
             "밥/먹방/술"

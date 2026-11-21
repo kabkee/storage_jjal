@@ -249,23 +249,6 @@
         "md5": "2ae51ad8c96819018beb08573c069cdb"
     },
     {
-        "id": "16",
-        "name": "일어나디자인해야지",
-        "file": "assets/webp/e04a4c89-ee45-4f03-adc7-5b32e57549d2.webp",
-        "tag": "jpg,comic_book,analog_clock,wall_clock, 만화, 소녀, 걱정, 슬픔, 텍스트, 디자인, 20세기 소년, manga, girl, worry, sadness, text, design, 20th Century Boys",
-        "category_1": "JPG",
-        "category_2": null,
-        "emotion": [
-            "지침/귀찮음"
-        ],
-        "situation": [
-            "회사/업무",
-            "재촉/독촉"
-        ],
-        "thumb": "assets/thumbs/e04a4c89-ee45-4f03-adc7-5b32e57549d2.webp",
-        "md5": "0b4dda30a932abafaaf2363cc433df48"
-    },
-    {
         "id": "17",
         "name": "가즈아_트럼프",
         "file": "assets/webp/5822e982-eca2-45f7-a079-0ab2afcac4e7.webp",
@@ -1571,23 +1554,6 @@
         ],
         "thumb": "assets/thumbs/598949a6-970a-4212-b554-9068f89ff7aa.webp",
         "md5": "3c8bf293f8e9b322fc3007dce364057f"
-    },
-    {
-        "id": "99",
-        "name": "넌이제슬슬준비를",
-        "file": "assets/webp/59c9a11a-eadd-430e-aef5-59296a22c795.webp",
-        "tag": "jpg,comic_book,book_jacket,zebra, Kenshiro, Fist of the North Star, Manga, Serious, Pointing finger, Korean text, You're already prepared for the sad commute, Anime, Hokuto no Ken, Retro manga",
-        "category_1": "JPG",
-        "category_2": null,
-        "emotion": [
-            "자신감/뿌듯"
-        ],
-        "situation": [
-            "회사/업무",
-            "재촉/독촉"
-        ],
-        "thumb": "assets/thumbs/59c9a11a-eadd-430e-aef5-59296a22c795.webp",
-        "md5": "955454a47dc0a417041886759c31d3d9"
     },
     {
         "id": "100",

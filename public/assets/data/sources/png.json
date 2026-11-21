@@ -113,22 +113,6 @@
         "md5": "32f32e9c669a45e464f9f16e30923ad6"
     },
     {
-        "id": "136",
-        "name": "파파",
-        "file": "assets/webp/142dc9d9-6971-4e0f-963d-c1fe315c57bb.webp",
-        "tag": "jpg,cab,car_mirror,school_bus, SNL, 주성치, 택시, 동 일 아, 웃음, 코미디, SNL Korea, Comedy, Taxi, Laughter, Sung-joo Lee",
-        "category_1": "PNG",
-        "category_2": null,
-        "emotion": [
-            "기쁨/행복"
-        ],
-        "situation": [
-            "인사"
-        ],
-        "thumb": "assets/thumbs/142dc9d9-6971-4e0f-963d-c1fe315c57bb.webp",
-        "md5": "9176cc15060fbdfbbb58a1c79fdb7e96"
-    },
-    {
         "id": "137",
         "name": "압도적감사",
         "file": "assets/webp/4a9b93bd-107f-4d18-b33c-45d8ccbdb524.webp",
@@ -856,22 +840,6 @@
         "md5": "2cfa4dc32755266d64595c4bae96e2ea"
     },
     {
-        "id": "182",
-        "name": "시욱이가범인",
-        "file": "assets/webp/8840d512-b391-4099-9aaa-4dcb6ce28c87.webp",
-        "tag": "jpg,comic_book,knee_pad,pill_bottle, Teacher, Student, School, Book, Raising Hand, Learning, Education, Korean Text, Funny, Meme",
-        "category_1": "PNG",
-        "category_2": null,
-        "emotion": [
-            "황당"
-        ],
-        "situation": [
-            "비난/지적"
-        ],
-        "thumb": "assets/thumbs/8840d512-b391-4099-9aaa-4dcb6ce28c87.webp",
-        "md5": "9430dfe27a2adc6cc45fce88b757c416"
-    },
-    {
         "id": "183",
         "name": "다내꺼다",
         "file": "assets/webp/8f286af3-2d77-4631-84a2-87274742378c.webp",
@@ -918,22 +886,6 @@
         ],
         "thumb": "assets/thumbs/f3e329e0-8f17-4a3f-bd88-af167641759b.webp",
         "md5": "9ba7318a163a897c3edaf9cf0b606578"
-    },
-    {
-        "id": "186",
-        "name": "찰리가범인",
-        "file": "assets/webp/6ed2e114-0e15-405b-ab7f-f76836be0e17.webp",
-        "tag": "jpg,comic_book,knee_pad,pill_bottle, Teacher, student, classroom, book, school, learning, question, answer, Korean text, drawing, 선생님, 학생, 교실, 책, 학교, 학습, 질문, 대답, 한국어, 그림",
-        "category_1": "PNG",
-        "category_2": null,
-        "emotion": [
-            "황당"
-        ],
-        "situation": [
-            "비난/지적"
-        ],
-        "thumb": "assets/thumbs/6ed2e114-0e15-405b-ab7f-f76836be0e17.webp",
-        "md5": "31711375dba22e869388f4cb5538cd0c"
     },
     {
         "id": "187",
@@ -983,23 +935,6 @@
         ],
         "thumb": "assets/thumbs/ca167309-98bb-403e-a915-42f6ea0424b5.webp",
         "md5": "f3cc327f5aae3564c1a85f3c8bcf454b"
-    },
-    {
-        "id": "190",
-        "name": "파파-한별아",
-        "file": "assets/webp/0d71b22c-3014-4573-ad8e-a542175eccd5.webp",
-        "tag": "jpg,car_mirror,cab,school_bus, SNL, 한별아, 택시, 감정, 놀람, 코미디, SNL Korea, Hanbyeol-ah, Taxi, Emotion, Surprise, Comedy",
-        "category_1": "PNG",
-        "category_2": null,
-        "emotion": [
-            "웃김",
-            "기쁨/행복"
-        ],
-        "situation": [
-            "인사"
-        ],
-        "thumb": "assets/thumbs/0d71b22c-3014-4573-ad8e-a542175eccd5.webp",
-        "md5": "0991f04dd12400924271c7f5dfe177b9"
     },
     {
         "id": "191",
