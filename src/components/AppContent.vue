@@ -196,7 +196,8 @@
                 </div>
                 <div v-if="authEnabled">
                     <div class="set-label">계정 (💬 문구 모음)</div>
-                    <div class="set-desc">구글로 로그인하면 「✏️ 문구 넣기」에서 만든 문구를 짤마다 남겨 모두와 나눌 수 있어요. 이름만 보이고 이메일은 공개되지 않아요.</div>
+                    <div class="set-desc">구글로 로그인하면 「✏️ 문구 넣기」에서 만든 문구를 짤마다 남겨 모두와 나눌 수 있어요. 이름만 보이고 이메일은 공개되지 않아요.
+                        <a href="/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></div>
                     <div v-if="user" class="set-row">
                         <span class="me">👤 <b>{{ user.name }}</b><template v-if="isAdmin"> · 관리자</template></span>
                         <button class="btn" @click="signOut()">로그아웃</button>
