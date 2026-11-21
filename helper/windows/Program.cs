@@ -54,6 +54,22 @@ namespace JjalCopy
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // 업데이트 점검용: 트레이 없이 GitHub 최신 릴리스를 확인(+ --download 면 설치 프로그램까지 받기)하고 결과를 파일에 쓴다
+            //   JjalCopy.exe --check-update <결과.txt> [--download]
+            if (args.Length >= 2 && args[0] == "--check-update")
+            {
+                string result;
+                try
+                {
+                    var rel = Updater.Latest().GetAwaiter().GetResult();
+                    result = rel == null ? "no-release" : $"latest={rel.Version.ToString(3)} current={Version} newer={rel.Version > System.Version.Parse(Version)} url={rel.SetupUrl}";
+                    if (rel != null && args.Contains("--download")) result += "\nsaved=" + Updater.Download(rel).GetAwaiter().GetResult();
+                }
+                catch (Exception e) { result = "error=" + (e.InnerException ?? e).Message; }
+                File.WriteAllText(args[1], result);
+                return 0;
+            }
+
             // 헤드리스 점검용: 트레이·클립보드 없이 브리지만 N초 띄운다 (SSH 테스트)
             if (args.Length >= 1 && args[0] == "--selftest")
             {
@@ -144,6 +160,12 @@ namespace JjalCopy
     static class Prefs
     {
         const string Key = @"Software\JjalCopy";
+        /// 마지막 자동 업데이트 확인 시각 (UTC, 하루 한 번만 확인)
+        public static DateTime LastUpdateCheck
+        {
+            get { using (var k = Registry.CurrentUser.OpenSubKey(Key)) return k?.GetValue("LastUpdateCheck") is string v && long.TryParse(v, out var t) ? DateTime.FromBinary(t) : DateTime.MinValue; }
+            set { using (var k = Registry.CurrentUser.CreateSubKey(Key)) k.SetValue("LastUpdateCheck", value.ToBinary().ToString(), RegistryValueKind.String); }
+        }
         /// 복사 후 「카톡으로 끌어다 놓기」 미리보기 창을 띄울지 (윈도우 카톡은 클립보드 파일 붙여넣기를 받지 않음)
         public static bool ShowDragPopup
         {
@@ -189,6 +211,9 @@ namespace JjalCopy
         readonly Control ui = new Control();   // 클립보드는 STA(UI) 스레드에서만 쓸 수 있어서 Invoke 용
         readonly Bridge bridge;
         readonly ToolStripMenuItem autorunItem;
+        readonly ToolStripMenuItem updateItem;
+        Updater.Release pendingUpdate;   // 자동 확인으로 찾은 새 버전 (풍선 알림 클릭 시 설치)
+        bool updating;
         readonly EventWaitHandle quitEvent;
 
         public TrayContext(bool justInstalled)
@@ -214,6 +239,8 @@ namespace JjalCopy
                 popupItem.Checked = Prefs.ShowDragPopup;
             }) { Checked = Prefs.ShowDragPopup };
             menu.Items.Add(popupItem);
+            updateItem = new ToolStripMenuItem("업데이트 확인", null, async (s, e) => await CheckUpdate(manual: true));
+            menu.Items.Add(updateItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("종료", null, (s, e) => Quit());
             if (Autorun.Uninstaller != null)
@@ -227,6 +254,16 @@ namespace JjalCopy
                 Visible = true,
             };
             tray.DoubleClick += (s, e) => Process.Start(Program.SiteUrl);
+            tray.BalloonTipClicked += async (s, e) => { if (pendingUpdate != null) await InstallUpdate(pendingUpdate); };
+
+            // 시작하고 잠시 뒤 새 버전 확인 (하루 한 번만, 조용히 — 있으면 풍선 알림)
+            var startupCheck = new System.Windows.Forms.Timer { Interval = 15000 };
+            startupCheck.Tick += async (s, e) =>
+            {
+                startupCheck.Stop(); startupCheck.Dispose();
+                if (DateTime.UtcNow - Prefs.LastUpdateCheck > TimeSpan.FromHours(20)) await CheckUpdate(manual: false);
+            };
+            startupCheck.Start();
 
             // 새 버전 설치기가 「종료해 달라」고 신호를 보내면 종료
             quitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, Program.QuitEventName);
@@ -278,12 +315,116 @@ namespace JjalCopy
             Process.Start(new ProcessStartInfo(u) { UseShellExecute = true });
         }
 
+        /// GitHub 최신 릴리스(윈도우 = 「Latest」)와 비교. manual 이면 결과를 대화상자로, 아니면 새 버전이 있을 때만 풍선 알림
+        async Task CheckUpdate(bool manual)
+        {
+            if (updating) return;
+            Updater.Release rel;
+            try { rel = await Updater.Latest(); }
+            catch (Exception e)
+            {
+                if (manual) MessageBox.Show("업데이트를 확인하지 못했어요.\n" + (e.InnerException ?? e).Message, Program.DisplayName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Prefs.LastUpdateCheck = DateTime.UtcNow;
+            var current = Version.Parse(Program.Version);
+            if (rel == null || rel.Version <= current)
+            {
+                updateItem.Text = "업데이트 확인 (최신 버전이에요)";
+                if (manual) MessageBox.Show($"지금 쓰는 v{Program.Version} 이 최신 버전이에요.", Program.DisplayName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            pendingUpdate = rel;
+            updateItem.Text = $"⬆ 업데이트하기 (v{rel.Version.ToString(3)})";
+            if (!manual)
+            {
+                tray.ShowBalloonTip(10000, Program.DisplayName,
+                    $"새 버전 v{rel.Version.ToString(3)} 이 나왔어요. 여기를 누르면 업데이트해요.", ToolTipIcon.Info);
+                return;
+            }
+            var r = MessageBox.Show($"새 버전 v{rel.Version.ToString(3)} 이 나왔어요. (지금 v{Program.Version})\n\n지금 업데이트할까요?\n받아서 설치한 뒤 도우미가 다시 켜져요.",
+                Program.DisplayName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes) await InstallUpdate(rel);
+        }
+
+        /// 설치 프로그램을 받아 조용히 실행 → 설치기가 이 도우미에게 종료 신호를 보내고, 설치가 끝나면 새 버전을 다시 켠다
+        async Task InstallUpdate(Updater.Release rel)
+        {
+            if (updating) return;
+            updating = true;
+            updateItem.Enabled = false;
+            updateItem.Text = $"업데이트 받는 중… (v{rel.Version.ToString(3)})";
+            try
+            {
+                var setup = await Updater.Download(rel);
+                // 지금의 자동 실행 설정을 그대로 유지
+                var tasks = Autorun.IsOn ? "autostart" : "!autostart";
+                Process.Start(new ProcessStartInfo(setup, $"/SILENT /SUPPRESSMSGBOXES /NORESTART /MERGETASKS=\"{tasks}\"") { UseShellExecute = true });
+            }
+            catch (Exception e)
+            {
+                updating = false;
+                updateItem.Enabled = true;
+                updateItem.Text = $"⬆ 업데이트하기 (v{rel.Version.ToString(3)})";
+                MessageBox.Show("업데이트를 받지 못했어요.\n" + (e.InnerException ?? e).Message + "\n\n사이트의 「도우미 받기」로 직접 설치할 수도 있어요.",
+                    Program.DisplayName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         void Quit()
         {
             bridge?.Stop();
             tray.Visible = false;
             tray.Dispose();
             ExitThread();
+        }
+    }
+
+    /// 새 버전 확인·받기 — GitHub 릴리스. 윈도우 판은 항상 「Latest」 릴리스(태그 jjalcopy-vX.Y.Z)에 JjalCopySetup.exe 가 붙는다
+    static class Updater
+    {
+        const string LatestApi = "https://api.github.com/repos/kabkee/storage_jjal/releases/latest";
+        static readonly HttpClient Http = CreateHttp();
+
+        static HttpClient CreateHttp()
+        {
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+            var h = new HttpClient { Timeout = TimeSpan.FromSeconds(120) };
+            h.DefaultRequestHeaders.UserAgent.ParseAdd($"JjalCopy/{Program.Version}");
+            h.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json");
+            return h;
+        }
+
+        public sealed class Release { public Version Version; public string SetupUrl; }
+
+        public static async Task<Release> Latest()
+        {
+            var text = await Http.GetStringAsync(LatestApi);
+            var obj = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(text);
+            var tag = obj.TryGetValue("tag_name", out var t) ? t as string : null;
+            var m = tag == null ? null : Regex.Match(tag, @"^jjalcopy-v(\d+\.\d+\.\d+)$");
+            if (m == null || !m.Success) return null;   // 윈도우 릴리스가 아니면 무시
+            string url = null;
+            // JavaScriptSerializer 는 배열을 ArrayList 또는 object[] 로 준다 → 둘 다 받게 IEnumerable 로
+            if (obj.TryGetValue("assets", out var a) && a is System.Collections.IEnumerable assets && !(a is string))
+                foreach (var item in assets)
+                    if (item is Dictionary<string, object> asset && asset.TryGetValue("name", out var n) && (n as string) == "JjalCopySetup.exe")
+                        url = asset["browser_download_url"] as string;
+            if (url == null) return null;   // 설치 프로그램이 아직 안 붙은 릴리스 (CI 빌드 중)
+            return new Release { Version = Version.Parse(m.Groups[1].Value), SetupUrl = url };
+        }
+
+        public static async Task<string> Download(Release rel)
+        {
+            var dir = Path.Combine(Program.TempRoot, "update");
+            Directory.CreateDirectory(dir);
+            var dest = Path.Combine(dir, $"JjalCopySetup-{rel.Version.ToString(3)}.exe");
+            var bytes = await Http.GetByteArrayAsync(rel.SetupUrl);
+            if (bytes.Length < 100 * 1024 || bytes[0] != (byte)'M' || bytes[1] != (byte)'Z') throw new Exception("받은 파일이 설치 프로그램이 아니에요");
+            File.WriteAllBytes(dest, bytes);
+            return dest;
         }
     }
 
