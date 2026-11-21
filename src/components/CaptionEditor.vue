@@ -9,9 +9,11 @@
 
             <div class="cap-body">
                 <div class="stage">
-                    <canvas ref="canvas" class="preview" :class="{ dragging }" title="끌어서 글자 위치 옮기기"
+                    <canvas ref="canvas" class="preview" :class="{ dragging, picking }"
+                        :title="picking ? '배경으로 쓸 색을 그림에서 누르세요' : '끌어서 글자 위치 옮기기'"
                         @pointerdown="onDown" @pointermove="onMove" @pointerup="onUp" @pointercancel="onUp"></canvas>
                     <div v-if="!loaded" class="loading">불러오는 중…</div>
+                    <div v-if="picking" class="pick-hint">🎯 그림에서 배경으로 쓸 색을 누르세요</div>
                 </div>
 
                 <div class="controls">
@@ -34,12 +36,48 @@
                     </div>
 
                     <div class="row">
-                        <span class="lbl">색</span>
-                        <button v-for="c in COLORS" :key="c" class="sw" :class="{ on: color === c }"
+                        <span class="lbl">글자</span>
+                        <button v-for="c in COLORS" :key="c" class="sw" :class="{ on: color.toLowerCase() === c.toLowerCase() }"
                             :style="{ background: c }" :aria-label="`글자색 ${c}`" @click="color = c"></button>
+                        <label class="sw custom" :class="{ on: !COLORS.some(c => c.toLowerCase() === color.toLowerCase()) }"
+                            :style="customStyle(color, COLORS)" title="글자색 직접 고르기">
+                            <input type="color" :value="color" aria-label="글자색 직접 고르기" @input="color = $event.target.value">
+                        </label>
                         <label class="chk"><input v-model="outline" type="checkbox"> 테두리</label>
-                        <label class="chk"><input v-model="band" type="checkbox"> 글자 뒤 띠</label>
                     </div>
+
+                    <!-- 배경: 원래 그림의 글귀를 덮고 새로 쓰고 싶을 때. 「그림에서」 로 주변 색을 찍어 오면 티가 덜 난다 -->
+                    <div class="row">
+                        <span class="lbl">배경</span>
+                        <div class="seg">
+                            <button v-for="[v, l] in BG_MODES" :key="v" :class="{ on: bgMode === v }" @click="bgMode = v">{{ l }}</button>
+                        </div>
+                    </div>
+                    <template v-if="bgMode === 'fill'">
+                        <div class="row">
+                            <span class="lbl"></span>
+                            <button v-for="c in BG_COLORS" :key="c" class="sw" :class="{ on: bgColor.toLowerCase() === c.toLowerCase() }"
+                                :style="{ background: c }" :aria-label="`배경색 ${c}`" @click="bgColor = c"></button>
+                            <label class="sw custom" :class="{ on: !BG_COLORS.some(c => c.toLowerCase() === bgColor.toLowerCase()) }"
+                                :style="customStyle(bgColor, BG_COLORS)" title="배경색 직접 고르기">
+                                <input type="color" :value="bgColor" aria-label="배경색 직접 고르기" @input="bgColor = $event.target.value">
+                            </label>
+                            <button class="btn small pick" :class="{ on: picking }" @click="picking = !picking">🎯 그림에서</button>
+                        </div>
+                    </template>
+                    <template v-if="bgMode !== 'none'">
+                        <div class="row">
+                            <span class="lbl"></span>
+                            <div class="seg">
+                                <button :class="{ on: !bgWide }" @click="bgWide = false">글자에 맞춤</button>
+                                <button :class="{ on: bgWide }" @click="bgWide = true">가로 꽉 채움</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class="lbl">여백</span>
+                            <input v-model.number="bgPad" type="range" min="0" max="1.5" step="0.05" class="range" aria-label="배경 여백">
+                        </div>
+                    </template>
                 </div>
             </div>
 
@@ -59,6 +97,10 @@ const emit = defineEmits(['close', 'toast', 'copied']);
 
 const POSITIONS = [[0.12, '위'], [0.5, '가운데'], [0.88, '아래']];
 const COLORS = ['#FFFFFF', '#111111', '#FFE14D', '#FF4D4D'];
+const BG_COLORS = ['#FFFFFF', '#000000', '#FFE14D'];
+const BG_MODES = [['none', '없음'], ['shade', '반투명'], ['fill', '색 채우기']];
+// 직접 고른 색이면 그 색으로, 아니면 무지개 동그라미
+const customStyle = (c, presets) => presets.some(p => p.toLowerCase() === c.toLowerCase()) ? null : { background: c };
 const FONT = '"Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
 
 const canvas = ref(null);
@@ -69,7 +111,11 @@ const pos = ref({ x: 0.5, y: 0.88 });   // 글자 덩어리 가운데 (그림 �
 const size = ref(9);                     // 글자 높이 = 그림 폭의 size%
 const color = ref('#FFFFFF');
 const outline = ref(true);
-const band = ref(false);
+const bgMode = ref('none');            // 'none' | 'shade'(반투명 검정) | 'fill'(단색으로 덮기)
+const bgColor = ref('#FFFFFF');
+const bgWide = ref(false);              // 배경을 그림 가로 전체로
+const bgPad = ref(0.3);                 // 배경 여백 (글자 크기 대비)
+const picking = ref(false);             // 그림에서 배경색 찍기 모드
 const dragging = ref(false);
 let img = null;
 
@@ -105,27 +151,36 @@ const draw = () => {
     ctx.font = `800 ${px}px ${FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const lines = wrapLines(ctx, t, W * 0.92);
+    const lines = wrapLines(ctx, t, W * 0.96);
     const lh = px * 1.22;
-    const blockH = lh * lines.length;
-    // 글자 덩어리가 그림 밖으로 나가지 않게 가운데 위치를 가둔다 (가로는 가장 긴 줄 폭 기준)
-    const half = Math.min(W / 2, Math.max(...lines.map(l => ctx.measureText(l).width)) / 2 + px * 0.2);
-    const cx = Math.min(Math.max(pos.value.x * W, half), W - half);
-    const cy = Math.min(Math.max(pos.value.y * H, blockH / 2 + px * 0.2), H - blockH / 2 - px * 0.2);
-    const top = cy - blockH / 2 + lh / 2;
+    const widths = lines.map(l => ctx.measureText(l).width);
+    const maxW = Math.max(...widths);
+    // 실제 글자 모양의 위·아래 끝 (줄 간격 여백 제외) — 그림 가장자리에 딱 붙일 수 있게 이걸로 가둔다
+    const m0 = ctx.measureText(lines[0] || '가'), m1 = ctx.measureText(lines[lines.length - 1] || '가');
+    const asc = m0.actualBoundingBoxAscent || px * 0.45, desc = m1.actualBoundingBoxDescent || px * 0.45;
+    const span = lh * (lines.length - 1);                 // 첫 줄 가운데 ~ 마지막 줄 가운데
+    const stroke = outline.value ? Math.max(2, px * 0.16) : 0;
+    const edge = stroke / 2;                              // 테두리가 잘리지 않을 만큼만 띄운다 (거의 0)
+    const halfW = Math.min(W / 2, maxW / 2 + edge);
+    const cx = Math.min(Math.max(pos.value.x * W, halfW), W - halfW);
+    const upper = asc + span / 2 + edge, lower = desc + span / 2 + edge;
+    const cy = upper + lower >= H ? H / 2 : Math.min(Math.max(pos.value.y * H, upper), H - lower);
+    const top = cy - span / 2;
 
-    if (band.value) {
-        const bw = Math.min(W, Math.max(...lines.map(l => ctx.measureText(l).width)) + px * 1.2);
-        ctx.fillStyle = 'rgba(0,0,0,0.55)';
-        ctx.fillRect(cx - bw / 2, cy - blockH / 2 - px * 0.15, bw, blockH + px * 0.3);
+    if (bgMode.value !== 'none') {
+        const pad = px * bgPad.value;
+        const y0 = cy - span / 2 - asc - pad, y1 = cy + span / 2 + desc + pad;
+        const bw = bgWide.value ? W : maxW + pad * 2;
+        ctx.fillStyle = bgMode.value === 'shade' ? 'rgba(0,0,0,0.55)' : bgColor.value;
+        ctx.fillRect(bgWide.value ? 0 : cx - bw / 2, y0, bw, y1 - y0);
     }
     lines.forEach((l, i) => {
         const y = top + i * lh;
         if (outline.value) {
             ctx.lineJoin = 'round';
             ctx.miterLimit = 2;
-            ctx.lineWidth = Math.max(2, px * 0.16);
-            ctx.strokeStyle = color.value === '#111111' ? '#FFFFFF' : '#000000';
+            ctx.lineWidth = stroke;
+            ctx.strokeStyle = isDark(color.value) ? '#FFFFFF' : '#000000';
             ctx.strokeText(l, cx, y);
         }
         ctx.fillStyle = color.value;
@@ -133,7 +188,13 @@ const draw = () => {
     });
 };
 
-watch([text, pos, size, color, outline, band], draw, { deep: true });
+// 어두운 글자색이면 흰 테두리, 밝으면 검은 테두리
+const isDark = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    return ((n >> 16) * 0.299 + ((n >> 8) & 255) * 0.587 + (n & 255) * 0.114) < 128;
+};
+
+watch([text, pos, size, color, outline, bgMode, bgColor, bgWide, bgPad], draw, { deep: true });
 
 onMounted(async () => {
     const im = new Image();
@@ -162,7 +223,28 @@ const toRatio = (e) => {
         y: Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)),
     };
 };
-const onDown = (e) => { if (!loaded.value) return; dragging.value = true; canvas.value.setPointerCapture?.(e.pointerId); pos.value = toRatio(e); };
+const onDown = (e) => {
+    if (!loaded.value) return;
+    if (picking.value) return pickColor(e);
+    dragging.value = true;
+    canvas.value.setPointerCapture?.(e.pointerId);
+    pos.value = toRatio(e);
+};
+// 원본 그림(글자 없이)에서 누른 곳 주변 3x3 평균색을 배경색으로
+const pickColor = (e) => {
+    const { x, y } = toRatio(e);
+    const W = img.naturalWidth, H = img.naturalHeight;
+    const off = document.createElement('canvas');
+    off.width = 3; off.height = 3;
+    const octx = off.getContext('2d', { willReadFrequently: true });
+    octx.drawImage(img, Math.min(W - 3, Math.max(0, Math.round(x * W) - 1)), Math.min(H - 3, Math.max(0, Math.round(y * H) - 1)), 3, 3, 0, 0, 3, 3);
+    const d = octx.getImageData(0, 0, 3, 3).data;
+    let r = 0, g = 0, b = 0;
+    for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+    const hex = (v) => Math.round(v / 9).toString(16).padStart(2, '0');
+    bgColor.value = `#${hex(r)}${hex(g)}${hex(b)}`;
+    picking.value = false;
+};
 const onMove = (e) => { if (dragging.value) pos.value = toRatio(e); };
 const onUp = () => { dragging.value = false; };
 
@@ -220,6 +302,12 @@ const save = async () => {
 .sw.on { outline: 2px solid var(--accent); outline-offset: 2px; }
 .chk { font-size: 13px; display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; cursor: pointer; }
 .chk input { accent-color: var(--accent); }
+.sw.custom { position: relative; overflow: hidden; background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
+.sw.custom input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+.btn.pick { height: 30px; font-size: 12.5px; }
+.btn.pick.on { background: var(--accent) !important; color: var(--on-accent) !important; }
+.preview.picking { cursor: crosshair; }
+.pick-hint { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, .7); color: #fff; font-size: 12.5px; padding: 5px 10px; border-radius: 8px; pointer-events: none; white-space: nowrap; }
 .btn { height: 42px; padding: 0 16px; border-radius: 10px; background: var(--chip) !important; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
 .btn.small { height: 34px; padding: 0 12px; font-size: 13px; }
 .btn.primary { background: var(--accent) !important; color: var(--on-accent) !important; }
