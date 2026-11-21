@@ -51,6 +51,10 @@
                 @click.prevent="openHelperGuide(null)">
                 <v-icon size="15">mdi-download</v-icon> 움짤 복사 도우미
             </a>
+            <a v-else-if="helperUpdateAvailable" :href="helperDownloadUrl" class="helper-link update"
+                :title="`지금 쓰는 도우미 v${helperInfo.version || '?'} → 새 버전 v${latestHelperVersion} 받기 (설치 프로그램을 실행하면 덮어써져요)`">
+                <v-icon size="15">mdi-arrow-up-circle</v-icon> 도우미 업데이트 v{{ latestHelperVersion }}
+            </a>
             <div class="count"><b>{{ filteredImages.length }}</b>개 짤 · 최신순</div>
         </div>
 
@@ -191,6 +195,20 @@
                         <span class="chip on">웃김</span><span class="chip">황당</span>
                         <span class="active-chip">축하 <span class="x">×</span></span>
                         <span class="btn primary inline">📋 복사하기</span>
+                    </div>
+                </div>
+                <div v-if="helperDownloadUrl">
+                    <div class="set-label">짤 복사 도우미 ({{ helperOsName }})</div>
+                    <div class="set-desc">
+                        움짤을 클릭 한 번에 카톡으로 보내게 해 주는 작은 프로그램이에요.
+                        <template v-if="webpcapReady">지금 <b>v{{ helperInfo.version || '?' }}</b> 이 켜져 있어요<template v-if="helperUpdateAvailable"> — 새 버전 <b>v{{ latestHelperVersion }}</b> 이 있어요</template>.</template>
+                        <template v-else>이 컴퓨터에서 켜져 있지 않아요.</template>
+                    </div>
+                    <div class="set-row">
+                        <a class="btn" :class="{ primary: !webpcapReady || helperUpdateAvailable }" :href="helperDownloadUrl">
+                            ⬇ {{ webpcapReady && !helperUpdateAvailable ? '다시 받기' : (webpcapReady ? '업데이트 받기' : '도우미 받기') }} (v{{ latestHelperVersion }})
+                        </a>
+                        <button class="btn" @click="settingsOpen = false; openHelperGuide(null)">설치 방법</button>
                     </div>
                 </div>
                 <div>
@@ -729,6 +747,10 @@ const helperDownloadUrl = isWindows ? WIN_HELPER_URL : isMac ? MAC_HELPER_URL : 
 const helperOsName = isWindows ? 'Windows' : 'Mac';
 // 안내는 창 폭이 아니라 OS 로 판단한다(노트북에서 브라우저를 반만 띄워도 안내가 떠야 함)
 const showHelperLink = computed(() => !!helperDownloadUrl && !webpcapReady.value);
+// 최신 도우미 버전 — 새 릴리스를 내면 같이 올릴 것 (켜져 있는 도우미가 이보다 낮으면 「업데이트」 링크를 보여 준다)
+const LATEST_HELPER = { windows: '1.5.0', mac: '1.0.0' };
+const latestHelperVersion = isWindows ? LATEST_HELPER.windows : LATEST_HELPER.mac;
+const helperUpdateAvailable = computed(() => !!helperDownloadUrl && webpcapReady.value && !helperAtLeast(latestHelperVersion));
 const probeWebPCap = async () => {
     if (!isMac && !isWindows) return;
     try {
@@ -1109,6 +1131,8 @@ body, .v-application {
 .count b { color: var(--text); }
 .helper-link { font-size: 13px; color: var(--sub); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
 .helper-link:hover { color: var(--accent); }
+.helper-link.update { color: var(--accent); font-weight: 700; }
+a.btn { text-decoration: none; color: inherit; }
 
 .panel { max-width: 1240px; margin: 8px auto 0; padding: 0 16px; }
 .panel-inner { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
