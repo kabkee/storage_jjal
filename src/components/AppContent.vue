@@ -662,7 +662,7 @@ const addFavImage = (imageKey) => {
 // 도우미가 없으면 움짤은 Save As 안내(윈도우 데스크톱은 도우미 설치 안내 창). 윈도우 데스크톱에서만 작은 안내 링크를 보여준다.
 const WEBPCAP = 'http://127.0.0.1:47321';
 const HELPER_APPS = ['WebPCap', 'JjalCopy'];
-const WIN_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/latest/download/JjalCopy.exe';
+const WIN_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/latest/download/JjalCopySetup.exe';
 const webpcapReady = ref(false);
 const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
 const isMac = /Mac/i.test(platformStr) && navigator.maxTouchPoints <= 1;   // iPad(데스크톱 모드) 제외
@@ -741,41 +741,32 @@ const copyImageToClipboard = async (image, where = 'g') => {
         return;
     }
     // 정지 이미지는 도우미가 켜져 있어도 브라우저가 PNG 그림으로 복사 → 카톡에서 바로 붙여넣기(파일이 아니라 그림이라 윈도우 카톡도 받음)
-
-    function setCanvasImage(path, func) {
-        const img = new Image
-        const c = document.createElement('canvas')
-        const ctx = c.getContext('2d')
-
-        img.onload = function () {
-            c.width = this.naturalWidth
-            c.height = this.naturalHeight
-            ctx.drawImage(this, 0, 0)
-            c.toBlob(blob => {
-                func(blob)
-            }, 'image/png')
-        }
-        img.src = path
-    }
-
+    // 누르자마자 「✓ 복사됨」을 보여 준다(원본을 받아 PNG 로 바꾸는 동안 아무 반응이 없어 보이지 않게). 실패하면 표시를 거두고 알린다.
+    flashCopied(image, where);
+    const fail = (e) => {
+        console.error('이미지를 클립보드에 복사하는 중 오류 발생:', e);
+        if (copiedKey.value === image.id + where) copiedKey.value = null;
+        const why = window.isSecureContext ? '' : ' (https 주소에서만 복사돼요)';
+        appSnackbars.value.showSnackbar({ message: `복사에 실패했어요${why}. 「⋯ → 저장」으로 받아 주세요`, type: 'error' });
+    };
+    // PNG 변환은 비동기라, 클립보드 쓰기는 클릭 직후에 Promise 를 넘겨서 호출한다(사파리는 클릭 순간에 불러야 허용)
+    const pngBlob = new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            const c = document.createElement('canvas');
+            c.width = img.naturalWidth;
+            c.height = img.naturalHeight;
+            c.getContext('2d').drawImage(img, 0, 0);
+            c.toBlob(blob => (blob ? resolve(blob) : reject(new Error('PNG 변환 실패'))), 'image/png');
+        };
+        img.onerror = () => reject(new Error('이미지를 불러오지 못했어요'));
+        img.src = image.file;
+    });
     try {
-        setCanvasImage(image.file, (imgBlob) => {
-            navigator.clipboard.write(
-                [new ClipboardItem({ 'image/png': imgBlob })]
-            )
-                .then(() => {
-                    flashCopied(image, where);
-                    appSnackbars.value.showSnackbar({
-                        message: `"${image.name}" 복사됨 — 카톡에서 ${pasteKey}`
-                    })
-                })
-                .catch((e) => {
-                    console.log(e);
-                    appSnackbars.value.showSnackbar({ message: '복사에 실패했어요. 「⋯ → 저장」으로 받아 주세요', type: 'error' });
-                })
-        })
-    } catch (error) {
-        console.error("이미지를 클립보드에 복사하는 중 오류 발생:", error);
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })]);
+        appSnackbars.value.showSnackbar({ message: `"${image.name}" 복사됨 — 카톡에서 ${pasteKey}` });
+    } catch (e) {
+        fail(e);
     }
 }
 
