@@ -88,6 +88,8 @@ history 라우터라 `/?...` 형태(2026-10-02 해시 라우터에서 전환 —
 - **이미지는 webp 만 쓴다**(2026-11-21 오너 결정). `public/assets/{gif,jpg,png}` 는 비어 있고 새 짤도 import 때 webp 로 변환된다. 옛 원본은 git 기록(`e9a565f` 이전)에 남아 있다. 일괄 변환 스크립트: `public/assets/data/convert-to-webp.js`(미리보기 / `--apply`).
 - 짤 클릭 복사: **정지 이미지는 도우미 유무와 상관없이 브라우저가 PNG 그림으로 복사**(카톡 Ctrl+V 로 바로 전송). **움짤만** 로컬 도우미(맥 WebPCap / 윈도우 `helper/windows` JjalCopy, `127.0.0.1:47321`)로 원본 파일을 클립보드에 넣고 끌어다 놓기 창을 띄운다. 도우미가 없으면 움짤 클릭 시 Save As + 도우미 설치 안내 창(윈도우 데스크톱, 「짧은 안내만 보기」는 localStorage `jjal.helperGuideMuted`). 🔴 윈도우 카톡은 클립보드 파일 붙여넣기를 받지 않는다(탐색기 형식 그대로 넣어도 실패, 2026-11-21 실측).
 
+- **GIF 모드**(2026-11-21, 헤더 「GIF」 버튼 · localStorage `jjal_settings.gifMode`): 텔레그램은 webp 움짤을 「파일」로만 보여줘서 만든 것. 켜면 움짤 복사·저장 때 **누른 짤 하나만 브라우저에서 webp → GIF 로 변환**(`src/utils/webpToGif.js`, WebCodecs `ImageDecoder` + `gifenc` — https·localhost 에서만 동작, 그래서 http 개발 주소에선 실패 안내가 뜬다). 윈도우 도우미 v1.4+(`/copy-data`)면 클립보드로, 아니면 GIF 파일 다운로드. 🚫 GIF 를 미리 만들어 두지 말 것 — 87개 전부 변환하면 349MB·8분 30초(실측).
+
 - 한글 파일 경로는 절대 만들지 말 것(배포 후 이미지 깨짐의 과거 원인). 표시 텍스트(이름/태그/감정/상황)는 한글 가능하지만 반드시 NFC 정규화.
 - `public/assets/data/*.js`는 `.gitignore`에서 제외되어 있어 새 스크립트를 추가해도 정상적으로 git에 추적된다.
 - 이 컴퓨터의 전역 `yarn` 은 1.22 인데 저장소는 yarn 4(lockfile v8)다. 패키지 설치는 `corepack yarn@4.9.4 install` 로 한다. 스크립트 실행(`yarn dev`/`test`/`build`)은 1.22 로도 동작한다.

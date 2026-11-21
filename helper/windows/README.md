@@ -27,6 +27,7 @@ jjal storage 에서 짤을 **클릭 한 번** → 원본(움직이는 GIF 그대
 
 ## 동작
 - 사이트가 `GET /ping` 으로 감지 → 클릭 시 `POST /copy {"url","name"}`
+- **v1.4+ GIF 모드**: 사이트가 움짤을 브라우저에서 webp → GIF 로 바꿔 `POST /copy-data?name=<이름.gif>`(본문 = GIF 바이트, `Content-Type: image/gif`)로 보낸다. `/ping` 응답의 `features: ["copy-data"]` 로 지원 여부를 알린다 (텔레그램은 webp 를 파일로만 보여줘서 생긴 기능). 옛 도우미·맥 WebPCap 이면 사이트가 GIF 파일을 다운로드로 준다
 - 원본을 끝까지 받은 뒤 탐색기 `Ctrl+C` 와 같은 형태(파일 드롭 목록)로 클립보드에 올린다
   (브라우저는 보안상 클립보드에 파일을 못 넣고, 드래그 앤 드롭은 빈 파일이 갈 수 있어서 만든 방식)
 - `127.0.0.1` 에만 열리고, 허용 사이트(jjal Amplify 도메인·개발 서버)의 요청만 받는다. `image/*` · 100MB 이하만

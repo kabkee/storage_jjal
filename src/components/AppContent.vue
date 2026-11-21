@@ -16,6 +16,9 @@
                     @click="toggleTheme()">
                     <v-icon size="20">{{ isDark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
                 </button>
+                <button class="icon-btn gif-btn" :class="{ on: settings.gifMode }" :aria-pressed="settings.gifMode"
+                    :title="settings.gifMode ? 'GIF 모드 켜짐 — 움짤을 GIF 로 복사·저장해요 (누르면 끄기)' : 'GIF 모드: 움짤을 GIF 로 복사·저장 (텔레그램용)'"
+                    @click="toggleGifMode()">GIF</button>
                 <button class="icon-btn square" title="설정" aria-label="설정" @click="settingsOpen = true">
                     <v-icon size="20">mdi-cog-outline</v-icon>
                 </button>
@@ -285,6 +288,7 @@ import { onMounted, onUnmounted, ref, computed, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router';
 import { useDisplay, useTheme } from 'vuetify';
 import { matchesSearch, matchesFacetFilters } from '@/utils/imageFilter';
+import { canConvertToGif, webpToGif } from '@/utils/webpToGif';
 import { parseFilterQuery, buildFilterQuery, recentIds, orderByIds } from '@/utils/urlState';
 
 const { width } = useDisplay();
@@ -559,7 +563,8 @@ const ACCENTS = [
     ['#F5C400', '노랑'], ['#12B886', '초록'], ['#15AABF', '청록'], ['#495057', '먹색'],
 ];
 const THEME_OPTIONS = [['system', '🖥 시스템'], ['light', '☀️ 라이트'], ['dark', '🌙 다크']];
-const SETTINGS_DEFAULTS = { theme: 'system', accent: '#3B6CF6' };
+// gifMode: 움짤을 GIF 로 바꿔 복사·저장 (텔레그램은 webp 를 파일로만 보여줌). 평소엔 꺼 두고 필요할 때만 켠다
+const SETTINGS_DEFAULTS = { theme: 'system', accent: '#3B6CF6', gifMode: false };
 const loadSettings = () => {
     try { return { ...SETTINGS_DEFAULTS, ...JSON.parse(localStorage.getItem('jjal_settings') || '{}') }; }
     catch { return { ...SETTINGS_DEFAULTS }; }
@@ -596,6 +601,14 @@ watch([settings, isDark], () => {
 const setTheme = (v) => { settings.value.theme = v; };
 const toggleTheme = () => { settings.value.theme = isDark.value ? 'light' : 'dark'; };
 const setAccent = (c) => { settings.value.accent = c; };
+const toggleGifMode = () => {
+    settings.value.gifMode = !settings.value.gifMode;
+    appSnackbars.value.showSnackbar({
+        message: settings.value.gifMode
+            ? 'GIF 모드 켜짐 — 움짤을 GIF 로 바꿔 복사·저장해요 (텔레그램용)'
+            : 'GIF 모드 꺼짐 — 움짤을 원래대로 webp 로 복사해요',
+    });
+};
 const resetSettings = () => {
     settings.value = { ...SETTINGS_DEFAULTS };
     localStorage.removeItem('jjal_settings');
@@ -664,6 +677,7 @@ const WEBPCAP = 'http://127.0.0.1:47321';
 const HELPER_APPS = ['WebPCap', 'JjalCopy'];
 const WIN_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/latest/download/JjalCopySetup.exe';
 const webpcapReady = ref(false);
+const helperFeatures = ref([]);   // 윈도우 도우미 v1.4+ 는 ["copy-data"] (= GIF 모드로 바꾼 파일을 직접 받음)
 const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
 const isMac = /Mac/i.test(platformStr) && navigator.maxTouchPoints <= 1;   // iPad(데스크톱 모드) 제외
 const isWindows = /Win/i.test(platformStr);
@@ -673,9 +687,12 @@ const probeWebPCap = async () => {
     if (!isMac && !isWindows) return;
     try {
         const r = await fetch(`${WEBPCAP}/ping`, { signal: AbortSignal.timeout(800) });
-        webpcapReady.value = HELPER_APPS.includes((await r.json())?.app);
+        const j = await r.json();
+        webpcapReady.value = HELPER_APPS.includes(j?.app);
+        helperFeatures.value = Array.isArray(j?.features) ? j.features : [];
     } catch {
         webpcapReady.value = false;
+        helperFeatures.value = [];
     }
 };
 onMounted(() => {
@@ -713,6 +730,75 @@ const copyViaWebPCap = async (image, where) => {
     }
 };
 
+// ── GIF 모드: 누른 움짤 하나만 브라우저에서 webp → GIF 로 바꿔 도우미에 넘기거나 파일로 저장 ──
+// 도우미(윈도우 v1.4+)가 /copy-data 를 지원하면 클립보드로, 아니면(맥 WebPCap·도우미 없음·모바일) GIF 파일 다운로드.
+const gifCache = new Map();   // file → Promise<Blob> (최근 5개만)
+const getGif = (image) => {
+    let p = gifCache.get(image.file);
+    if (!p) {
+        p = webpToGif(withLeadingSlash(image.file));
+        p.catch(() => gifCache.delete(image.file));
+        gifCache.set(image.file, p);
+        if (gifCache.size > 5) gifCache.delete(gifCache.keys().next().value);
+    }
+    return p;
+};
+const gifName = (image) => `${image.name || 'jjal'}.gif`;
+const saveBlob = (blob, name) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 60_000);
+};
+const convertForGifMode = async (image) => {
+    if (!canConvertToGif()) {
+        appSnackbars.value.showSnackbar({
+            message: '이 브라우저는 GIF 변환을 못 해요 — 크롬·엣지 최신 버전에서 써 주세요 (GIF 모드를 끄면 webp 로 받아요)',
+            type: 'error',
+        });
+        return null;
+    }
+    const cached = gifCache.has(image.file);
+    if (!cached) appSnackbars.value.showSnackbar({ message: `"${image.name}" GIF 로 바꾸는 중…`, timeout: 1800 });
+    try {
+        return await getGif(image);
+    } catch (e) {
+        appSnackbars.value.showSnackbar({ message: `GIF 변환 실패: ${e.message}`, type: 'error' });
+        return null;
+    }
+};
+let lastGifCopy = { file: '', at: 0 };
+const copyAsGif = async (image, where) => {
+    const now = Date.now();
+    if (lastGifCopy.file === image.file && now - lastGifCopy.at < 1500) return;   // 더블클릭 중복 방지
+    lastGifCopy = { file: image.file, at: now };
+
+    const blob = await convertForGifMode(image);
+    if (!blob) return;
+    const mb = (blob.size / 1e6).toFixed(1);
+    if (webpcapReady.value && helperFeatures.value.includes('copy-data')) {
+        try {
+            const r = await fetch(`${WEBPCAP}/copy-data?name=${encodeURIComponent(gifName(image))}`, {
+                method: 'POST', headers: { 'Content-Type': 'image/gif' }, body: blob,
+            });
+            const j = await r.json().catch(() => ({}));
+            if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
+            flashCopied(image, where);
+            appSnackbars.value.showSnackbar({ message: `"${image.name}" GIF(${mb}MB) 복사 완료 — 텔레그램에서 ${pasteKey}` });
+            return;
+        } catch (e) {
+            appSnackbars.value.showSnackbar({ message: `도우미로 복사 실패(${e.message}) — GIF 파일로 저장할게요`, type: 'warning' });
+            probeWebPCap();
+        }
+    }
+    saveBlob(blob, gifName(image));
+    flashCopied(image, where);
+    appSnackbars.value.showSnackbar({ message: `"${image.name}" GIF(${mb}MB) 저장 — 받은 파일을 텔레그램에 끌어다 놓기` });
+};
+
 // 도우미 없이 움짤을 눌렀을 때 띄우는 안내 창. 「다음부터 안 띄우기」를 고르면 예전처럼 짧은 안내만 한다
 const HELPER_GUIDE_MUTE_KEY = 'jjal.helperGuideMuted';
 const helperGuide = ref({ show: false, name: '', mute: false });
@@ -727,6 +813,7 @@ const closeHelperGuide = () => {
 const copyImageToClipboard = async (image, where = 'g') => {
     addFavImage(image.file);
 
+    if (isAnimated(image) && settings.value.gifMode) return copyAsGif(image, where);
     if (isAnimated(image)) {
         // 움짤만 도우미로: 원본 파일을 클립보드에 넣고 「끌어다 놓기」 창을 띄운다 (윈도우 카톡은 파일 붙여넣기를 안 받음)
         if (webpcapReady.value) return copyViaWebPCap(image, where);
@@ -825,7 +912,14 @@ const onThumbDragEnd = (e, image) => {
     if (!el.matches(':hover')) restoreThumb(el, image);
 };
 
-const downloadImage = (image) => {
+const downloadImage = async (image) => {
+    if (isAnimated(image) && settings.value.gifMode) {
+        const blob = await convertForGifMode(image);
+        if (!blob) return;
+        saveBlob(blob, gifName(image));
+        appSnackbars.value.showSnackbar({ message: `"${image.name}" 를 GIF 로 다운로드 합니다.` });
+        return;
+    }
     const a = document.createElement('a');
     a.href = withLeadingSlash(image.file);
     a.download = `${image.name || 'jjal'}.${(image.file.split('.').pop() || 'webp').toLowerCase()}`;
@@ -877,6 +971,7 @@ body, .v-application {
 .search-clear { color: var(--sub) !important; padding: 4px; }
 .icon-btn { height: 44px; padding: 0 14px; border-radius: 12px; background: var(--surface) !important; border: 1.5px solid var(--line) !important; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; white-space: nowrap; }
 .icon-btn.square { width: 44px; padding: 0; justify-content: center; }
+.icon-btn.gif-btn { width: 52px; padding: 0; justify-content: center; font-size: 13px; font-weight: 800; letter-spacing: .5px; }
 .icon-btn.on { background: var(--accent) !important; color: var(--on-accent) !important; border-color: var(--accent) !important; }
 
 /* ── 필터 줄 ── */

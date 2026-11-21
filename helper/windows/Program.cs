@@ -58,7 +58,7 @@ namespace JjalCopy
             if (args.Length >= 1 && args[0] == "--selftest")
             {
                 int secs = args.Length > 1 && int.TryParse(args[1], out var s) ? s : 20;
-                var b = new Bridge((src, name) => Copier.Download(src, name).ContinueWith(t => Path.GetFileName(t.Result)));
+                var b = new Bridge(getPath => getPath().ContinueWith(t => Path.GetFileName(t.Result)));
                 b.Start();
                 Thread.Sleep(secs * 1000);
                 return 0;
@@ -246,10 +246,10 @@ namespace JjalCopy
 
         void Notify(string text, ToolTipIcon icon) => tray.ShowBalloonTip(5000, Program.DisplayName, text, icon);
 
-        /// 원본 다운로드(백그라운드) → 클립보드(UI 스레드)
-        async Task<string> CopyToClipboard(Uri src, string name)
+        /// 원본 다운로드 또는 사이트가 보낸 파일(GIF 모드) 저장(백그라운드) → 클립보드(UI 스레드)
+        async Task<string> CopyToClipboard(Func<Task<string>> getPath)
         {
-            var path = await Copier.Download(src, name);
+            var path = await getPath();
             ui.Invoke((Action)(() =>
             {
                 // 탐색기 Ctrl+C 와 같은 셸 데이터 객체 → 실패 시 WinForms 파일 드롭 목록
@@ -469,6 +469,18 @@ namespace JjalCopy
             }
         }
 
+        /// 사이트가 직접 보낸 파일(GIF 모드에서 브라우저가 webp → GIF 로 바꾼 것)을 임시 폴더에 저장
+        public static string Save(byte[] bytes, string name)
+        {
+            if (bytes == null || bytes.Length == 0) throw new Exception("빈 파일을 받았어요");
+            if (bytes.Length > MaxBytes) throw new Exception("파일이 너무 커요 (100MB 초과)");
+            var dir = Path.Combine(Program.TempRoot, Guid.NewGuid().ToString("N").Substring(0, 12));
+            Directory.CreateDirectory(dir);
+            var path = Path.Combine(dir, name);
+            File.WriteAllBytes(path, bytes);
+            return path;
+        }
+
         /// 하루 지난 임시 파일 정리
         public static void CleanOld()
         {
@@ -499,13 +511,19 @@ namespace JjalCopy
     /// 127.0.0.1 전용 최소 HTTP 서버. 허용 Origin 에만 CORS 로 응답한다.
     ///   GET  /ping               → {"app":"JjalCopy","version":"1.0.0","os":"windows"}
     ///   POST /copy {"url","name"} → {"ok":true,"name":"이름.gif"}
+    ///   POST /copy-data?name=<이름.gif>  (본문 = 이미지 바이트, Content-Type: image/*) → 같은 응답
+    ///        사이트의 「GIF 모드」가 브라우저에서 webp 움짤을 GIF 로 바꿔 보낸다 (텔레그램은 webp 를 파일로만 보여줌)
     sealed class Bridge
     {
-        readonly Func<Uri, string, Task<string>> onCopy;
+        const int MaxJsonBody = 64 * 1024;
+        const int MaxDataBody = 100 * 1024 * 1024;
+        static readonly string[] Features = { "copy-data" };
+        // 인자: 클립보드에 올릴 파일의 경로를 만들어 주는 함수 (다운로드 또는 받은 바이트 저장)
+        readonly Func<Func<Task<string>>, Task<string>> onCopy;
         readonly JavaScriptSerializer json = new JavaScriptSerializer();
         TcpListener listener;
 
-        public Bridge(Func<Uri, string, Task<string>> onCopy) { this.onCopy = onCopy; }
+        public Bridge(Func<Func<Task<string>>, Task<string>> onCopy) { this.onCopy = onCopy; }
 
         public void Start()
         {
@@ -557,14 +575,20 @@ namespace JjalCopy
                         if (i > 0) headers[l.Substring(0, i).Trim()] = l.Substring(i + 1).Trim();
                     }
                     int len = headers.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out var v) ? v : 0;
-                    if (len > 64 * 1024) return;
-                    while (buf.Count - headerEnd - 4 < len)
+                    bool isData = first[1].StartsWith("/copy-data", StringComparison.Ordinal);
+                    if (len < 0 || len > (isData ? MaxDataBody : MaxJsonBody)) return;
+                    // 본문은 정확한 크기의 배열에 바로 받는다 (GIF 는 수십 MB 일 수 있어 List<byte> 로 쌓으면 느림)
+                    var body = new byte[len];
+                    int got = Math.Min(len, buf.Count - headerEnd - 4);
+                    buf.CopyTo(headerEnd + 4, body, 0, got);
+                    if (isData) stream.ReadTimeout = 30000;
+                    while (got < len)
                     {
-                        int n = await stream.ReadAsync(tmp, 0, tmp.Length);
+                        int n = await stream.ReadAsync(body, got, len - got);
                         if (n <= 0) break;
-                        buf.AddRange(tmp.Take(n));
+                        got += n;
                     }
-                    var body = Encoding.UTF8.GetString(buf.Skip(headerEnd + 4).Take(len).ToArray());
+                    if (got < len) return;
 
                     var (status, payload, origin) = await Route(first[0], first[1], headers, body);
                     await Send(stream, status, payload, origin);
@@ -590,15 +614,37 @@ namespace JjalCopy
             return Uri.TryCreate(o, UriKind.Absolute, out var u) && Program.AllowedHosts.Contains(u.Host.ToLowerInvariant()) ? o : null;
         }
 
-        async Task<(int, object, string)> Route(string method, string path, Dictionary<string, string> h, string body)
+        async Task<(int, object, string)> Route(string method, string target, Dictionary<string, string> h, byte[] rawBody)
         {
+            int q = target.IndexOf('?');
+            var path = q < 0 ? target : target.Substring(0, q);
+            var query = q < 0 ? "" : target.Substring(q + 1);
             var origin = AllowedOrigin(h);
             if (origin == null) return (403, new { error = "origin not allowed" }, null);
             if (method == "OPTIONS") return (204, null, origin);
             if (method == "GET" && path == "/ping")
-                return (200, new { app = Program.AppName, version = Program.Version, os = "windows" }, origin);
+                return (200, new { app = Program.AppName, version = Program.Version, os = "windows", features = Features }, origin);
+            if (method == "POST" && path == "/copy-data")
+            {
+                var type = h.TryGetValue("Content-Type", out var ct) ? ct.Split(';')[0].Trim() : "";
+                if (!type.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
+                    return (415, new { ok = false, error = $"이미지가 아니에요 ({type})" }, origin);
+                string rawName = null;
+                foreach (var kv in query.Split('&'))
+                    if (kv.StartsWith("name=", StringComparison.Ordinal))
+                        rawName = Uri.UnescapeDataString(kv.Substring(5).Replace('+', ' '));
+                var ext = type.Substring(6).ToLowerInvariant();
+                var name = Copier.SafeName(rawName, new Uri("http://local/file." + (ext == "jpeg" ? "jpg" : ext)));
+                try
+                {
+                    var saved = await onCopy(() => Task.Run(() => Copier.Save(rawBody, name)));
+                    return (200, new { ok = true, name = saved, hint = Prefs.ShowDragPopup ? "drag" : "paste" }, origin);
+                }
+                catch (Exception e) { return (502, new { ok = false, error = (e.InnerException ?? e).Message }, origin); }
+            }
             if (method == "POST" && path == "/copy")
             {
+                var body = Encoding.UTF8.GetString(rawBody);
                 Dictionary<string, object> req;
                 try { req = json.Deserialize<Dictionary<string, object>>(body); } catch { req = null; }
                 if (req == null || !(req.TryGetValue("url", out var u) && u is string raw)
@@ -610,7 +656,7 @@ namespace JjalCopy
                 var name = Copier.SafeName(req.TryGetValue("name", out var n) ? n as string : null, src);
                 try
                 {
-                    var saved = await onCopy(src, name);
+                    var saved = await onCopy(() => Copier.Download(src, name));
                     return (200, new { ok = true, name = saved, hint = Prefs.ShowDragPopup ? "drag" : "paste" }, origin);
                 }
                 catch (Exception e) { return (502, new { ok = false, error = (e.InnerException ?? e).Message }, origin); }
