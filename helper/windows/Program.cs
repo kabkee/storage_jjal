@@ -24,6 +24,8 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace JjalCopy
 {
@@ -98,6 +100,51 @@ namespace JjalCopy
         {
             using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream("app.ico"))
                 return s != null ? new Icon(s) : SystemIcons.Application;
+        }
+    }
+
+    /// 탐색기가 파일을 복사·드래그할 때 쓰는 「셸 데이터 객체」를 만든다.
+    /// WinForms DataObject(FileDrop)와 달리 Shell IDList Array·FileContents·FileGroupDescriptorW 까지 들어가
+    /// 탐색기에서 직접 끄는 것과 같은 형식이 된다. 실패하면 null (호출한 쪽이 WinForms 방식으로 폴백).
+    static class ShellData
+    {
+        [ComImport, Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        interface IShellItem
+        {
+            void BindToHandler(IntPtr pbc, [In] ref Guid bhid, [In] ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppv);
+        }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        static extern void SHCreateItemFromParsingName(string path, IntPtr pbc, [In] ref Guid riid, out IShellItem item);
+        [DllImport("ole32.dll")] static extern int OleSetClipboard(IComDataObject pDataObj);
+        [DllImport("ole32.dll")] static extern int OleFlushClipboard();
+
+        static Guid IID_IShellItem = new Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe");
+        static Guid BHID_DataObject = new Guid("B8C0BD9F-ED24-455c-83E6-D5390C4FE8C4");
+        static Guid IID_IDataObject = new Guid("0000010e-0000-0000-C000-000000000046");
+
+        public static IComDataObject For(string path)
+        {
+            try
+            {
+                SHCreateItemFromParsingName(path, IntPtr.Zero, ref IID_IShellItem, out var item);
+                item.BindToHandler(IntPtr.Zero, ref BHID_DataObject, ref IID_IDataObject, out var obj);
+                return obj as IComDataObject;
+            }
+            catch { return null; }
+        }
+
+        /// 클립보드에 셸 데이터 객체를 올리고 고정(flush)한다. 성공하면 true
+        public static bool SetClipboard(string path)
+        {
+            var d = For(path);
+            if (d == null) return false;
+            for (int i = 0; i < 10; i++)
+            {
+                if (OleSetClipboard(d) == 0) { OleFlushClipboard(); return true; }
+                Thread.Sleep(100);   // 다른 프로그램이 클립보드를 잡고 있으면 잠깐 기다렸다 재시도
+            }
+            return false;
         }
     }
 
@@ -229,11 +276,14 @@ namespace JjalCopy
             var path = await Copier.Download(src, name);
             ui.Invoke((Action)(() =>
             {
-                var files = new StringCollection { path };
-                var data = new DataObject();
-                data.SetFileDropList(files);
-                data.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1))); // DROPEFFECT_COPY
-                Clipboard.SetDataObject(data, true, 10, 100);
+                // 탐색기 Ctrl+C 와 같은 셸 데이터 객체 → 실패 시 WinForms 파일 드롭 목록
+                if (!ShellData.SetClipboard(path))
+                {
+                    var data = new DataObject();
+                    data.SetFileDropList(new StringCollection { path });
+                    data.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1))); // DROPEFFECT_COPY
+                    Clipboard.SetDataObject(data, true, 10, 100);
+                }
                 if (Prefs.ShowDragPopup) DragPopup.ShowFor(path);
             }));
             return Path.GetFileName(path);
@@ -359,10 +409,16 @@ namespace JjalCopy
             if (Math.Abs(p.X - downAt.X) < d.Width && Math.Abs(p.Y - downAt.Y) < d.Height) return;
             pressed = false;
             life.Stop();
-            var data = new DataObject();
-            data.SetFileDropList(new StringCollection { path });
-            data.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1)));
-            var result = DoDragDrop(data, DragDropEffects.Copy);
+            // 탐색기에서 파일을 끄는 것과 같은 셸 데이터 객체로 드래그 (카톡 등이 탐색기 드롭만 받는 경우 대비)
+            object data = ShellData.For(path);
+            if (data == null)
+            {
+                var fallback = new DataObject();
+                fallback.SetFileDropList(new StringCollection { path });
+                fallback.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1)));
+                data = fallback;
+            }
+            var result = DoDragDrop(data, DragDropEffects.Copy | DragDropEffects.Link);
             if (result != DragDropEffects.None) Close();
             else life.Start();
         }

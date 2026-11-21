@@ -9,16 +9,26 @@ const taxonomy = {
 describe('parseFilterQuery', () => {
   it('returns empty state for empty query', () => {
     expect(parseFilterQuery({}, taxonomy)).toEqual({
-      search: null, emotion: [], situation: [], excludeGif: null, ids: []
+      search: null, emotion: [], situation: [], motion: null, ids: []
     })
   })
 
-  it('parses search, comma lists and nogif', () => {
+  it('parses search, comma lists and motion', () => {
     expect(parseFilterQuery({
-      search: '카드', emotion: '웃김,놀람/충격', situation: '한턱/쏘기', nogif: '1'
+      search: '카드', emotion: '웃김,놀람/충격', situation: '한턱/쏘기', motion: 'anim'
     }, taxonomy)).toEqual({
-      search: '카드', emotion: ['웃김', '놀람/충격'], situation: ['한턱/쏘기'], excludeGif: true, ids: []
+      search: '카드', emotion: ['웃김', '놀람/충격'], situation: ['한턱/쏘기'], motion: 'anim', ids: []
     })
+  })
+
+  it('reads legacy nogif links as motion filter', () => {
+    expect(parseFilterQuery({ nogif: '1' }, taxonomy).motion).toBe('still')
+    expect(parseFilterQuery({ nogif: '0' }, taxonomy).motion).toBe('all')
+    expect(parseFilterQuery({ motion: 'still', nogif: '0' }, taxonomy).motion).toBe('still')
+  })
+
+  it('ignores unknown motion values', () => {
+    expect(parseFilterQuery({ motion: 'video' }, taxonomy).motion).toBe(null)
   })
 
   it('drops tags not in taxonomy and duplicates', () => {
@@ -31,9 +41,6 @@ describe('parseFilterQuery', () => {
       .toMatchObject({ emotion: ['웃김'], search: '카드' })
   })
 
-  it('treats nogif=0 as explicit false', () => {
-    expect(parseFilterQuery({ nogif: '0' }, taxonomy).excludeGif).toBe(false)
-  })
 
   it('uses first value when a param is repeated', () => {
     expect(parseFilterQuery({ search: ['a', 'b'] }, taxonomy).search).toBe('a')
@@ -42,11 +49,11 @@ describe('parseFilterQuery', () => {
 
 describe('buildFilterQuery', () => {
   it('omits empty values', () => {
-    expect(buildFilterQuery({ search: '', emotion: [], situation: [], excludeGif: false })).toEqual({})
+    expect(buildFilterQuery({ search: '', emotion: [], situation: [], motion: 'all' })).toEqual({})
   })
 
   it('round-trips through parseFilterQuery', () => {
-    const state = { search: '카드', emotion: ['놀람/충격'], situation: ['한턱/쏘기', '인사'], excludeGif: true, ids: ['311', '9'] }
+    const state = { search: '카드', emotion: ['놀람/충격'], situation: ['한턱/쏘기', '인사'], motion: 'still', ids: ['311', '9'] }
     expect(parseFilterQuery(buildFilterQuery(state), taxonomy)).toEqual(state)
   })
 })

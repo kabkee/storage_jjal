@@ -65,7 +65,7 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 
 - `file`: 클립보드 복사/다운로드에 쓰이는 원본. **항상 `assets/webp/<UUID>.webp`** (2026-11-21 전체 webp 전환: 305MB→66MB, 22%). 한글 금지.
 - `md5`: 업로드 원본의 md5. 관리 화면 「이미 등록된 짤」 감지가 webp 변환본이 아니라 원본끼리 비교하도록 남긴다.
-- `animated`: 움직이는 짤이면 `true`. 사이트의 GIF 배지·「GIF 제외」(`nogif`)·복사 동작이 확장자 대신 이걸 본다. (`sources/gif.json` = 원래 GIF 였던 짤)
+- `animated`: 움직이는 짤이면 `true`. 사이트의 「움짤」 배지·「전체/정지/움짤」 필터(`motion`)·복사 동작이 확장자 대신 이걸 본다. (`sources/gif.json` = 원래 GIF 였던 짤)
 - `added`: 추가 날짜(YYYY-MM-DD). `yarn import-images` 가 자동으로 넣는다. "최근 추가 N개"가 이걸 먼저 본다(옛 짤엔 없음). id는 2026-10-02 중복 정리로 옛 짤 18개가 312~329 를 받아서 id 순서만으로는 최근 판단이 안 된다.
 - `thumb`: 그리드 표시 전용 경량 썸네일. GIF 원본이면 움직이는 webp, 아니면 정지 webp. 프론트엔드는 `img.thumb || img.file`로 우선 썸네일을 쓰고 없으면 원본 폴백.
 - 기존 ~310개 레거시 이미지(2026-01-01 이전에 들어온 것들)는 `category_1`/`category_2`(파일형식) 필드가 남아있지만 프론트엔드는 더 이상 참조하지 않는 죽은 필드다 — 지우지 않아도 무해함.
@@ -74,7 +74,7 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 
 history 라우터라 `/?...` 형태(2026-10-02 해시 라우터에서 전환 — 카카오톡이 `#` 들어간 링크는 미리보기를 안 만든다. 예전 `#/?...` 링크는 `src/router/index.js` 가 해시 없는 주소로 바꿔 준다). 상태↔URL 변환은 `src/utils/urlState.js`(테스트 있음).
 
-- `search=카드` 검색어 / `emotion=웃김,황당` · `situation=한턱/쏘기` 칩 필터(쉼표 구분, taxonomy에 없는 값은 무시) / `nogif=1` GIF 제외
+- `search=카드` 검색어 / `emotion=웃김,황당` · `situation=한턱/쏘기` 칩 필터(쉼표 구분, taxonomy에 없는 값은 무시) / `motion=still`(정지 이미지만) · `motion=anim`(움짤만) — 옛 링크 `nogif=1` 은 `motion=still` 로 읽음
 - `ids=309,310,311` 골라서 공유한 짤만 그 순서대로 표시. 검색창의 공유 아이콘 → 선택 모드 → "링크 복사". "최근 추가 N개"는 id 큰 순(= 최근 추가).
 - 1개만 골라 공유하면 `/s/<id>.html` 링크가 복사된다. `yarn build` 마지막에 `generate-share-pages.js` 가 짤마다 정적 페이지를 `dist/s/`에 만들고, 열면 `/?ids=<id>` 로 넘어간다. **og:image 는 원본 webp 가 아니라 빌드 때 만든 `dist/s/<id>.jpg`(첫 프레임, 최대 800px)** — 미리보기 봇이 webp·애니메이션을 못 읽을 수 있어서. **Amplify 재작성 규칙의 예외 확장자에 `html|xml` 이 있어야 동작**(없으면 index.html 로 덮임, 2026-10-02 추가).
 - 링크 미리보기(OG 태그)는 `index.html`에 정적으로 있음. 검색·필터·여러 개 공유 링크는 모두 같은 대표 카드(`public/og-image.jpg`, 1200x630)를 쓴다.

@@ -76,11 +76,16 @@
                     </div>
                     <div class="d-flex align-center">
                         <a v-if="showWinHelperLink" :href="WIN_HELPER_URL" class="helper-link mr-4"
-                            title="설치하면 짤을 클릭 한 번으로 원본(움직이는 GIF) 복사 → 카톡에서 Ctrl+V. 「Windows의 PC 보호」 창이 뜨면 「추가 정보 → 실행」">
+                            title="설치하면 짤을 클릭 한 번으로 원본(움짤 포함) 복사 → 카톡에서 Ctrl+V. 「Windows의 PC 보호」 창이 뜨면 「추가 정보 → 실행」">
                             <v-icon size="16">mdi-download</v-icon> 원클릭 복사 프로그램
                         </a>
-                        <v-switch v-model="excludeGif" hide-details inset color="primary" class="mr-2" />
-                        <span>GIF 제외</span>
+                        <!-- 정지 이미지(클릭하면 바로 복사)와 움짤을 나눠 보기. webp 전환 후 확장자로는 구분이 안 돼서 데이터의 animated 를 본다 -->
+                        <v-btn-toggle v-model="motionFilter" mandatory density="compact" variant="outlined" divided
+                            color="primary" class="motion-toggle">
+                            <v-btn value="all" size="small">전체</v-btn>
+                            <v-btn value="still" size="small" title="움직이지 않는 이미지만 (클릭하면 바로 복사)">정지</v-btn>
+                            <v-btn value="anim" size="small" title="움직이는 짤만">움짤</v-btn>
+                        </v-btn-toggle>
                     </div>
                 </div>
                 <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
@@ -95,7 +100,7 @@
                             <div v-if="selectMode" class="select-mark">
                                 <v-icon size="18" :icon="selectedIds.includes(img.id) ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline'"></v-icon>
                             </div>
-                            <div v-if="isAnimated(img)" class="gif-badge">GIF</div>
+                            <div v-if="isAnimated(img)" class="gif-badge">움짤</div>
                             <div class="hover-text">{{ img.name }}</div>
                         </div>
                     </template>
@@ -109,7 +114,7 @@
                             @dragstart="onThumbDragStart($event, img)" @dragend="onThumbDragEnd($event, img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
-                            <div v-if="isAnimated(img)" class="gif-badge">GIF</div>
+                            <div v-if="isAnimated(img)" class="gif-badge">움짤</div>
                             <div class="hover-text">{{ img.name }}</div>
                             <div class="delete" @click="deleteFromFav($event, img)">X</div>
                         </div>
@@ -183,7 +188,7 @@ const selectedSituation = ref([]);
 const favImageIdxs = ref([]);
 const isShowFav = ref(false);
 const appSnackbars = ref(null);
-const excludeGif = ref(null);
+const motionFilter = ref('all');   // 'all' | 'still'(정지만) | 'anim'(움짤만)
 const showFilterSheet = ref(false);
 // 공유 링크(/?ids=...)로 들어왔을 때 보여줄 짤 id 목록 (URL과 동기화)
 const sharedIds = ref([]);
@@ -250,23 +255,25 @@ onMounted(async () => {
         }
     }
 
-    const stored = localStorage.getItem('excludeGif');
-    excludeGif.value = stored ? stored === '1' : false;
+    // 옛 설정(excludeGif=1)은 「정지만」으로 이어받는다
+    const stored = localStorage.getItem('motionFilter');
+    motionFilter.value = ['all', 'still', 'anim'].includes(stored) ? stored
+        : (localStorage.getItem('excludeGif') === '1' ? 'still' : 'all');
 
     applyFilterQuery(route.query, { initial: true });
     urlSyncReady.value = true;
 });
 
-// URL(/?search=카드&emotion=웃김,황당&situation=한턱/쏘기&nogif=1) -> 화면 상태
-// initial: 첫 진입 때만 nogif가 없으면 저장된(localStorage) GIF 설정을 유지한다.
-// 그 이후엔 상태가 항상 URL에 반영돼 있으므로 nogif가 없으면 꺼진 것이다 (뒤로가기 대응).
+// URL(/?search=카드&emotion=웃김,황당&situation=한턱/쏘기&motion=still) -> 화면 상태
+// initial: 첫 진입 때만 motion 이 없으면 저장된(localStorage) 설정을 유지한다.
+// 그 이후엔 상태가 항상 URL에 반영돼 있으므로 motion 이 없으면 「전체」다 (뒤로가기 대응).
 const applyFilterQuery = (query, { initial = false } = {}) => {
     const parsed = parseFilterQuery(query, taxonomy.value);
     search.value = parsed.search;
     selectedEmotion.value = parsed.emotion;
     selectedSituation.value = parsed.situation;
-    if (parsed.excludeGif !== null) excludeGif.value = parsed.excludeGif;
-    else if (!initial) excludeGif.value = false;
+    if (parsed.motion !== null) motionFilter.value = parsed.motion;
+    else if (!initial) motionFilter.value = 'all';
     sharedIds.value = parsed.ids;
     if (parsed.ids.length) isShowFav.value = false;
 };
@@ -275,7 +282,7 @@ const currentFilterQuery = () => buildFilterQuery({
     search: search.value,
     emotion: selectedEmotion.value,
     situation: selectedSituation.value,
-    excludeGif: excludeGif.value,
+    motion: motionFilter.value,
     ids: sharedIds.value
 });
 
@@ -284,8 +291,8 @@ const sameQuery = (a, b) => {
     return norm(a) === norm(b);
 };
 
-// 화면 상태 -> URL (검색어 입력/칩 클릭/GIF 스위치 모두 반영, 히스토리는 쌓지 않음)
-watch([search, selectedEmotion, selectedSituation, excludeGif, sharedIds], () => {
+// 화면 상태 -> URL (검색어 입력/칩 클릭/정지·움짤 필터 모두 반영, 히스토리는 쌓지 않음)
+watch([search, selectedEmotion, selectedSituation, motionFilter, sharedIds], () => {
     if (!urlSyncReady.value) return;
     const query = currentFilterQuery();
     if (!sameQuery(query, route.query)) router.replace({ query });
@@ -300,8 +307,8 @@ watch(() => route.query, (query) => {
 watch(favImageIdxs, (newValue) => {
     newValue && Array.isArray(newValue) && localStorage.setItem('favImageIdxs', newValue.join(','));
 })
-watch(excludeGif, (newValue) => {
-    localStorage.setItem('excludeGif', newValue ? '1' : '0');
+watch(motionFilter, (newValue) => {
+    localStorage.setItem('motionFilter', newValue || 'all');
 })
 
 const favImages = computed(() => {
@@ -324,10 +331,9 @@ const filteredImages = computed(() => {
     if (search.value) {
         filtered = filtered.filter(img => matchesSearch(img, search.value));
     }
-    // 공유받은 짤은 받는 사람의 'GIF 제외' 설정 때문에 숨겨지지 않게 한다
-    if (excludeGif.value && !isShared) {
-        filtered = filtered.filter(img => !isAnimated(img));
-    }
+    // 공유받은 짤은 받는 사람의 정지/움짤 설정 때문에 숨겨지지 않게 한다
+    if (!isShared && motionFilter.value === 'still') filtered = filtered.filter(img => !isAnimated(img));
+    if (!isShared && motionFilter.value === 'anim') filtered = filtered.filter(img => isAnimated(img));
     return filtered;
 })
 
