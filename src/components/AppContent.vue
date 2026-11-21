@@ -458,7 +458,11 @@ const copyViaWebPCap = async (image) => {
         });
         const j = await r.json().catch(() => ({}));
         if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
-        appSnackbars.value.showSnackbar({ message: `"${image.name}" 원본 복사 완료 — 카톡·Slack에서 ${pasteKey}` });
+        // 윈도우 카톡은 클립보드 파일 붙여넣기를 안 받아서, 도우미가 띄운 미리보기 창을 끌어다 놓게 안내
+        const how = j.hint === 'drag'
+            ? `옆에 뜬 창을 카톡으로 끌어다 놓기 (탐색기·Slack은 ${pasteKey})`
+            : `카톡·Slack에서 ${pasteKey}`;
+        appSnackbars.value.showSnackbar({ message: `"${image.name}" 원본 복사 완료 — ${how}` });
     } catch (e) {
         appSnackbars.value.showSnackbar({ message: `WebPCap 복사 실패: ${e.message}`, type: 'error' });
         probeWebPCap();

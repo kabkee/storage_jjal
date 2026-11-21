@@ -101,6 +101,18 @@ namespace JjalCopy
         }
     }
 
+    /// 사용자 설정 (HKCU\Software\JjalCopy)
+    static class Prefs
+    {
+        const string Key = @"Software\JjalCopy";
+        /// 복사 후 「카톡으로 끌어다 놓기」 미리보기 창을 띄울지 (윈도우 카톡은 클립보드 파일 붙여넣기를 받지 않음)
+        public static bool ShowDragPopup
+        {
+            get { using (var k = Registry.CurrentUser.OpenSubKey(Key)) return !(k?.GetValue("ShowDragPopup") is int v) || v != 0; }
+            set { using (var k = Registry.CurrentUser.CreateSubKey(Key)) k.SetValue("ShowDragPopup", value ? 1 : 0, RegistryValueKind.DWord); }
+        }
+    }
+
     /// 설치·자동 실행·제거
     static class Installer
     {
@@ -173,6 +185,13 @@ namespace JjalCopy
                 autorunItem.Checked = Installer.IsAutorun;
             }) { Checked = Installer.IsAutorun };
             menu.Items.Add(autorunItem);
+            ToolStripMenuItem popupItem = null;
+            popupItem = new ToolStripMenuItem("복사 후 「끌어다 놓기」 창 띄우기", null, (s, e) =>
+            {
+                Prefs.ShowDragPopup = !Prefs.ShowDragPopup;
+                popupItem.Checked = Prefs.ShowDragPopup;
+            }) { Checked = Prefs.ShowDragPopup };
+            menu.Items.Add(popupItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("종료", null, (s, e) => Quit());
             menu.Items.Add("제거 (프로그램 삭제)", null, (s, e) => UninstallAsk());
@@ -215,6 +234,7 @@ namespace JjalCopy
                 data.SetFileDropList(files);
                 data.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1))); // DROPEFFECT_COPY
                 Clipboard.SetDataObject(data, true, 10, 100);
+                if (Prefs.ShowDragPopup) DragPopup.ShowFor(path);
             }));
             return Path.GetFileName(path);
         }
@@ -234,6 +254,131 @@ namespace JjalCopy
             tray.Visible = false;
             tray.Dispose();
             ExitThread();
+        }
+    }
+
+    /// 복사 직후 마우스 옆에 뜨는 작은 미리보기 창. 이 창을 카톡으로 끌어다 놓으면 실제 파일이 전송된다.
+    /// (윈도우 카톡은 클립보드의 파일 붙여넣기는 무시하지만, 탐색기식 파일 드래그 앤 드롭은 받는다)
+    /// 포커스를 뺏지 않고(NOACTIVATE), 놓거나 ✕ 누르거나 20초 지나면 닫힌다.
+    sealed class DragPopup : Form
+    {
+        static DragPopup current;
+        readonly string path;
+        readonly PictureBox pic;
+        readonly System.Windows.Forms.Timer life = new System.Windows.Forms.Timer { Interval = 20000 };
+        Point downAt;
+        bool pressed;
+
+        public static void ShowFor(string path)
+        {
+            current?.Close();
+            current = new DragPopup(path);
+            current.Show();
+        }
+
+        protected override bool ShowWithoutActivation => true;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.ExStyle |= 0x08000000 /* WS_EX_NOACTIVATE */ | 0x00000080 /* WS_EX_TOOLWINDOW */;
+                return cp;
+            }
+        }
+
+        DragPopup(string path)
+        {
+            this.path = path;
+            FormBorderStyle = FormBorderStyle.None;
+            TopMost = true;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.Manual;
+            BackColor = Color.FromArgb(32, 32, 36);
+            float k;
+            using (var g = CreateGraphics()) k = g.DpiX / 96f;
+            int S(int v) => (int)Math.Round(v * k);
+
+            // 파일 잠금을 피하려고 메모리로 읽는다 (스트림은 GIF 애니메이션 동안 살아 있어야 함)
+            var img = Image.FromStream(new MemoryStream(File.ReadAllBytes(path)));
+            int box = S(150);
+            pic = new PictureBox
+            {
+                Image = img, SizeMode = PictureBoxSizeMode.Zoom, Cursor = Cursors.SizeAll,
+                Location = new Point(S(10), S(10)), Size = new Size(box, box), BackColor = Color.Black,
+            };
+            var label = new Label
+            {
+                Text = "카톡으로 끌어다 놓기", ForeColor = Color.White, AutoSize = false, TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Malgun Gothic", 9f, FontStyle.Bold), Location = new Point(S(10), S(10) + box + S(4)),
+                Size = new Size(box, S(20)), Cursor = Cursors.SizeAll,
+            };
+            var sub = new Label
+            {
+                Text = Path.GetFileName(path), ForeColor = Color.FromArgb(170, 170, 170), AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter, AutoEllipsis = true, Font = new Font("Malgun Gothic", 8f),
+                Location = new Point(S(10), label.Bottom), Size = new Size(box, S(18)),
+            };
+            var close = new Label
+            {
+                Text = "✕", ForeColor = Color.White, BackColor = Color.FromArgb(160, 0, 0, 0), AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter, Size = new Size(S(22), S(22)),
+                Location = new Point(S(10) + box - S(22), S(10)), Cursor = Cursors.Hand,
+            };
+            close.Click += (s, e) => Close();
+            Controls.Add(close);
+            Controls.Add(pic);
+            Controls.Add(label);
+            Controls.Add(sub);
+            close.BringToFront();
+            ClientSize = new Size(box + S(20), sub.Bottom + S(8));
+
+            foreach (Control c in new Control[] { this, pic, label, sub })
+            {
+                c.MouseDown += (s, e) => { if (e.Button == MouseButtons.Left) { pressed = true; downAt = Cursor.Position; } };
+                c.MouseUp += (s, e) => pressed = false;
+                c.MouseMove += (s, e) => StartDragIfMoved();
+            }
+
+            // 마우스 오른쪽 아래, 화면 밖으로 나가지 않게
+            var cur = Cursor.Position;
+            var wa = Screen.FromPoint(cur).WorkingArea;
+            int x = Math.Min(cur.X + S(18), wa.Right - Width - S(8));
+            int y = Math.Min(cur.Y + S(18), wa.Bottom - Height - S(8));
+            Location = new Point(Math.Max(wa.Left, x), Math.Max(wa.Top, y));
+
+            life.Tick += (s, e) => { if (!Bounds.Contains(Cursor.Position)) Close(); };
+            life.Start();
+        }
+
+        void StartDragIfMoved()
+        {
+            if (!pressed) return;
+            var d = SystemInformation.DragSize;
+            var p = Cursor.Position;
+            if (Math.Abs(p.X - downAt.X) < d.Width && Math.Abs(p.Y - downAt.Y) < d.Height) return;
+            pressed = false;
+            life.Stop();
+            var data = new DataObject();
+            data.SetFileDropList(new StringCollection { path });
+            data.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1)));
+            var result = DoDragDrop(data, DragDropEffects.Copy);
+            if (result != DragDropEffects.None) Close();
+            else life.Start();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            using (var pen = new Pen(Color.FromArgb(139, 61, 237), 2)) e.Graphics.DrawRectangle(pen, 1, 1, Width - 3, Height - 3);
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            life.Dispose();
+            pic.Image?.Dispose();
+            if (current == this) current = null;
+            base.OnFormClosed(e);
         }
     }
 
@@ -404,7 +549,11 @@ namespace JjalCopy
                 if (!Program.AllowedHosts.Contains(src.Host.ToLowerInvariant()))
                     return (403, new { ok = false, error = "허용되지 않은 사이트: " + src.Host }, origin);
                 var name = Copier.SafeName(req.TryGetValue("name", out var n) ? n as string : null, src);
-                try { return (200, new { ok = true, name = await onCopy(src, name) }, origin); }
+                try
+                {
+                    var saved = await onCopy(src, name);
+                    return (200, new { ok = true, name = saved, hint = Prefs.ShowDragPopup ? "drag" : "paste" }, origin);
+                }
                 catch (Exception e) { return (502, new { ok = false, error = (e.InnerException ?? e).Message }, origin); }
             }
             return (404, new { error = "not found" }, origin);
