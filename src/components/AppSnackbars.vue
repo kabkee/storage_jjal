@@ -1,55 +1,37 @@
 <template>
-    <div>
-        <!-- 버튼을 클릭할 때마다 새로운 snackbar 추가 -->
-
-
-        <!-- 여러 개의 Snackbars를 배열로 관리하여 동시에 표시 -->
-        <v-snackbar v-for="(snackbar) in snackbars" :key="snackbar.id" v-model="snackbar.show"
-            :timeout="snackbar.timeout" :color="snackbar.color" :style="{ bottom: `${snackbar.position * 65}px` }">
-            {{ snackbar.message }}
-            <v-btn text @click="snackbar.show = false">Close</v-btn>
-        </v-snackbar>
+    <!-- 화면 아래 가운데 작은 알림 (디자인 시안의 토스트). 여러 개면 위로 쌓인다 -->
+    <div class="toasts" aria-live="polite">
+        <TransitionGroup name="toast">
+            <div v-for="t in toasts" :key="t.id" class="toast" :class="'toast--' + t.type" @click="remove(t.id)">
+                {{ t.message }}
+            </div>
+        </TransitionGroup>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
-let nextId = 1;  // A unique ID for each snackbar
-const snackbars = ref([]);
+let nextId = 1;
+const toasts = ref([]);
+const MAX = 3;
 
-const showSnackbar = ({ message, type = 'success', timeout = 3000 }) => {
-    // Find the lowest available position
-    const usedPositions = snackbars.value.map(snackbar => snackbar.position);
-    let availablePosition = 0;
-    while (usedPositions.includes(availablePosition)) {
-        availablePosition++;
-    }
-
-    // Add a new snackbar at the available position
+// type: success(기본) | info | warning | error — 경고·오류는 조금 더 오래 보인다
+const showSnackbar = ({ message, type = 'success', timeout }) => {
     const id = nextId++;
-    snackbars.value.push({
-        id,
-        message,
-        show: true,
-        timeout: timeout,
-        color: type,
-        position: availablePosition,
-    });
-
-    // Automatically remove snackbar after timeout
-    setTimeout(() => {
-        removeSnackbar(id);
-    }, 3000);
+    toasts.value = [...toasts.value, { id, message, type }].slice(-MAX);
+    setTimeout(() => remove(id), timeout ?? (type === 'error' || type === 'warning' ? 4500 : 2600));
 };
+const remove = (id) => { toasts.value = toasts.value.filter(t => t.id !== id); };
 
-const removeSnackbar = (id) => {
-    // Find the snackbar by ID and remove it
-    snackbars.value = snackbars.value.filter(snackbar => snackbar.id !== id);
-};
-
-
-defineExpose({
-    showSnackbar
-})
+defineExpose({ showSnackbar });
 </script>
+
+<style scoped>
+.toasts { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 2500; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; width: max-content; max-width: calc(100vw - 24px); }
+.toast { pointer-events: auto; cursor: pointer; background: var(--text, #191C22); color: var(--bg, #F6F7F9); padding: 10px 16px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0, 0, 0, .22); text-align: center; }
+.toast--warning { background: #B45309; color: #fff; }
+.toast--error { background: #C92A2A; color: #fff; }
+.toast-enter-active, .toast-leave-active { transition: opacity .18s, transform .18s; }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(8px); }
+</style>

@@ -5,6 +5,20 @@
   <meta charset="UTF-8" />
   <link rel="icon" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F6F7F9" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <script>
+    // 첫 그리기 전에 저장된 화면 모드·강조색 적용 (다크 모드에서 하얗게 번쩍이는 것 방지). 값은 AppContent 설정과 같음
+    (() => {
+      try {
+        const st = JSON.parse(localStorage.getItem('jjal_settings') || '{}');
+        const dark = st.theme === 'dark' || ((st.theme || 'system') === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.dataset.theme = 'dark';
+        if (st.accent) document.documentElement.style.setProperty('--accent', st.accent);
+      } catch (e) { /* 무시 */ }
+    })();
+  </script>
   <title>값기의 짤방 모음</title>
   <meta name="description" content="검색해서 바로 복사하는 리액션 짤 모음. 감정·상황별 필터로 웃김, 황당, 위로, 한턱 쏘기 짤을 찾아 클릭 한 번에 복사하세요." />
   <link rel="canonical" href="https://jjal-kabkee.d271z96h7lorpb.amplifyapp.com/" />
