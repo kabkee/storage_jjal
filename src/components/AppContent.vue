@@ -70,14 +70,15 @@
                         <v-btn size="small" variant="outlined" @click="clearShared()">전체 보기</v-btn>
                     </div>
                 </v-alert>
-                <div class="d-flex align-center justify-space-between w-100 pr-4">
+                <div class="result-bar d-flex align-center justify-space-between w-100 pr-4">
                     <div class="mr-4 pl-2">
                         총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤
                     </div>
                     <div class="d-flex align-center">
-                        <a v-if="showWinHelperLink" :href="WIN_HELPER_URL" class="helper-link mr-4"
-                            title="설치하면 짤을 클릭 한 번으로 원본(움짤 포함) 복사 → 카톡에서 Ctrl+V. 「Windows의 PC 보호」 창이 뜨면 「추가 정보 → 실행」">
-                            <v-icon size="16">mdi-download</v-icon> 원클릭 복사 프로그램
+                        <a v-if="showWinHelperLink" href="#" class="helper-link mr-4"
+                            title="움짤도 클릭 한 번으로 카톡에 보내는 「짤 복사 도우미」 설치 안내"
+                            @click.prevent="openHelperGuide(null)">
+                            <v-icon size="16">mdi-download</v-icon> 움짤 복사 도우미
                         </a>
                         <!-- 정지 이미지(클릭하면 바로 복사)와 움짤을 나눠 보기. webp 전환 후 확장자로는 구분이 안 돼서 데이터의 animated 를 본다 -->
                         <v-btn-toggle v-model="motionFilter" mandatory density="compact" variant="outlined" divided
@@ -164,6 +165,80 @@
             <v-btn size="small" variant="text" icon="mdi-close" aria-label="선택 끝" @click="exitSelectMode()"></v-btn>
         </div>
     </div>
+
+    <!-- 도우미 없이 움짤을 눌렀을 때 / 「움짤 복사 도우미」 링크: Save As 안내 + 윈도우 도우미 설치 안내 -->
+    <v-dialog v-model="helperGuide.show" max-width="520" scrollable>
+        <v-card class="helper-guide" rounded="lg">
+            <v-card-title class="d-flex align-center ga-2 pt-4 px-5">
+                <v-icon color="primary">mdi-movie-open-play-outline</v-icon>
+                <span class="text-h6 font-weight-bold">움짤을 카톡으로 보내는 법</span>
+                <v-spacer></v-spacer>
+                <v-btn icon="mdi-close" variant="text" size="small" aria-label="닫기" @click="closeHelperGuide()"></v-btn>
+            </v-card-title>
+
+            <v-card-text class="px-5 pb-2">
+                <v-alert v-if="helperGuide.name" type="warning" variant="tonal" density="compact" class="mb-4">
+                    <b>"{{ helperGuide.name }}"</b> 는 움직이는 짤이에요.<br>
+                    클릭 복사로는 움직임이 사라져서, 아래 방법 중 하나로 보내 주세요.
+                </v-alert>
+
+                <!-- 방법 1: 지금 바로 (설치 없이) -->
+                <div class="guide-box">
+                    <div class="guide-head">
+                        <v-chip size="small" color="grey-darken-1" variant="flat" label>방법 1</v-chip>
+                        <span>설치 없이 지금 바로</span>
+                    </div>
+                    <div class="guide-step"><span class="step-no">1</span>
+                        <span>짤을 <b>마우스 오른쪽 클릭</b></span></div>
+                    <div class="guide-step"><span class="step-no">2</span>
+                        <span><b>「다른 이름으로 이미지 저장」</b>(Save As)</span></div>
+                    <div class="guide-step"><span class="step-no">3</span>
+                        <span>저장한 파일을 <b>카톡 대화창에 끌어다 놓기</b></span></div>
+                </div>
+
+                <!-- 방법 2: 도우미 설치 (윈도우) -->
+                <div v-if="isWindows" class="guide-box guide-box--primary mt-3">
+                    <div class="guide-head">
+                        <v-chip size="small" color="primary" variant="flat" label>방법 2 · 추천</v-chip>
+                        <span>「짤 복사 도우미」 한 번 설치</span>
+                    </div>
+                    <p class="guide-desc">
+                        설치해 두면 움짤을 <b>클릭만 해도</b> 마우스 옆에 작은 창이 떠요.
+                        그 창을 <b>카톡 대화창으로 끌어다 놓으면</b> 바로 전송돼요.
+                    </p>
+                    <div class="guide-step"><span class="step-no">1</span>
+                        <span>아래 <b>「도우미 받기」</b> 버튼으로 <code>JjalCopy.exe</code> 받기
+                            <div class="step-note">브라우저가 「흔하지 않은 파일」이라며 막으면 → 다운로드 목록에서 <b>「유지」/「계속」</b></div>
+                        </span></div>
+                    <div class="guide-step"><span class="step-no">2</span>
+                        <span>받은 파일 실행
+                            <div class="step-note">「Windows의 PC 보호」 파란 창이 뜨면 → <b>「추가 정보」 → 「실행」</b></div>
+                        </span></div>
+                    <div class="guide-step"><span class="step-no">3</span>
+                        <span>화면 오른쪽 아래 트레이에 아이콘이 생기면 끝!
+                            <div class="step-note">이 탭으로 돌아오면 자동으로 알아채요 — 다시 움짤을 눌러 보세요</div>
+                        </span></div>
+                </div>
+
+                <div class="text-caption text-medium-emphasis mt-3">
+                    💡 정지 이미지는 도우미와 상관없이 <b>클릭 → 카톡에서 Ctrl+V</b> 로 바로 보내져요.
+                    <template v-if="isWindows">도우미 종료·제거는 트레이 아이콘 우클릭.</template>
+                </div>
+                <v-checkbox v-if="helperGuide.name" v-model="helperGuide.mute" density="compact" hide-details
+                    label="다음부터 이 창 대신 짧은 안내만 보기" class="mt-1"></v-checkbox>
+            </v-card-text>
+
+            <v-divider></v-divider>
+            <v-card-actions class="px-5 py-3 ga-2">
+                <v-btn variant="outlined" size="large" @click="closeHelperGuide()">닫기</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn v-if="isWindows" color="primary" variant="flat" size="large" :href="WIN_HELPER_URL"
+                    prepend-icon="mdi-download" class="px-6 font-weight-bold text-none">
+                    도우미 받기 (Windows)
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 
     <AppSnackbars ref="appSnackbars" />
 </template>
@@ -421,10 +496,11 @@ const addFavImage = (imageKey) => {
         favImageIdxs.value = [...newFavIdxs];
     }
 }
-// ── 원클릭 원본 복사 (맥 WebPCap / 윈도우 짤 복사 도우미) ─────────────────────────
-// 로컬 도우미가 켜져 있으면(127.0.0.1:47321/ping 응답) 썸네일 클릭 한 번에 「원본 파일」을 클립보드로 → 카톡에서 ⌘V/Ctrl+V.
+// ── 움짤 원본 복사 (맥 WebPCap / 윈도우 짤 복사 도우미) ─────────────────────────
+// 로컬 도우미가 켜져 있으면(127.0.0.1:47321/ping 응답) 「움짤」 클릭 한 번에 원본 파일을 클립보드로 + 끌어다 놓기 창.
+// 정지 이미지는 도우미를 쓰지 않는다: 파일로 넣으면 윈도우 카톡이 붙여넣기를 거부하므로 브라우저 PNG 복사가 낫다.
 // 브라우저는 클립보드에 파일을 넣을 수 없고, 드래그 앤 드롭은 Zen 이 파일을 다 쓰기 전에 넘겨 빈 파일이 되므로 이 경로를 쓴다.
-// 도우미가 없으면 기존 동작 그대로. 윈도우 데스크톱에서만 작은 다운로드 링크를 보여준다.
+// 도우미가 없으면 움짤은 Save As 안내(윈도우 데스크톱은 도우미 설치 안내 창). 윈도우 데스크톱에서만 작은 안내 링크를 보여준다.
 const WEBPCAP = 'http://127.0.0.1:47321';
 const HELPER_APPS = ['WebPCap', 'JjalCopy'];
 const WIN_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/latest/download/JjalCopy.exe';
@@ -477,19 +553,34 @@ const copyViaWebPCap = async (image) => {
     }
 };
 
+// 도우미 없이 움짤을 눌렀을 때 띄우는 안내 창. 「다음부터 안 띄우기」를 고르면 예전처럼 짧은 안내만 한다
+const HELPER_GUIDE_MUTE_KEY = 'jjal.helperGuideMuted';
+const helperGuide = ref({ show: false, name: '', mute: false });
+const openHelperGuide = (image) => {
+    helperGuide.value = { show: true, name: image?.name || '', mute: false };
+};
+const closeHelperGuide = () => {
+    if (helperGuide.value.mute) localStorage.setItem(HELPER_GUIDE_MUTE_KEY, '1');
+    helperGuide.value.show = false;
+};
+
 const copyImageToClipboard = async (image) => {
     addFavImage(image.file);
 
-    if (webpcapReady.value) return copyViaWebPCap(image);
-
     if (isAnimated(image)) {
+        // 움짤만 도우미로: 원본 파일을 클립보드에 넣고 「끌어다 놓기」 창을 띄운다 (윈도우 카톡은 파일 붙여넣기를 안 받음)
+        if (webpcapReady.value) return copyViaWebPCap(image);
         // 짤톡 확장 프로그램이 설치돼 있으면(<html data-jjaltok>) 더블클릭으로 바로 저장되므로 안내하지 않는다
         if (document.documentElement.dataset.jjaltok) return;
+        if (isWindows && !isMobileCustom.value && !localStorage.getItem(HELPER_GUIDE_MUTE_KEY)) {
+            return openHelperGuide(image);
+        }
         appSnackbars.value.showSnackbar({
             message: `안내 : "${image.name}" 를 Save As 로 다운 받으세요!!  `, type: 'warning'
         })
         return;
     }
+    // 정지 이미지는 도우미가 켜져 있어도 브라우저가 PNG 그림으로 복사 → 카톡에서 바로 붙여넣기(파일이 아니라 그림이라 윈도우 카톡도 받음)
 
     function setCanvasImage(path, func) {
         const img = new Image
@@ -605,8 +696,64 @@ const deleteFromFav = (event, image) => {
     text-decoration: none;
     white-space: nowrap;
 }
+/* 움짤 안내 창 */
+.helper-guide .guide-box {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.02);
+}
+.helper-guide .guide-box--primary {
+    border: 2px solid rgb(var(--v-theme-primary));
+    background: rgba(var(--v-theme-primary), 0.05);
+}
+.helper-guide .guide-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1.02em;
+    margin-bottom: 8px;
+}
+.helper-guide .guide-desc {
+    margin-bottom: 10px;
+    line-height: 1.55;
+}
+.helper-guide .guide-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 7px 0;
+    line-height: 1.5;
+}
+.helper-guide .step-no {
+    flex: 0 0 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgb(var(--v-theme-primary));
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+.helper-guide .guide-box:not(.guide-box--primary) .step-no {
+    background: #757575;
+}
+.helper-guide .step-note {
+    font-size: 0.85em;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 2px;
+}
 .helper-link:hover {
     color: rgb(var(--v-theme-primary));
+}
+/* 「총 N개 짤 · 전체/정지/움짤」 줄: 아래 짤 목록과 붙지 않게 */
+.result-bar {
+    margin: 4px 0 12px;
+    padding-top: 4px;
 }
 .image-container {
     position: relative;
