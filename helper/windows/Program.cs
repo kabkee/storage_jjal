@@ -284,7 +284,11 @@ namespace JjalCopy
                     data.SetData("Preferred DropEffect", new MemoryStream(BitConverter.GetBytes(1))); // DROPEFFECT_COPY
                     Clipboard.SetDataObject(data, true, 10, 100);
                 }
-                if (Prefs.ShowDragPopup) DragPopup.ShowFor(path);
+                if (Prefs.ShowDragPopup)
+                {
+                    try { DragPopup.ShowFor(path); }
+                    catch (Exception e) { Notify("미리보기 창을 띄우지 못했어요: " + e.Message, ToolTipIcon.Warning); }
+                }
             }));
             return Path.GetFileName(path);
         }
@@ -349,14 +353,18 @@ namespace JjalCopy
             using (var g = CreateGraphics()) k = g.DpiX / 96f;
             int S(int v) => (int)Math.Round(v * k);
 
-            // 파일 잠금을 피하려고 메모리로 읽는다 (스트림은 GIF 애니메이션 동안 살아 있어야 함)
-            var img = Image.FromStream(new MemoryStream(File.ReadAllBytes(path)));
+            var img = LoadPreview(path);   // webp 는 GDI+ 가 못 읽어서 WIC 로 첫 프레임을 연다. 못 열면 null(그림 없이 표시)
             int box = S(150);
             pic = new PictureBox
             {
                 Image = img, SizeMode = PictureBoxSizeMode.Zoom, Cursor = Cursors.SizeAll,
                 Location = new Point(S(10), S(10)), Size = new Size(box, box), BackColor = Color.Black,
             };
+            if (img == null)
+            {
+                pic.Paint += (s, e) => TextRenderer.DrawText(e.Graphics, "🖼\n(미리보기 없음)", new Font("Malgun Gothic", 10f),
+                    pic.ClientRectangle, Color.Gainsboro, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.WordBreak);
+            }
             var label = new Label
             {
                 Text = "카톡으로 끌어다 놓기", ForeColor = Color.White, AutoSize = false, TextAlign = ContentAlignment.MiddleCenter,
@@ -399,6 +407,26 @@ namespace JjalCopy
 
             life.Tick += (s, e) => { if (!Bounds.Contains(Cursor.Position)) Close(); };
             life.Start();
+        }
+
+        /// 미리보기 이미지 열기: ① GDI+(GIF·PNG·JPG, GIF 는 움직임) ② WIC(윈도우 webp 코덱, 첫 프레임) ③ 실패 시 null
+        static Image LoadPreview(string path)
+        {
+            var bytes = File.ReadAllBytes(path);
+            try { return Image.FromStream(new MemoryStream(bytes)); }   // 스트림은 GIF 애니메이션 동안 살아 있어야 해서 닫지 않음
+            catch { }
+            try
+            {
+                var dec = System.Windows.Media.Imaging.BitmapDecoder.Create(new MemoryStream(bytes),
+                    System.Windows.Media.Imaging.BitmapCreateOptions.None, System.Windows.Media.Imaging.BitmapCacheOption.OnLoad);
+                var enc = new System.Windows.Media.Imaging.PngBitmapEncoder();
+                enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(dec.Frames[0]));
+                var ms = new MemoryStream();
+                enc.Save(ms);
+                ms.Position = 0;
+                return Image.FromStream(ms);
+            }
+            catch { return null; }
         }
 
         void StartDragIfMoved()

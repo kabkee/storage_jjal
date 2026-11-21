@@ -472,7 +472,7 @@ const copyViaWebPCap = async (image) => {
             : `카톡·Slack에서 ${pasteKey}`;
         appSnackbars.value.showSnackbar({ message: `"${image.name}" 원본 복사 완료 — ${how}` });
     } catch (e) {
-        appSnackbars.value.showSnackbar({ message: `WebPCap 복사 실패: ${e.message}`, type: 'error' });
+        appSnackbars.value.showSnackbar({ message: `원클릭 복사 실패: ${e.message}`, type: 'error' });
         probeWebPCap();
     }
 };
