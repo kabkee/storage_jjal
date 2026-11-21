@@ -1,0 +1,41 @@
+# 짤 복사 도우미(macOS) 빌드 → GitHub 릴리스에 JjalCopy-mac.zip 첨부
+# 태그 jjalcopy-mac-vX.Y.Z 를 올리면(또는 gh release create 로 태그 생성) 실행된다. (윈도우 워크플로 태그 jjalcopy-v* 와 겹치지 않음)
+name: jjalcopy-mac-release
+
+on:
+  push:
+    tags: ['jjalcopy-mac-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: helper/mac
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 빌드 (arm64 + x86_64)
+        run: |
+          VERSION="${GITHUB_REF_NAME#jjalcopy-mac-v}"
+          UNIVERSAL=1 VERSION="$VERSION" ./build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JjalCopy-mac
+          path: |
+            helper/mac/dist/JjalCopy-mac.zip
+            helper/mac/dist/JjalCopy-mac.sha256
+
+      - name: 릴리스에 첨부
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+          # 릴리스가 없으면 만든다 — 맥 릴리스는 절대 「Latest」 가 되면 안 됨(윈도우 다운로드 링크가 latest 를 가리킴)
+          gh release view "$tag" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create "$tag" -R "$GITHUB_REPOSITORY" --latest=false --title "짤 복사 도우미 (macOS) ${tag#jjalcopy-mac-}" --notes "자동 빌드"
+          gh release upload "$tag" dist/JjalCopy-mac.zip -R "$GITHUB_REPOSITORY" --clobber

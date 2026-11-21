@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key><string>com.kabkee.jjalcopy</string>
+    <key>CFBundleName</key><string>JjalCopy</string>
+    <key>CFBundleDisplayName</key><string>짤 복사 도우미</string>
+    <key>CFBundleExecutable</key><string>JjalCopy</string>
+    <key>CFBundleIconFile</key><string>AppIcon</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>__VERSION__</string>
+    <key>CFBundleVersion</key><string>__VERSION__</string>
+    <key>LSMinimumSystemVersion</key><string>13.0</string>
+    <!-- 메뉴 막대에만 아이콘 (Dock 에 안 뜸) -->
+    <key>LSUIElement</key><true/>
+    <key>NSHighResolutionCapable</key><true/>
+    <!-- 개발 서버(http://100.64.25.50:3010) 원본도 받기 위해 허용. 실제로 받는 곳은 Config.allowedHosts 로 제한 -->
+    <key>NSAppTransportSecurity</key>
+    <dict><key>NSAllowsArbitraryLoads</key><true/></dict>
+</dict>
+</plist>
