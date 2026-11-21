@@ -82,7 +82,7 @@
                 <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in filteredImages' :key="img?.file">
                         <div class="image-container" :class="{ 'is-selected': selectMode && selectedIds.includes(img.id) }"
-                            :data-file="img.file">
+                            :data-file="img.file" draggable="true" @dragstart="onImageDragStart($event, img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"
                                 @click="onImageClick(img)"></v-img>
@@ -98,7 +98,8 @@
             <v-row v-else no-gutters>
                 <v-col cols="12" class="d-flex align-content-center flex-wrap ga-2 pl-2">
                     <template v-for='img in favImages' :key="img?.file">
-                        <div class="image-container" :data-file="img.file" @click="copyImageToClipboard(img)">
+                        <div class="image-container" :data-file="img.file" @click="copyImageToClipboard(img)"
+                            draggable="true" @dragstart="onImageDragStart($event, img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
                             <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
@@ -450,6 +451,29 @@ const copyImageToClipboard = async (image) => {
     }
 }
 
+// 썸네일을 끌어다 놓을 때 썸네일(webp)이 아니라 「원본 파일」이 가도록 드래그 데이터를 직접 채운다.
+// 브라우저 기본 이미지 드래그는 화면에 그린 썸네일 캐시로 파일을 만들어서 받는 앱에 따라 빈 파일이 된다.
+const MIME_BY_EXT = { gif: 'image/gif', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+const onImageDragStart = (e, image) => {
+    if (!image?.file || !e.dataTransfer) return;
+    const url = new URL(withLeadingSlash(image.file), window.location.origin).href;
+    const ext = (image.file.split('.').pop() || '').toLowerCase();
+    const mime = MIME_BY_EXT[ext] || 'application/octet-stream';
+    // DownloadURL 형식은 「mime:파일명:URL」 — 파일명에 콜론·경로문자가 있으면 깨지므로 치환
+    const baseName = (image.name || image.file.split('/').pop().replace(/\.[^.]+$/, ''))
+        .replace(/[:\\/?*"<>|]/g, '_').trim() || 'jjal';
+    const dt = e.dataTransfer;
+    dt.effectAllowed = 'copy';
+    // Chrome·Edge: 받는 쪽(Finder·메신저)에 원본 URL 에서 내려받은 실제 파일을 넘긴다
+    dt.setData('DownloadURL', `${mime}:${baseName}.${ext}:${url}`);
+    // 그 외 브라우저/앱 대비: 원본 URL
+    dt.setData('text/uri-list', url);
+    dt.setData('text/plain', url);
+    dt.setData('text/html', `<img src="${url}" alt="${baseName.replace(/"/g, '&quot;')}">`);
+    const thumbEl = e.currentTarget?.querySelector('img');
+    if (thumbEl) dt.setDragImage(thumbEl, 50, 50);
+}
+
 const downloadGIF = (image) => {
     const fullUrl = `${window.location.origin}/${image.file}`;
     const a = document.createElement('a');
@@ -470,6 +494,11 @@ const deleteFromFav = (event, image) => {
 </script>
 
 <style scoped>
+/* 썸네일 <img> 자체의 기본 드래그를 막고, 부모 .image-container 의 커스텀 드래그(원본 파일)를 쓴다 */
+.image-container :deep(img) {
+    -webkit-user-drag: none;
+    user-select: none;
+}
 .image-container {
     position: relative;
     display: flex;
