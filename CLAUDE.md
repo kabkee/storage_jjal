@@ -2,7 +2,9 @@
 
 Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS Amplify(`jjal_kabkee` 브랜치, push 시 자동 배포)로 서비스 중.
 
-## 로컬 관리 화면 (http://100.64.25.50:3010/admin · Tailscale 전용)
+## 로컬 관리 화면 (https://kabkee-main.tailfe017f.ts.net:8445/admin · Tailscale 전용)
+
+- 🔐 **https 주소로 쓸 것**: `tailscale serve --https=8445` → `http://100.64.25.50:3010` (tailnet only, 2026-11-21). 브라우저는 https(또는 localhost)에서만 클립보드에 그림을 넣게 해 줘서, `http://100.64.25.50:3010` 으로 열면 짤 클릭 복사가 「https 주소에서만 복사돼요」로 실패한다. 설정 확인 `tailscale serve status`, 끄기 `sudo tailscale serve --https=8445 off`. (8443 paperclip · 8444 l3 client · 8446 은 다른 서비스)
 
 - 상시 실행: PM2 `storage-jjal-admin` (`JJAL_ADMIN_HOST=100.64.25.50 pm2 start yarn --name storage-jjal-admin --cwd <repo> -- admin`). 재시작은 `pm2 restart storage-jjal-admin`.
 - 🔴 관리 API 에는 인증이 없다. 그래서 **Tailscale IP 에만 바인딩**한다(127.0.0.1·LAN·0.0.0.0 에는 열지 않음). 오너는 외부에서 Tailscale 로만 접속한다(2026-11-16).

@@ -54,6 +54,9 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    // 개발 서버는 Tailscale https(https://kabkee-main.tailfe017f.ts.net:8445 → :3010)로도 연다 — 클립보드 복사는 https 에서만 됨.
+    // Vite 5.4.12+ 는 모르는 Host 를 막으므로 tailnet 이름을 허용해 둔다
+    allowedHosts: ['.ts.net'],
   },
   build: {
     rollupOptions: {
