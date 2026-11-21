@@ -3,20 +3,32 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#F6F7F9" />
 <title>짤방 디자인 시안 (2026-11-21)</title>
 <!-- 디자인 시안 전용 페이지: dev 서버(/mockup/redesign.html)에서만 열린다. 빌드(index.html 입력)에는 포함되지 않음 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<script>
+  // 첫 그리기 전에 저장된 테마·색을 적용(다크 모드에서 하얗게 번쩍이는 것 방지)
+  (() => {
+    const st = JSON.parse(localStorage.getItem('jjal_settings') || '{}');
+    const dark = st.theme === 'dark' || ((st.theme || 'system') === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+    if (dark) document.documentElement.dataset.theme = 'dark';
+    if (st.accent) document.documentElement.style.setProperty('--accent', st.accent);
+  })();
+</script>
 <style>
+/* 강조색(--accent)·글자색(--on-accent)은 설정에서 고른 값을 JS 가 넣는다. 기본은 파랑 */
 :root {
-  --accent: #3B6CF6; --accent-soft: #E8EEFF; --on-accent: #fff;
+  --accent: #3B6CF6; --on-accent: #fff;
   --bg: #F6F7F9; --surface: #fff; --text: #191C22; --sub: #6B7280; --line: #E5E7EB; --chip: #F0F1F4;
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, var(--surface));
   --radius: 10px;
+  color-scheme: light;
 }
-:root[data-accent="yellow"] { --accent: #F5C400; --accent-soft: #FFF6CC; --on-accent: #191C22; }
-:root[data-accent="green"]  { --accent: #12B886; --accent-soft: #DDF7EE; --on-accent: #fff; }
 :root[data-theme="dark"] {
   --bg: #111317; --surface: #1B1E24; --text: #ECEEF2; --sub: #9AA1AC; --line: #2B2F37; --chip: #262A32;
-  --accent-soft: color-mix(in srgb, var(--accent) 22%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 24%, var(--surface));
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { margin: 0; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -37,8 +49,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 /* ── 필터 줄 ── */
 .toolbar { max-width: 1240px; margin: 0 auto; padding: 10px 16px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .drop { height: 36px; padding: 0 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 14px; display: inline-flex; align-items: center; gap: 4px; }
-.drop.has { border-color: var(--accent); color: var(--accent); font-weight: 600; background: var(--accent-soft); }
-:root[data-accent="yellow"] .drop.has { color: var(--text); }
+.drop.has { border-color: var(--accent); font-weight: 700; background: var(--accent-soft); }
 .drop .caret { font-size: 10px; opacity: .6; }
 .seg { display: inline-flex; background: var(--chip); border-radius: 999px; padding: 3px; }
 .seg button { height: 30px; padding: 0 12px; border-radius: 999px; font-size: 13px; color: var(--sub); }
@@ -107,13 +118,24 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; z-index: 50; }
 
-/* ── 시안 설정(실제 사이트엔 없음) ── */
-.mock-ctrl { position: fixed; right: 12px; bottom: 12px; z-index: 35; background: var(--surface); border: 1px dashed var(--sub); border-radius: 12px; padding: 8px 10px; font-size: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
-.mock-ctrl .row { display: flex; gap: 4px; align-items: center; }
-.mock-ctrl .sw { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; }
-.mock-ctrl .sw.on { border-color: var(--text); }
-.mock-ctrl.min > :not(.mock-title) { display: none; }
-.mock-title { font-weight: 700; cursor: pointer; }
+/* ── 설정 탭 ── */
+.icon-btn.square { width: 44px; padding: 0; justify-content: center; font-size: 18px; }
+.settings { background: var(--surface); border-radius: 18px; width: min(440px, calc(100vw - 24px)); max-height: 86vh; overflow: auto; padding: 20px; display: flex; flex-direction: column; gap: 22px; }
+.settings h2 { margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: space-between; }
+.set-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.set-desc { font-size: 12px; color: var(--sub); margin-bottom: 10px; }
+.seg.wide { display: flex; }
+.seg.wide button { flex: 1; height: 38px; font-size: 14px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.swatch { width: 36px; height: 36px; border-radius: 50%; position: relative; box-shadow: inset 0 0 0 1px rgba(0,0,0,.1); }
+.swatch.on::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sw-on, #fff); }
+.swatch.on { outline: 2px solid var(--text); outline-offset: 2px; }
+.custom { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; position: relative; background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
+.custom.on { outline: 2px solid var(--text); outline-offset: 2px; }
+.custom input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+.preview { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 12px; border-radius: 12px; background: var(--bg); }
+.set-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.set-row .btn { padding: 0 14px; height: 38px; font-size: 13px; }
 
 /* ── 모바일 ── */
 @media (max-width: 640px) {
@@ -129,7 +151,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
   .sheet { width: 100vw; border-radius: 18px 18px 0 0; grid-template-columns: 1fr; max-height: 90vh; }
   .sheet .big { min-height: 0; }
   .sheet .big img { max-height: 45vh; }
-  .mock-ctrl { bottom: 12px; right: 8px; }
+  .settings { width: 100vw; border-radius: 18px 18px 0 0; }
 }
 </style>
 </head>
@@ -196,9 +218,11 @@ function render() {
     <div class="logo">🐾 값기의 <span>짤방</span></div>
     <label class="search">
       <span>🔍</span>
-      <input id="q" value="${h(S.q)}" placeholder="어떤 짤 찾아? (예: 축하, 퇴근, 고양이)" autocomplete="off">
+      <input id="q" value="${h(S.q)}" placeholder="어떤 짤 찾아? 축하·퇴근·고양이…" autocomplete="off">
       ${S.q ? '<button data-act="clear-q" title="지우기">✕</button>' : '<kbd>/</kbd>'}
     </label>
+    <button class="icon-btn square" data-act="theme-toggle" title="${isDark() ? '라이트 모드로' : '다크 모드로'}" aria-label="테마 전환">${isDark() ? '☀️' : '🌙'}</button>
+    <button class="icon-btn square" data-act="settings" title="설정" aria-label="설정">⚙️</button>
     <button class="icon-btn ${S.selectMode ? 'on' : ''}" data-act="select-mode">🔗<span class="label">${S.selectMode ? '선택 끝' : '골라서 공유'}</span></button>
   </div></header>
 
@@ -245,7 +269,7 @@ function render() {
   </div>` : ''}
 
   ${S.toast ? `<div class="toast">${h(S.toast)}</div>` : ''}
-  ${mockCtrl()}`;
+  ${S.settingsOpen ? settingsHtml() : ''}`;
 
   if (keepFocus) { const q = document.getElementById('q'); q.focus(); q.setSelectionRange(caret, caret); }
 }
@@ -273,15 +297,71 @@ function detailHtml(d) {
   </div></div>`;
 }
 
-function mockCtrl() {
-  const accent = document.documentElement.dataset.accent || 'blue';
-  const dark = document.documentElement.dataset.theme === 'dark';
-  const sw = (k, c) => `<button class="sw ${accent === k ? 'on' : ''}" style="background:${c}" data-act="accent" data-v="${k}" title="${k}"></button>`;
-  return `<div class="mock-ctrl ${S.ctrlMin ? 'min' : ''}">
-    <div class="mock-title" data-act="ctrl-min">🎨 시안 설정 ${S.ctrlMin ? '▸' : '▾'}</div>
-    <div class="row">강조색 ${sw('blue', '#3B6CF6')}${sw('yellow', '#F5C400')}${sw('green', '#12B886')}</div>
-    <div class="row"><button class="btn" style="height:28px;padding:0 10px;font-size:12px" data-act="theme">${dark ? '☀ 라이트' : '🌙 다크'}</button></div>
-  </div>`;
+// ─── 설정 (localStorage 'jjal_settings' = { theme: 'system'|'light'|'dark', accent: '#RRGGBB' }) ───
+const ACCENTS = [
+  ['#3B6CF6', '파랑(기본)'], ['#7C5CFC', '보라'], ['#E64980', '핑크'], ['#F76707', '주황'],
+  ['#F5C400', '노랑'], ['#12B886', '초록'], ['#15AABF', '청록'], ['#495057', '먹색'],
+];
+const DEFAULTS = { theme: 'system', accent: '#3B6CF6' };
+const settings = { ...DEFAULTS, ...JSON.parse(localStorage.getItem('jjal_settings') || '{}') };
+const saveSettings = () => localStorage.setItem('jjal_settings', JSON.stringify(settings));
+const darkMq = matchMedia('(prefers-color-scheme: dark)');
+const isDark = () => settings.theme === 'dark' || (settings.theme === 'system' && darkMq.matches);
+// 밝은 강조색(노랑 등) 위에는 검은 글자, 어두운 색 위에는 흰 글자
+const onColor = hex => {
+  const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map(c => c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.4 ? '#191C22' : '#FFFFFF';
+};
+function applySettings() {
+  const root = document.documentElement;
+  if (isDark()) root.dataset.theme = 'dark'; else delete root.dataset.theme;
+  root.style.setProperty('--accent', settings.accent);
+  root.style.setProperty('--on-accent', onColor(settings.accent));
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark() ? '#111317' : '#F6F7F9');
+}
+darkMq.addEventListener('change', () => { if (settings.theme === 'system') { applySettings(); render(); } });
+
+function settingsHtml() {
+  const preset = ACCENTS.some(([c]) => c.toLowerCase() === settings.accent.toLowerCase());
+  return `<div class="dim" data-act="settings-close"><div class="settings" data-stop>
+    <h2>⚙️ 설정 <button class="btn" style="height:34px;padding:0 12px" data-act="settings-close" data-force>닫기</button></h2>
+    <div>
+      <div class="set-label">화면 모드</div>
+      <div class="set-desc">「시스템」은 폰·PC 설정을 따라가요. 헤더의 🌙/☀️ 버튼으로도 바로 바꿀 수 있어요.</div>
+      <div class="seg wide">
+        ${[['system', '🖥 시스템'], ['light', '☀️ 라이트'], ['dark', '🌙 다크']].map(([v, l]) =>
+          `<button class="${settings.theme === v ? 'on' : ''}" data-act="set-theme" data-v="${v}">${l}</button>`).join('')}
+      </div>
+    </div>
+    <div>
+      <div class="set-label">강조색</div>
+      <div class="set-desc">버튼·선택한 칩·복사 표시에 쓰이는 색이에요. 무지개 동그라미로 직접 고를 수도 있어요.</div>
+      <div class="swatches">
+        ${ACCENTS.map(([c, n]) => `<button class="swatch ${settings.accent.toLowerCase() === c.toLowerCase() ? 'on' : ''}"
+            style="background:${c};--sw-on:${onColor(c)}" title="${n}" aria-label="${n}" data-act="set-accent" data-v="${c}"></button>`).join('')}
+        <label class="custom ${preset ? '' : 'on'}" title="직접 고르기" ${preset ? '' : `style="background:${settings.accent}"`}>
+          <input type="color" id="accent-picker" value="${settings.accent}" aria-label="강조색 직접 고르기">
+        </label>
+      </div>
+    </div>
+    <div>
+      <div class="set-label">미리보기</div>
+      <div class="preview">
+        <button class="chip on">웃김</button><button class="chip">황당</button>
+        <span class="active-chip">축하 <span class="x">×</span></span>
+        <button class="btn primary" style="grid-column:auto;height:36px;padding:0 14px;font-size:13px">📋 복사하기</button>
+      </div>
+    </div>
+    <div>
+      <div class="set-label">기록</div>
+      <div class="set-desc">설정과 「최근 쓴 짤」은 이 브라우저에만 저장돼요.</div>
+      <div class="set-row">
+        <button class="btn" data-act="clear-recent">🕘 최근 쓴 짤 지우기 (${S.recent.length}개)</button>
+        <button class="btn" data-act="reset-settings">↺ 설정 초기화</button>
+      </div>
+    </div>
+  </div></div>`;
 }
 
 // ─── 동작 ─────────────────────────────────────────────────
@@ -298,6 +378,7 @@ document.addEventListener('click', e => {
   const t = e.target.closest('[data-act]');
   if (!t) return;
   if (t.dataset.act === 'close' && e.target.closest('[data-stop]') && !t.closest('.actions')) return; // 시트 안쪽 클릭은 닫지 않음
+  if (t.dataset.act === 'settings-close' && e.target.closest('[data-stop]') && !('force' in t.dataset)) return;
   const { act, axis, v } = t.dataset;
   const cardEl = t.closest('.card');
   const id = cardEl?.dataset.id;
@@ -322,17 +403,28 @@ document.addEventListener('click', e => {
     case 'pick-recent': S.selected = [...all].sort((a, b) => b.id - a.id).slice(0, 10).map(d => d.id); render(); break;
     case 'share-link': toast(`/?ids=${S.selected.join(',')} 링크 복사 (시안)`); break;
     case 'toast': toast(v); break;
-    case 'accent': document.documentElement.dataset.accent = v; render(); break;
-    case 'theme': document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? '' : 'dark'; render(); break;
-    case 'ctrl-min': S.ctrlMin = !S.ctrlMin; render(); break;
+    case 'theme-toggle': settings.theme = isDark() ? 'light' : 'dark'; saveSettings(); applySettings(); render(); break;
+    case 'settings': S.settingsOpen = true; render(); break;
+    case 'settings-close': S.settingsOpen = false; render(); break;
+    case 'set-theme': settings.theme = v; saveSettings(); applySettings(); render(); break;
+    case 'set-accent': settings.accent = v; saveSettings(); applySettings(); render(); break;
+    case 'clear-recent': S.recent = []; localStorage.setItem('mock_recent', '[]'); toast('최근 쓴 짤을 지웠어요'); break;
+    case 'reset-settings': Object.assign(settings, DEFAULTS); localStorage.removeItem('jjal_settings'); applySettings(); toast('설정을 처음으로 돌렸어요'); break;
   }
 });
-document.addEventListener('input', e => { if (e.target.id === 'q') { S.q = e.target.value; render(); } });
+document.addEventListener('input', e => {
+  if (e.target.id === 'q') { S.q = e.target.value; render(); }
+  // 색 고르는 중에는 다시 그리지 않고 색만 바꾼다(피커가 닫히지 않게), 다 고르면 change 에서 저장
+  if (e.target.id === 'accent-picker') { settings.accent = e.target.value; applySettings(); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'accent-picker') { settings.accent = e.target.value; saveSettings(); applySettings(); render(); }
+});
 document.addEventListener('keydown', e => {
   if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') { e.preventDefault(); document.getElementById('q').focus(); }
-  if (e.key === 'Escape') { S.detail = null; S.open = null; render(); }
+  if (e.key === 'Escape') { S.detail = null; S.open = null; S.settingsOpen = false; render(); }
 });
-if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+applySettings();
 render();
 </script>
 </body>
