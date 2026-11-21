@@ -1,4 +1,5 @@
 // 일회성 마이그레이션: sources/{gif,jpg,png}.json 의 원본 파일을 전부 webp 로 바꾼다 (2026-11-21).
+// ⚠️ 다시 돌리지 말 것 — 같은 날 움짤은 원본 GIF 로 되돌렸다(restore-animated-gif.js). 다시 돌리면 움짤이 또 webp 가 된다.
 //   node public/assets/data/convert-to-webp.js            → 미리보기(dry-run): 변환만 /tmp 에 해보고 용량 집계
 //   node public/assets/data/convert-to-webp.js --apply    → assets/webp/<uuid>.webp 생성 + sources 갱신 + 원본 삭제
 // 레코드는 원래 있던 sources/<원본형식>.json 에 그대로 두고 file 만 바꾼다. 추가 필드:

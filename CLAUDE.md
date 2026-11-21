@@ -37,7 +37,7 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
    - 자유 키워드(`tag` 필드)는 개념 하나당 한글/영어를 항상 짝으로 넣는다 (예: "고양이, Cat").
 4. `public/assets/data/new-images.manifest.json`에 `[{ sourceFilename, name, emotion: [...], situation: [...], tag }, ...]` 형태로 작성한다.
 5. `yarn import-images` 실행 → `public/assets/data/import-tagged-images.js`가:
-   - **webp 로 변환**해 `assets/webp/<UUID>.webp` 로 저장하고 원본은 지운다(`webp-convert.js` — 움직이는 짤 q75·PNG q90·JPG q80, 애니메이션·프레임 지연 유지). 레코드는 원본 형식별 `sources/<gif|jpg|png|webp>.json` 에 들어가고 `md5`(원본 기준)·`animated`(움직이면 true)가 붙는다. 파일명은 UUID 라 한글이 경로에 남지 않는다 (과거 배포 후 "이미지 없음" 에러의 원인이었음)
+   - **정지 이미지는 webp 로 변환**해 `assets/webp/<UUID>.webp`(`webp-convert.js` — PNG q90·JPG q80), **움짤은 GIF 로** `assets/gif/<UUID>.gif` 에 둔다(원본이 GIF 면 다시 인코딩하지 않고 그대로, 움직이는 webp·png 면 GIF 로 변환). 원본은 지운다. 레코드는 원본 형식별 `sources/<gif|jpg|png|webp>.json` 에 들어가고 `md5`(원본 기준)·`animated`(움직이면 true)가 붙는다. 파일명은 UUID 라 한글이 경로에 남지 않는다 (과거 배포 후 "이미지 없음" 에러의 원인이었음)
    - `generate-thumbnail.js`로 그리드용 썸네일을 `public/assets/thumbs/`에 생성 — **움직이는 이미지는 애니메이션을 유지한 움직이는 webp**로, 정지 이미지는 정지 webp로 만든다(240x240). 확장자가 아니라 실제 프레임 수로 판단한다. 움직이는 짤을 정지 프레임으로 만들면 용량은 별로 안 줄면서 움직임만 사라지므로 항상 animated webp로 유지할 것.
    - 모든 신규 레코드의 id를 `sources/*.json` 4개 파일 전체를 스캔한 전역 최대값+1로 채번한다(파일별로 따로 채번하면 다른 타입 파일과 id가 충돌할 수 있음).
    - 모든 한글 문자열을 `.normalize('NFC')`로 정규화해서 `public/assets/data/sources/<type>.json`에 레코드를 추가한다.
@@ -65,7 +65,7 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 }
 ```
 
-- `file`: 클립보드 복사/다운로드에 쓰이는 원본. **항상 `assets/webp/<UUID>.webp`** (2026-11-21 전체 webp 전환: 305MB→66MB, 22%). 한글 금지.
+- `file`: 클립보드 복사/다운로드에 쓰이는 원본. **정지 짤은 `assets/webp/<UUID>.webp`, 움짤은 `assets/gif/<UUID>.gif`** (2026-11-21). 한글 금지.
 - `md5`: 업로드 원본의 md5. 관리 화면 「이미 등록된 짤」 감지가 webp 변환본이 아니라 원본끼리 비교하도록 남긴다.
 - `animated`: 움직이는 짤이면 `true`. 사이트의 「움짤」 배지·「전체/정지/움짤」 필터(`motion`)·복사 동작이 확장자 대신 이걸 본다. (`sources/gif.json` = 원래 GIF 였던 짤)
 - `added`: 추가 날짜(YYYY-MM-DD). `yarn import-images` 가 자동으로 넣는다. "최근 추가 N개"가 이걸 먼저 본다(옛 짤엔 없음). id는 2026-10-02 중복 정리로 옛 짤 18개가 312~329 를 받아서 id 순서만으로는 최근 판단이 안 된다.
@@ -85,10 +85,10 @@ history 라우터라 `/?...` 형태(2026-10-02 해시 라우터에서 전환 —
 
 - **화면 디자인**(2026-11-21 시안 `mockup/redesign.html` 적용): 고정 헤더(검색·🌙/☀️·⚙️ 설정·골라서 공유) + 감정/상황 펼침 버튼 + 「최근 쓴 짤」 띠 + 카드 그리드(⋯ = 상세 보기: 감정·상황 칩은 필터, 태그는 검색, 복사·저장·공유). 색은 `AppContent.vue` 의 CSS 변수(`--accent`·`--bg` 등)로, 설정은 localStorage `jjal_settings`(`theme`·`accent`)에 저장되고 `index.html` 인라인 스크립트가 첫 그리기 전에 적용한다. 「최근 쓴 짤」은 기존 `favImageIdxs`(앞에 `/` 붙은 파일 경로)를 그대로 쓴다.
 
-- **이미지는 webp 만 쓴다**(2026-11-21 오너 결정). `public/assets/{gif,jpg,png}` 는 비어 있고 새 짤도 import 때 webp 로 변환된다. 옛 원본은 git 기록(`e9a565f` 이전)에 남아 있다. 일괄 변환 스크립트: `public/assets/data/convert-to-webp.js`(미리보기 / `--apply`).
+- **정지 짤은 webp, 움짤은 원본 GIF**(2026-11-21 오너 결정). 같은 날 전부 webp 로 바꿨다가(305MB→66MB) **카톡이 움직이는 webp 를 작게 보여줘서(GIF 는 크게) 움짤 87개만 원본 GIF 로 되돌렸다**(55MB → 237MB, `restore-animated-gif.js` 가 `e9a565f` 의 git 기록에서 원본을 꺼냄 — 재인코딩 없음). 썸네일은 전부 webp 그대로. 🚫 `convert-to-webp.js` 다시 돌리지 말 것(움짤이 또 webp 가 됨). `public/assets/{jpg,png}` 는 비어 있다.
 - 짤 클릭 복사: **정지 이미지는 도우미 유무와 상관없이 브라우저가 PNG 그림으로 복사**(카톡 Ctrl+V 로 바로 전송). **움짤만** 로컬 「짤 복사 도우미」(윈도우 `helper/windows` · 맥 `helper/mac`, 둘 다 app `JjalCopy`, `127.0.0.1:47321`)로 원본 파일을 클립보드에 넣는다(윈도우는 + 끌어다 놓기 창, 맥은 카톡 ⌘V). 윈도우 도우미의 「끌어다 놓기 창」이 꺼져 있으면(ping `popup:false`, v1.5+) 움짤은 복사하지 않고 Save As 안내 — 윈도우 카톡은 파일 붙여넣기를 안 받기 때문. 끌어다 놓기 창 미리보기는 윈도우에 webp 코덱이 없을 수 있어 사이트가 300px JPEG(`preview`)를 같이 보낸다(v1.5+ 에만, 옛 도우미는 본문 64KB 제한). 도우미가 없으면 움짤 클릭 시 OS 별 설치 안내 창(윈도우·맥 데스크톱, 창 폭 무관, 「짧은 안내만 보기」는 localStorage `jjal.helperGuideMuted`). 🚫 맥 WebPCap 의 jjal 연결 기능은 2026-11-21 에 뺐다(사이트도 WebPCap 응답을 무시). 맥 도우미 릴리스는 태그 `jjalcopy-mac-vX.Y.Z` 이고 **Latest 로 만들지 말 것**(윈도우 링크가 latest 를 씀), 사이트 링크는 `MAC_HELPER_URL` 에 버전 고정.
 
-- **GIF 모드**(2026-11-21, 헤더 「GIF」 버튼 · localStorage `jjal_settings.gifMode`): 텔레그램은 webp 움짤을 「파일」로만 보여줘서 만든 것. 켜면 움짤 복사·저장 때 **누른 짤 하나만 브라우저에서 webp → GIF 로 변환**(`src/utils/webpToGif.js`, WebCodecs `ImageDecoder` + `gifenc` — https·localhost 에서만 동작, 그래서 http 개발 주소에선 실패 안내가 뜬다). **모바일(안드로이드 등)은 시스템 공유 창(`navigator.share`)으로 GIF 파일을 넘겨 카톡 대화창으로 바로 보낸다**(공유 창은 누른 직후에만 열려서, 변환이 길어 거절되면 「📤 공유하기」 창을 한 번 더 띄움). 데스크톱은 윈도우 도우미 v1.4+(`/copy-data`)면 클립보드로, 아니면 GIF 파일 다운로드. 🚫 GIF 를 미리 만들어 두지 말 것 — 87개 전부 변환하면 349MB·8분 30초(실측).
+- 🚫 **GIF 모드는 없앴다**(2026-11-21, 움짤을 원본 GIF 로 되돌리면서). 브라우저 webp→GIF 변환(`webpToGif.js`·`gifenc`)·모바일 GIF 공유 창도 같이 빠졌다. 옛 설정 `jjal_settings.gifMode` 는 읽을 때 버린다. 도우미의 `/copy-data` 는 남아 있지만 사이트는 쓰지 않는다.
 
 - 한글 파일 경로는 절대 만들지 말 것(배포 후 이미지 깨짐의 과거 원인). 표시 텍스트(이름/태그/감정/상황)는 한글 가능하지만 반드시 NFC 정규화.
 - `public/assets/data/*.js`는 `.gitignore`에서 제외되어 있어 새 스크립트를 추가해도 정상적으로 git에 추적된다.

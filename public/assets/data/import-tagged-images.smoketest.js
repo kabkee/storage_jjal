@@ -25,6 +25,10 @@ assert.strictEqual(conv.file, 'assets/webp/z.webp');
 assert.strictEqual(conv.md5, 'abc');
 assert.strictEqual(conv.animated, true);
 assert.ok(!('animated' in record) && !('md5' in record), 'animated/md5 must be omitted when not given');
+// 움짤은 GIF 로 assets/gif/ 에 (2026-11-21: 카톡이 움직이는 webp 를 작게 보여줘서)
+const anim = buildRecord({ id: 3, uuid: 'g', ext: '.gif', folder: 'gif', md5: 'def', animated: true });
+assert.strictEqual(anim.file, 'assets/gif/g.gif');
+assert.strictEqual(anim.thumb, 'assets/thumbs/g.webp', 'thumbs stay webp even for GIF originals');
 
 const empty = buildRecord({ id: 1, uuid: 'x', ext: '.png', folder: 'png', name: '', emotion: undefined, situation: undefined, tag: undefined });
 assert.deepStrictEqual(empty.emotion, [], 'missing emotion defaults to empty array, not undefined');

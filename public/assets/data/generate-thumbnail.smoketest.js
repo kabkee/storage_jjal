@@ -18,9 +18,9 @@ async function run() {
     assert.strictEqual(jpgMeta.format, 'webp', `expected webp format, got ${jpgMeta.format}`);
     assert.ok(!(jpgMeta.pages > 1), 'still image thumbnail must not be animated');
 
-    // 움직이는 이미지(webp 전환된 옛 GIF) → 움직이는 webp 썸네일, 프레임 수 보존.
-    // 확장자가 아니라 실제 프레임 수로 판단해야 통과한다 (webp 전환 후 .gif 확장자가 없음)
-    const gifFixture = path.join(__dirname, '../webp/2efb353937ce31638ab5e9bf2c428e88.webp');
+    // 움직이는 이미지(원본 GIF) → 움직이는 webp 썸네일, 프레임 수 보존.
+    // 확장자가 아니라 실제 프레임 수로 판단한다 (움직이는 webp 를 올려도 같은 경로)
+    const gifFixture = path.join(__dirname, '../gif/2efb353937ce31638ab5e9bf2c428e88.gif');
     const gifOut = path.join(tmpDir, 'thumb-gif.webp');
     await generateThumbnail(gifFixture, gifOut);
     assert.ok(fs.existsSync(gifOut), 'gif thumbnail was not created');

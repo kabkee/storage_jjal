@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { generateThumbnail } = require('./generate-thumbnail');
-const { convertToWebp } = require('./webp-convert');
+const { convertToWebp, isAnimated, md5File } = require('./webp-convert');
+const sharp = require('sharp');
 
 const NEW_DIR = path.join(__dirname, '../new');
 const ASSETS_DIR = path.join(__dirname, '../../assets');
@@ -53,8 +54,11 @@ function getGlobalNextId(sourcesDir) {
     return max + 1;
 }
 
-// 파일 하나를 webp(UUID 이름)로 변환해 assets/webp/ 에 두고 썸네일을 만든 뒤 sources/<원본형식>.json 에 레코드를 추가한다.
-// 사이트는 webp 만 서빙한다(2026-11-21). 원본(srcPath)은 변환 후 지워진다. md5 는 원본 기준(중복 업로드 감지용).
+// 파일 하나를 UUID 이름으로 저장하고 썸네일을 만든 뒤 sources/<원본형식>.json 에 레코드를 추가한다.
+//  - 정지 이미지 → webp 로 변환해 assets/webp/ (2026-11-21)
+//  - 움짤 → GIF 로 assets/gif/ (2026-11-21 오너 결정: 카톡은 움직이는 webp 를 작게 보여줘서 움짤은 GIF 를 서빙).
+//    원본이 GIF 면 다시 인코딩하지 않고 그대로, 움직이는 webp·png 면 GIF 로 변환한다.
+// 원본(srcPath)은 처리 후 지워진다. md5 는 원본 기준(중복 업로드 감지용).
 async function importOne({ srcPath, name, emotion, situation, tag }, { sourcesDir = SOURCES_DIR } = {}) {
     const ext = path.extname(srcPath).toLowerCase();
     const config = EXT_MAP[ext];
@@ -62,10 +66,20 @@ async function importOne({ srcPath, name, emotion, situation, tag }, { sourcesDi
     if (!fs.existsSync(srcPath)) throw new Error(`파일을 찾을 수 없음: ${srcPath}`);
 
     const uuid = crypto.randomUUID();
-    const targetDir = path.join(ASSETS_DIR, 'webp');
+    const animated = await isAnimated(srcPath);
+    const outExt = animated ? '.gif' : '.webp';
+    const outFolder = animated ? 'gif' : 'webp';
+    const targetDir = path.join(ASSETS_DIR, outFolder);
     fs.mkdirSync(targetDir, { recursive: true });
-    const destPath = path.join(targetDir, `${uuid}.webp`);
-    const converted = await convertToWebp(srcPath, destPath);
+    const destPath = path.join(targetDir, `${uuid}${outExt}`);
+    let converted;
+    if (!animated) {
+        converted = await convertToWebp(srcPath, destPath);
+    } else {
+        if (ext === '.gif') fs.copyFileSync(srcPath, destPath);
+        else await sharp(srcPath, { animated: true, limitInputPixels: false }).gif().toFile(destPath);
+        converted = { animated: true, md5: md5File(srcPath) };
+    }
 
     fs.mkdirSync(THUMBS_DIR, { recursive: true });
     await generateThumbnail(srcPath, path.join(THUMBS_DIR, `${uuid}.webp`));
@@ -75,7 +89,7 @@ async function importOne({ srcPath, name, emotion, situation, tag }, { sourcesDi
     const jsonPath = path.join(sourcesDir, config.json);
     const jsonData = fs.existsSync(jsonPath) ? JSON.parse(fs.readFileSync(jsonPath, 'utf8')) : [];
     const record = buildRecord({
-        id: getGlobalNextId(sourcesDir), uuid, ext: '.webp', folder: 'webp',
+        id: getGlobalNextId(sourcesDir), uuid, ext: outExt, folder: outFolder,
         name, emotion, situation, tag, md5: converted.md5, animated: converted.animated
     });
     jsonData.push(record);
