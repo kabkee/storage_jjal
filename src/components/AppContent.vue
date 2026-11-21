@@ -6,7 +6,9 @@
                 <a class="logo" href="/" @click.prevent="resetAll()">🐾 값기의 <span>짤방</span></a>
                 <label class="search">
                     <v-icon size="20" class="search-icon">mdi-magnify</v-icon>
-                    <input ref="searchInput" v-model="search" placeholder="어떤 짤 찾아? 축하·퇴근·고양이…"
+                    <!-- v-model 은 한글 조합이 끝날 때(compositionend)까지 값을 안 넘겨서 「아」 같은 조합 중 글자로는 검색이 안 된다.
+                         input 이벤트의 값을 직접 받으면 조합 중인 글자까지 바로 검색된다 -->
+                    <input ref="searchInput" :value="search" @input="search = $event.target.value" placeholder="어떤 짤 찾아? 축하·퇴근·고양이…"
                         autocomplete="off" enterkeyhint="search" aria-label="짤 검색">
                     <button v-if="search" class="search-clear" title="지우기" aria-label="검색어 지우기"
                         @click.prevent="search = ''; searchInput?.focus()">✕</button>
