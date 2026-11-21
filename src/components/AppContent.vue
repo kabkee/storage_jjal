@@ -160,7 +160,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch } from "vue";
+import { onMounted, onUnmounted, ref, computed, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
 import { matchesSearch, matchesFacetFilters } from '@/utils/imageFilter';
@@ -409,8 +409,56 @@ const addFavImage = (imageKey) => {
         favImageIdxs.value = [...newFavIdxs];
     }
 }
+// ── WebPCap 원클릭 복사 (맥 전용) ───────────────────────────────────────────────
+// 맥에서 WebPCap 이 켜져 있으면(로컬 브리지 응답) 썸네일 클릭 한 번에 「원본 파일」을 클립보드로 → 카톡에서 ⌘V.
+// 브라우저 드래그 앤 드롭은 Zen 이 파일을 다 쓰기 전에 넘겨서 카톡에 빈 파일이 가므로 이 경로를 쓴다.
+// WebPCap 이 없으면(윈도우·모바일·미실행) 아무것도 안 보이고 기존 동작 그대로.
+const WEBPCAP = 'http://127.0.0.1:47321';
+const webpcapReady = ref(false);
+const isMac = /Mac/i.test(navigator.userAgentData?.platform || navigator.platform || navigator.userAgent);
+const probeWebPCap = async () => {
+    if (!isMac) return;
+    try {
+        const r = await fetch(`${WEBPCAP}/ping`, { signal: AbortSignal.timeout(800) });
+        webpcapReady.value = (await r.json())?.app === 'WebPCap';
+    } catch {
+        webpcapReady.value = false;
+    }
+};
+onMounted(() => {
+    probeWebPCap();
+    window.addEventListener('focus', probeWebPCap);   // WebPCap 을 나중에 켜도 탭으로 돌아오면 감지
+});
+onUnmounted(() => window.removeEventListener('focus', probeWebPCap));
+
+let lastWebPCapCopy = { file: '', at: 0 };
+const copyViaWebPCap = async (image) => {
+    // 짤톡 확장의 더블클릭 저장과 겹치면 클릭이 두 번 들어오므로 같은 짤 연속 요청은 무시
+    const now = Date.now();
+    if (lastWebPCapCopy.file === image.file && now - lastWebPCapCopy.at < 1500) return;
+    lastWebPCapCopy = { file: image.file, at: now };
+
+    const url = new URL(withLeadingSlash(image.file), window.location.origin).href;
+    const ext = (image.file.split('.').pop() || 'gif').toLowerCase();
+    try {
+        const r = await fetch(`${WEBPCAP}/copy`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url, name: `${image.name || 'jjal'}.${ext}` }),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
+        appSnackbars.value.showSnackbar({ message: `"${image.name}" 원본 복사 완료 — 카톡·Slack에서 ⌘V` });
+    } catch (e) {
+        appSnackbars.value.showSnackbar({ message: `WebPCap 복사 실패: ${e.message}`, type: 'error' });
+        probeWebPCap();
+    }
+};
+
 const copyImageToClipboard = async (image) => {
     addFavImage(image.file);
+
+    if (webpcapReady.value) return copyViaWebPCap(image);
 
     if (image.file.indexOf('gif') != -1) {
         // 짤톡 확장 프로그램이 설치돼 있으면(<html data-jjaltok>) 더블클릭으로 바로 저장되므로 안내하지 않는다
