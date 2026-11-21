@@ -1,5 +1,6 @@
 # 짤 복사 도우미(Windows) 설치 프로그램 빌드 → GitHub 릴리스에 JjalCopySetup.exe 첨부
-# 태그 jjalcopy-vX.Y.Z 를 올리면(또는 gh release create 로 태그 생성) 실행된다. 수동 실행은 산출물만 남긴다.
+# 태그 jjalcopy-vX.Y.Z 를 올리면(또는 gh release create 로 태그 생성) 실행된다.
+# workflow_dispatch 는 기본 브랜치(main)에 이 파일이 있어야 동작한다 — 작업 브랜치는 jjal_kabkee 라 태그로 돌린다.
 name: jjalcopy-release
 
 on:
@@ -52,5 +53,7 @@ jobs:
         run: |
           $tag = $env:GITHUB_REF_NAME
           gh release view $tag -R $env:GITHUB_REPOSITORY *> $null
-          if ($LASTEXITCODE -ne 0) { gh release create $tag -R $env:GITHUB_REPOSITORY --title "짤 복사 도우미 $tag" --notes "자동 빌드" }
-          gh release upload $tag dist/JjalCopySetup.exe -R $env:GITHUB_REPOSITORY --clobber
+          # 릴리스가 없으면 시험판으로 만든다 (정식판은 사람이 gh release create 로 먼저 만든다 → 「최신」 링크 보호)
+          if ($LASTEXITCODE -ne 0) { gh release create $tag -R $env:GITHUB_REPOSITORY --prerelease --title "짤 복사 도우미 $tag (자동 빌드)" --notes "자동 빌드" }
+          # JjalCopy.exe 도 함께 — 옛 다운로드 링크(releases/latest/download/JjalCopy.exe) 호환용(설치 없이 실행만 됨)
+          gh release upload $tag dist/JjalCopySetup.exe dist/JjalCopy.exe -R $env:GITHUB_REPOSITORY --clobber
