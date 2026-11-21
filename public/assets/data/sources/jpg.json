@@ -382,23 +382,6 @@
         "md5": "a1ad9f840e934006912d9784d7f1c1a3"
     },
     {
-        "id": "25",
-        "name": "김연경 내려올 거야 안 내려올 거야",
-        "file": "assets/webp/ecf6bab3-a56d-42f6-b796-127a50957d6a.webp",
-        "tag": "jpg,ping-pong_ball,neck_brace,tennis_ball, 김연경, 감동, 격려, 배구, 한국, 김연경 밈, 1세트 주요 장면, volleyball, encouragement, Korean, Kim Yeon-koung, meme",
-        "category_1": "JPG",
-        "category_2": null,
-        "emotion": [
-            "황당",
-            "불신/의심"
-        ],
-        "situation": [
-            "질문/궁금"
-        ],
-        "thumb": "assets/thumbs/ecf6bab3-a56d-42f6-b796-127a50957d6a.webp",
-        "md5": "428ea5224b03cdfb7b8111ff14083302"
-    },
-    {
         "id": "26",
         "name": "설득력이있어",
         "file": "assets/webp/391ef4c2-af71-4a26-869f-50df907b4306.webp",
@@ -1603,22 +1586,6 @@
         ],
         "thumb": "assets/thumbs/oo.webp",
         "md5": "e3ba88cc6cc09401ecdf62eca9594c06"
-    },
-    {
-        "id": "103",
-        "name": "김연경 그래서 봤어 안 봤어",
-        "file": "assets/webp/752297fb-a0a9-4d5a-a5d5-ecd9383d907f.webp",
-        "tag": "jpg,ping-pong_ball,neck_brace,comic_book, 그래서 봤어 안 봤어?, Volleyball, South Korea, Korean text, Meme, Sports, Olympics, Intense, Discussion, Kim Yeon Koung",
-        "category_1": "JPG",
-        "category_2": null,
-        "emotion": [
-            "황당"
-        ],
-        "situation": [
-            "질문/궁금"
-        ],
-        "thumb": "assets/thumbs/752297fb-a0a9-4d5a-a5d5-ecd9383d907f.webp",
-        "md5": "75b4e86a8dfa9420145d218a5e3e0074"
     },
     {
         "id": "104",
