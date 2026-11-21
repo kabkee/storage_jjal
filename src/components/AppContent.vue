@@ -151,6 +151,10 @@
             </div>
         </div>
 
+        <!-- ── 문구 관리 (관리자) ── -->
+        <CaptionAdmin v-if="captionAdminOpen" :images="images" @close="captionAdminOpen = false"
+            @toast="t => appSnackbars.showSnackbar(t)" />
+
         <!-- ── 문구 넣기 ── -->
         <CaptionEditor v-if="captionFor" :image="captionFor" @close="captionFor = null"
             @toast="t => appSnackbars.showSnackbar(t)" @copied="addFavImage(captionFor.file)" />
@@ -189,6 +193,16 @@
                         <span class="active-chip">축하 <span class="x">×</span></span>
                         <span class="btn primary inline">📋 복사하기</span>
                     </div>
+                </div>
+                <div v-if="authEnabled">
+                    <div class="set-label">계정 (💬 문구 모음)</div>
+                    <div class="set-desc">구글로 로그인하면 「✏️ 문구 넣기」에서 만든 문구를 짤마다 남겨 모두와 나눌 수 있어요. 이름만 보이고 이메일은 공개되지 않아요.</div>
+                    <div v-if="user" class="set-row">
+                        <span class="me">👤 <b>{{ user.name }}</b><template v-if="isAdmin"> · 관리자</template></span>
+                        <button class="btn" @click="signOut()">로그아웃</button>
+                        <button v-if="isAdmin" class="btn primary" @click="settingsOpen = false; captionAdminOpen = true">📝 문구 관리</button>
+                    </div>
+                    <div v-else ref="settingsLoginEl"></div>
                 </div>
                 <div v-if="helperDownloadUrl">
                     <div class="set-label">짤 복사 도우미 ({{ helperOsName }})</div>
@@ -333,7 +347,9 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, computed, watch } from "vue";
+import { onMounted, onUnmounted, ref, computed, watch, nextTick } from "vue";
+import { authEnabled, user, isAdmin, renderSignInButton, onSignIn, signOut } from '@/utils/googleAuth';
+import { refreshMe } from '@/utils/captionsApi';
 import { useRoute, useRouter } from 'vue-router';
 import { useDisplay, useTheme } from 'vuetify';
 import { matchesSearch, matchesFacetFilters } from '@/utils/imageFilter';
@@ -578,6 +594,17 @@ const searchTag = (t) => {
 };
 // 문구 넣기 편집기 (CaptionEditor.vue) — 상세 보기에서 연다
 const captionFor = ref(null);
+// 구글 로그인 · 문구 관리(관리자)
+const captionAdminOpen = ref(false);
+const settingsLoginEl = ref(null);
+watch(settingsOpen, async (open) => {
+    if (!open || !authEnabled || user.value) return;
+    await nextTick();
+    renderSignInButton(settingsLoginEl.value).catch(() => {});
+});
+onMounted(() => { if (user.value) refreshMe(); });
+const offSignIn = onSignIn(() => refreshMe());
+onUnmounted(offSignIn);
 const openCaption = (img) => {
     captionFor.value = img;
     detail.value = null;
@@ -602,7 +629,8 @@ const onKeydown = (e) => {
     const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
     if (e.key === '/' && !typing) { e.preventDefault(); searchInput.value?.focus(); }
     if (e.key === 'Escape') {
-        if (captionFor.value) captionFor.value = null;
+        if (captionAdminOpen.value) captionAdminOpen.value = false;
+        else if (captionFor.value) captionFor.value = null;
         else if (detail.value) detail.value = null;
         else if (settingsOpen.value) settingsOpen.value = false;
         else openAxis.value = null;
@@ -1092,6 +1120,7 @@ a.btn { text-decoration: none; color: inherit; }
 .preview { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 12px; border-radius: 12px; background: var(--bg); }
 .set-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .set-row .btn { height: 38px; font-size: 13px; }
+.set-row .me { font-size: 14px; display: inline-flex; align-items: center; }
 
 /* ── 골라서 공유 바 ── */
 .select-bar { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 30; background: var(--text); color: var(--bg); border-radius: 14px; padding: 10px 12px 10px 18px; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); max-width: calc(100vw - 24px); flex-wrap: wrap; justify-content: center; }

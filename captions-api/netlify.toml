@@ -1,0 +1,7 @@
+# 짤 문구 API 전용 Netlify 사이트 (jjal-captions-api) — 사이트 본체는 AWS Amplify, 이건 함수만
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"

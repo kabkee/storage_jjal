@@ -78,19 +78,50 @@
                             <input v-model.number="bgPad" type="range" min="0" max="1.5" step="0.05" class="range" aria-label="배경 여백">
                         </div>
                     </template>
+
+                    <!-- 💬 문구 모음: 모두가 저장한 문구(구글 로그인). 누르면 글자·위치·색까지 그대로 불러온다 -->
+                    <div v-if="sharingOn" class="shared">
+                        <div class="shared-head">
+                            <span>💬 이 짤의 문구 모음 <small v-if="shared.length">({{ shared.length }})</small></span>
+                            <span v-if="isAdmin" class="admin-badge">관리자</span>
+                        </div>
+                        <div v-if="sharedError" class="shared-msg">{{ sharedError }}</div>
+                        <div v-else-if="sharedLoading" class="shared-msg">불러오는 중…</div>
+                        <div v-else-if="!shared.length" class="shared-msg">아직 저장된 문구가 없어요. 첫 문구를 남겨 보세요!</div>
+                        <div v-else class="shared-list">
+                            <div v-for="c in shared" :key="c.id" class="shared-item" :class="{ hidden: c.hidden }">
+                                <button class="shared-text" :title="c.text" @click="applyCaption(c)">
+                                    <span class="t">{{ c.text.replace(/\n/g, ' / ') }}</span>
+                                    <span class="by">{{ c.mine ? '내 문구' : c.name }} · {{ ago(c.at) }}<template v-if="c.hidden"> · 숨김</template></span>
+                                </button>
+                                <button v-if="isAdmin" class="mini" :title="c.hidden ? '다시 보이기' : '숨기기'" @click="toggleHidden(c)">{{ c.hidden ? '👁' : '🙈' }}</button>
+                                <button v-if="isAdmin || c.mine" class="mini" title="삭제" @click="removeCaption(c)">🗑</button>
+                            </div>
+                        </div>
+                        <div v-show="showLogin && !user" class="login">
+                            <span>문구를 모두와 나누려면 로그인해 주세요</span>
+                            <div ref="loginEl"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="cap-actions">
+            <div class="cap-actions" :class="{ three: sharingOn }">
                 <button class="btn primary" :disabled="!loaded" @click="copy()">📋 복사하기</button>
                 <button class="btn" :disabled="!loaded" @click="save()">⬇ 저장</button>
+                <button v-if="sharingOn" class="btn share" :disabled="!loaded || !text.trim() || saving" @click="share()"
+                    title="이 문구(글자·위치·색)를 이 짤의 문구 모음에 남겨요 — 모두에게 보여요">
+                    {{ saving ? '저장 중…' : '💬 문구 모음에 남기기' }}
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { authEnabled, user, isAdmin, renderSignInButton, onSignIn } from '@/utils/googleAuth';
+import { listCaptions, saveCaption, setCaptionHidden, deleteCaption, refreshMe } from '@/utils/captionsApi';
 
 const props = defineProps({ image: { type: Object, required: true } });
 const emit = defineEmits(['close', 'toast', 'copied']);
@@ -195,6 +226,85 @@ const isDark = (hex) => {
 };
 
 watch([text, pos, size, color, outline, bgMode, bgColor, bgWide, bgPad], draw, { deep: true });
+
+// ── 💬 문구 모음 (구글 로그인 · Netlify 함수 jjal-captions-api · GitHub JSON) ──
+const sharingOn = authEnabled;          // 구글 클라이언트 ID 가 설정돼 있을 때만 보인다
+const shared = ref([]);
+const sharedLoading = ref(false);
+const sharedError = ref('');
+const saving = ref(false);
+const showLogin = ref(false);
+const loginEl = ref(null);
+
+const currentStyle = () => ({
+    x: pos.value.x, y: pos.value.y, size: size.value, color: color.value, outline: outline.value,
+    bgMode: bgMode.value, bgColor: bgColor.value, bgWide: bgWide.value, bgPad: bgPad.value,
+});
+const applyCaption = (c) => {
+    const st = c.style || {};
+    text.value = c.text;
+    pos.value = { x: st.x ?? 0.5, y: st.y ?? 0.88 };
+    size.value = st.size ?? 9;
+    color.value = st.color || '#FFFFFF';
+    outline.value = st.outline !== false;
+    bgMode.value = st.bgMode || 'none';
+    bgColor.value = st.bgColor || '#FFFFFF';
+    bgWide.value = !!st.bgWide;
+    bgPad.value = st.bgPad ?? 0.3;
+};
+const ago = (iso) => {
+    const s = (Date.now() - Date.parse(iso)) / 1000;
+    if (s < 60) return '방금';
+    if (s < 3600) return `${Math.floor(s / 60)}분 전`;
+    if (s < 86400) return `${Math.floor(s / 3600)}시간 전`;
+    if (s < 86400 * 30) return `${Math.floor(s / 86400)}일 전`;
+    return iso.slice(0, 10);
+};
+const loadShared = async () => {
+    sharedLoading.value = true;
+    sharedError.value = '';
+    try { shared.value = (await listCaptions(props.image.id)).captions; }
+    catch (e) { sharedError.value = `문구 모음을 불러오지 못했어요 (${e.message})`; }
+    finally { sharedLoading.value = false; }
+};
+const askLogin = async () => {
+    showLogin.value = true;
+    await nextTick();
+    try { await renderSignInButton(loginEl.value); }
+    catch (e) { emit('toast', { message: e.message, type: 'error' }); }
+};
+const share = async () => {
+    if (!user.value) return askLogin();
+    saving.value = true;
+    try {
+        const { caption } = await saveCaption(props.image.id, text.value, currentStyle());
+        shared.value = [caption, ...shared.value];
+        emit('toast', { message: '문구 모음에 남겼어요 — 다른 사람도 볼 수 있어요' });
+    } catch (e) {
+        emit('toast', { message: e.message, type: 'error' });
+        if (!user.value) askLogin();   // 로그인이 만료됐으면 다시
+    } finally { saving.value = false; }
+};
+const toggleHidden = async (c) => {
+    try { const r = await setCaptionHidden(c.id, !c.hidden); c.hidden = r.hidden; }
+    catch (e) { emit('toast', { message: e.message, type: 'error' }); }
+};
+const removeCaption = async (c) => {
+    if (!confirm(`「${c.text}」 문구를 지울까요?`)) return;
+    try { await deleteCaption(c.id); shared.value = shared.value.filter(x => x.id !== c.id); }
+    catch (e) { emit('toast', { message: e.message, type: 'error' }); }
+};
+// 로그인하면: 관리자 여부 확인 → 목록 다시(내 문구 표시) → 저장하려던 중이었으면 이어서 저장
+const offSignIn = onSignIn(async () => {
+    await refreshMe();
+    await loadShared();
+    if (showLogin.value && text.value.trim()) { showLogin.value = false; share(); }
+});
+onUnmounted(offSignIn);
+if (sharingOn) {
+    loadShared();
+    if (user.value) refreshMe().then(() => isAdmin.value && loadShared());
+}
 
 onMounted(async () => {
     const im = new Image();
@@ -313,11 +423,29 @@ const save = async () => {
 .btn.primary { background: var(--accent) !important; color: var(--on-accent) !important; }
 .btn:disabled { opacity: .45; cursor: default; }
 .cap-actions { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
+.cap-actions.three { grid-template-columns: 2fr 1fr 1.6fr; }
+.btn.share { background: var(--accent-soft) !important; }
+.shared { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.shared-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 700; }
+.shared-head small { color: var(--sub); font-weight: 600; }
+.admin-badge { font-size: 11px; background: var(--accent); color: var(--on-accent); padding: 1px 8px; border-radius: 999px; }
+.shared-msg { font-size: 12.5px; color: var(--sub); }
+.shared-list { display: flex; flex-direction: column; gap: 4px; max-height: 190px; overflow: auto; }
+.shared-item { display: flex; align-items: stretch; gap: 4px; }
+.shared-item.hidden { opacity: .5; }
+.shared-text { flex: 1; min-width: 0; text-align: left; background: var(--chip) !important; border-radius: 8px; padding: 6px 10px; display: flex; flex-direction: column; }
+.shared-text:hover { outline: 1.5px solid var(--accent); }
+.shared-text .t { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shared-text .by { font-size: 11px; color: var(--sub); }
+.mini { width: 32px; border-radius: 8px; background: var(--chip) !important; font-size: 14px; }
+.login { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--sub); }
 .cap-actions .btn { height: 48px; font-size: 15px; }
 @media (max-width: 640px) {
     .dim { align-items: flex-end; }
     .cap { width: 100vw; border-radius: 18px 18px 0 0; max-height: 94vh; }
     .cap-body { grid-template-columns: 1fr; }
     .preview { max-height: 42vh; }
+    .cap-actions.three { grid-template-columns: 1fr 1fr; }
+    .cap-actions.three .share { grid-column: 1 / -1; }
 }
 </style>
