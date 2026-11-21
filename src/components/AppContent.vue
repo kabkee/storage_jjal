@@ -748,7 +748,7 @@ const helperOsName = isWindows ? 'Windows' : 'Mac';
 // 안내는 창 폭이 아니라 OS 로 판단한다(노트북에서 브라우저를 반만 띄워도 안내가 떠야 함)
 const showHelperLink = computed(() => !!helperDownloadUrl && !webpcapReady.value);
 // 최신 도우미 버전 — 새 릴리스를 내면 같이 올릴 것 (켜져 있는 도우미가 이보다 낮으면 「업데이트」 링크를 보여 준다)
-const LATEST_HELPER = { windows: '1.5.0', mac: '1.0.0' };
+const LATEST_HELPER = { windows: '1.6.0', mac: '1.0.0' };
 const latestHelperVersion = isWindows ? LATEST_HELPER.windows : LATEST_HELPER.mac;
 const helperUpdateAvailable = computed(() => !!helperDownloadUrl && webpcapReady.value && !helperAtLeast(latestHelperVersion));
 const probeWebPCap = async () => {
