@@ -4,8 +4,10 @@
 // 원본을 「끝까지」 받은 뒤 탐색기에서 Ctrl+C 한 것과 같은 형태(파일 드롭 목록)로 클립보드에 올린다 → 카톡에서 Ctrl+V.
 // (브라우저는 보안상 클립보드에 「파일」을 넣을 수 없고, 드래그 앤 드롭은 브라우저가 파일을 다 쓰기 전에 넘겨 빈 파일이 될 수 있다)
 //
-// 설치: exe 를 실행하면 %LOCALAPPDATA%\JjalCopy 로 자신을 복사하고 Windows 시작 시 자동 실행에 등록(관리자 권한 불필요).
-// 종료·자동 실행 끄기·제거: 작업 표시줄 트레이 아이콘 우클릭.
+// 설치: JjalCopySetup.exe(Inno Setup, installer/JjalCopy.iss)가 %LOCALAPPDATA%\Programs\JjalCopy 에 설치하고
+//       자동 실행(HKCU Run)·「앱 및 기능」 제거를 담당한다. 이 exe 는 자기 복사·숨은 cmd 같은 걸 하지 않는다
+//       (v1.2 까지의 자가 설치 방식은 안랩 V3 가 악성 행위로 차단 → v1.3 에서 정식 설치 프로그램으로 전환).
+// 종료·자동 실행 끄기: 작업 표시줄 트레이 아이콘 우클릭. 제거: 「앱 및 기능」 또는 트레이 메뉴(설치 프로그램의 제거기 실행).
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -39,9 +41,7 @@ namespace JjalCopy
             { "jjal-kabkee.d271z96h7lorpb.amplifyapp.com", "100.64.25.50", "localhost", "127.0.0.1" };
 
         public static string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
-        public static readonly string InstallDir =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
-        public static string InstalledExe => Path.Combine(InstallDir, AppName + ".exe");
+        public static readonly string AppDir = Path.GetDirectoryName(Application.ExecutablePath);
         public static readonly string TempRoot = Path.Combine(Path.GetTempPath(), AppName);
 
         const string MutexName = @"Local\JjalCopy.SingleInstance";
@@ -64,37 +64,29 @@ namespace JjalCopy
                 return 0;
             }
 
-            // 설치 위치가 아닌 곳(다운로드 폴더 등)에서 실행 → 설치 후 설치본을 실행하고 끝
-            if (!args.Contains("--portable") && !SamePath(Application.ExecutablePath, InstalledExe))
+            // 이미 다른 인스턴스(같은 버전이든, 업데이트 전 옛 버전이든)가 떠 있으면 종료 신호를 보내고 자리를 넘겨받는다.
+            // → 설치 프로그램이 새 버전을 실행하면 옛 버전이 알아서 내려간다 (taskkill 같은 강제 종료 없이)
+            using (var mutex = new Mutex(false, MutexName))
             {
-                try
+                bool owned = false;
+                try { owned = mutex.WaitOne(0); } catch (AbandonedMutexException) { owned = true; }
+                if (!owned)
                 {
-                    Installer.Install(Application.ExecutablePath);
-                    Process.Start(InstalledExe, "--installed");
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("설치하지 못했어요.\n\n" + e.Message, DisplayName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return 1;
-                }
-                return 0;
-            }
-
-            using (var mutex = new Mutex(true, MutexName, out bool created))
-            {
-                if (!created)
-                {
-                    MessageBox.Show("이미 실행 중이에요.\n작업 표시줄 오른쪽(트레이)의 아이콘을 우클릭하면 종료할 수 있어요.",
-                        DisplayName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return 0;
+                    try { using (var quit = EventWaitHandle.OpenExisting(QuitEventName)) quit.Set(); }
+                    catch (WaitHandleCannotBeOpenedException) { }
+                    try { owned = mutex.WaitOne(5000); } catch (AbandonedMutexException) { owned = true; }
+                    if (!owned)
+                    {
+                        MessageBox.Show("이미 실행 중이에요.\n작업 표시줄 오른쪽(트레이)의 아이콘을 우클릭하면 종료할 수 있어요.",
+                            DisplayName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return 0;
+                    }
                 }
                 Application.Run(new TrayContext(justInstalled: args.Contains("--installed")));
+                mutex.ReleaseMutex();
             }
             return 0;
         }
-
-        static bool SamePath(string a, string b) =>
-            string.Equals(Path.GetFullPath(a).TrimEnd('\\'), Path.GetFullPath(b).TrimEnd('\\'), StringComparison.OrdinalIgnoreCase);
 
         public static Icon LoadIcon()
         {
@@ -160,50 +152,33 @@ namespace JjalCopy
         }
     }
 
-    /// 설치·자동 실행·제거
-    static class Installer
+    /// 자동 실행(HKCU Run) — 설치 프로그램이 처음 등록하고, 트레이 메뉴로 켜고 끈다
+    static class Autorun
     {
         const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
-        public static void Install(string src)
-        {
-            Directory.CreateDirectory(Program.InstallDir);
-            // 이미 실행 중인 이전 버전이 있으면 종료시키고(파일 잠금 해제) 덮어쓴다 → 새 버전 설치 = 업데이트
-            try
-            {
-                using (var quit = EventWaitHandle.OpenExisting(Program.QuitEventName)) quit.Set();
-            }
-            catch (WaitHandleCannotBeOpenedException) { }
-            Exception last = null;
-            for (int i = 0; i < 20; i++)
-            {
-                try { File.Copy(src, Program.InstalledExe, true); last = null; break; }
-                catch (IOException e) { last = e; Thread.Sleep(250); }
-            }
-            if (last != null) throw last;
-            SetAutorun(true);
-        }
-
-        public static bool IsAutorun
+        public static bool IsOn
         {
             get { using (var k = Registry.CurrentUser.OpenSubKey(RunKey)) return k?.GetValue(Program.AppName) != null; }
         }
 
-        public static void SetAutorun(bool on)
+        public static void Set(bool on)
         {
             using (var k = Registry.CurrentUser.CreateSubKey(RunKey))
             {
-                if (on) k.SetValue(Program.AppName, "\"" + Program.InstalledExe + "\"");
+                if (on) k.SetValue(Program.AppName, "\"" + Application.ExecutablePath + "\"");
                 else if (k.GetValue(Program.AppName) != null) k.DeleteValue(Program.AppName);
             }
         }
 
-        /// 자동 실행 해제 + 종료 2초 뒤 설치 폴더·임시 폴더 삭제
-        public static void Uninstall()
+        /// 설치 프로그램(Inno Setup)이 만든 제거기. 없으면 null (개발용으로 exe 만 실행한 경우)
+        public static string Uninstaller
         {
-            SetAutorun(false);
-            var cmd = $"/c timeout /t 2 /nobreak >nul & rmdir /s /q \"{Program.InstallDir}\" & rmdir /s /q \"{Program.TempRoot}\"";
-            Process.Start(new ProcessStartInfo("cmd.exe", cmd) { CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, UseShellExecute = false });
+            get
+            {
+                var u = Path.Combine(Program.AppDir, "unins000.exe");
+                return File.Exists(u) ? u : null;
+            }
         }
     }
 
@@ -228,9 +203,9 @@ namespace JjalCopy
             menu.Items.Add("jjal 사이트 열기", null, (s, e) => Process.Start(Program.SiteUrl));
             autorunItem = new ToolStripMenuItem("Windows 시작 시 자동 실행", null, (s, e) =>
             {
-                Installer.SetAutorun(!Installer.IsAutorun);
-                autorunItem.Checked = Installer.IsAutorun;
-            }) { Checked = Installer.IsAutorun };
+                Autorun.Set(!Autorun.IsOn);
+                autorunItem.Checked = Autorun.IsOn;
+            }) { Checked = Autorun.IsOn };
             menu.Items.Add(autorunItem);
             ToolStripMenuItem popupItem = null;
             popupItem = new ToolStripMenuItem("복사 후 「끌어다 놓기」 창 띄우기", null, (s, e) =>
@@ -241,7 +216,8 @@ namespace JjalCopy
             menu.Items.Add(popupItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("종료", null, (s, e) => Quit());
-            menu.Items.Add("제거 (프로그램 삭제)", null, (s, e) => UninstallAsk());
+            if (Autorun.Uninstaller != null)
+                menu.Items.Add("제거 (프로그램 삭제)", null, (s, e) => UninstallAsk());
 
             tray = new NotifyIcon
             {
@@ -293,13 +269,12 @@ namespace JjalCopy
             return Path.GetFileName(path);
         }
 
+        /// 설치 프로그램의 제거기를 실행한다(「앱 및 기능」에서 제거하는 것과 같음). 제거기가 이 프로그램을 종료시킨다.
         void UninstallAsk()
         {
-            var r = MessageBox.Show("짤 복사 도우미를 제거할까요?\n(자동 실행 해제 + 프로그램 파일 삭제)", Program.DisplayName,
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (r != DialogResult.Yes) return;
-            Installer.Uninstall();
-            Quit();
+            var u = Autorun.Uninstaller;
+            if (u == null) return;
+            Process.Start(new ProcessStartInfo(u) { UseShellExecute = true });
         }
 
         void Quit()

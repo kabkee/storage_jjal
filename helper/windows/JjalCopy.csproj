@@ -8,7 +8,7 @@
     <RootNamespace>JjalCopy</RootNamespace>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>1.2.1</Version>
+    <Version>1.3.0</Version>
     <Product>짤 복사 도우미</Product>
     <Company>kabkee</Company>
     <Description>jjal storage 원클릭 원본 복사 도우미</Description>

@@ -1,0 +1,56 @@
+# 짤 복사 도우미(Windows) 설치 프로그램 빌드 → GitHub 릴리스에 JjalCopySetup.exe 첨부
+# 태그 jjalcopy-vX.Y.Z 를 올리면(또는 gh release create 로 태그 생성) 실행된다. 수동 실행은 산출물만 남긴다.
+name: jjalcopy-release
+
+on:
+  push:
+    tags: ['jjalcopy-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: helper/windows
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: 앱 빌드 (.NET Framework 4.8)
+        run: |
+          dotnet build -c Release -o dist/build -nologo
+          Copy-Item dist/build/JjalCopy.exe dist/JjalCopy.exe
+
+      - name: 설치 프로그램 빌드 (Inno Setup)
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress | Out-Null }
+          & $iscc installer/JjalCopy.iss
+          if ($LASTEXITCODE -ne 0) { throw "ISCC 실패 $LASTEXITCODE" }
+          Get-Item dist/JjalCopySetup.exe | Format-List Name, Length
+          (Get-FileHash dist/JjalCopySetup.exe -Algorithm SHA256).Hash.ToLower() | Out-File dist/JjalCopySetup.sha256 -Encoding ascii
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JjalCopySetup
+          path: |
+            helper/windows/dist/JjalCopySetup.exe
+            helper/windows/dist/JjalCopySetup.sha256
+
+      - name: 릴리스에 첨부
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          gh release view $tag -R $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -ne 0) { gh release create $tag -R $env:GITHUB_REPOSITORY --title "짤 복사 도우미 $tag" --notes "자동 빌드" }
+          gh release upload $tag dist/JjalCopySetup.exe -R $env:GITHUB_REPOSITORY --clobber
