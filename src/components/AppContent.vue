@@ -141,6 +141,8 @@
                     </div>
                     <div class="actions">
                         <button class="btn primary" @click="copyFromDetail()">📋 복사하기</button>
+                        <!-- 정지 짤에만: 움짤은 프레임마다 글자를 그려야 해서 지원하지 않는다 -->
+                        <button v-if="!isAnimated(detail)" class="btn caption" @click="openCaption(detail)">✏️ 문구 넣기</button>
                         <button class="btn" @click="downloadImage(detail)">⬇ 저장</button>
                         <button class="btn" @click="copySingleShareLink(detail)">🔗 공유</button>
                         <button class="btn" @click="detail = null">닫기</button>
@@ -148,6 +150,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- ── 문구 넣기 ── -->
+        <CaptionEditor v-if="captionFor" :image="captionFor" @close="captionFor = null"
+            @toast="t => appSnackbars.showSnackbar(t)" @copied="addFavImage(captionFor.file)" />
 
         <!-- ── 설정 ── -->
         <div v-if="settingsOpen" class="dim" @click.self="settingsOpen = false">
@@ -570,6 +576,12 @@ const searchTag = (t) => {
     sharedIds.value = [];
     detail.value = null;
 };
+// 문구 넣기 편집기 (CaptionEditor.vue) — 상세 보기에서 연다
+const captionFor = ref(null);
+const openCaption = (img) => {
+    captionFor.value = img;
+    detail.value = null;
+};
 const copyFromDetail = () => {
     const img = detail.value;
     detail.value = null;
@@ -590,7 +602,8 @@ const onKeydown = (e) => {
     const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
     if (e.key === '/' && !typing) { e.preventDefault(); searchInput.value?.focus(); }
     if (e.key === 'Escape') {
-        if (detail.value) detail.value = null;
+        if (captionFor.value) captionFor.value = null;
+        else if (detail.value) detail.value = null;
         else if (settingsOpen.value) settingsOpen.value = false;
         else openAxis.value = null;
     }
@@ -1062,6 +1075,7 @@ a.btn { text-decoration: none; color: inherit; }
 .tags .chip { height: 28px; font-size: 12.5px; }
 .actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .actions .btn.primary { grid-column: 1 / -1; height: 48px; font-size: 15px; }
+.actions .btn.caption { grid-column: 1 / -1; background: var(--accent-soft) !important; color: var(--text); }
 
 .settings { background: var(--surface); border-radius: 18px; width: min(440px, calc(100vw - 24px)); max-height: 86vh; overflow: auto; padding: 20px; display: flex; flex-direction: column; gap: 22px; }
 .settings h2 { margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: space-between; }
