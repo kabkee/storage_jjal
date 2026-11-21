@@ -75,6 +75,10 @@
                         총 <span style="font-weight: bold; color: red;">{{ filteredImages.length }}</span>개 짤
                     </div>
                     <div class="d-flex align-center">
+                        <a v-if="showWinHelperLink" :href="WIN_HELPER_URL" class="helper-link mr-4"
+                            title="설치하면 짤을 클릭 한 번으로 원본(움직이는 GIF) 복사 → 카톡에서 Ctrl+V. 「Windows의 PC 보호」 창이 뜨면 「추가 정보 → 실행」">
+                            <v-icon size="16">mdi-download</v-icon> 원클릭 복사 프로그램
+                        </a>
                         <v-switch v-model="excludeGif" hide-details inset color="primary" class="mr-2" />
                         <span>GIF 제외</span>
                     </div>
@@ -409,18 +413,24 @@ const addFavImage = (imageKey) => {
         favImageIdxs.value = [...newFavIdxs];
     }
 }
-// ── WebPCap 원클릭 복사 (맥 전용) ───────────────────────────────────────────────
-// 맥에서 WebPCap 이 켜져 있으면(로컬 브리지 응답) 썸네일 클릭 한 번에 「원본 파일」을 클립보드로 → 카톡에서 ⌘V.
-// 브라우저 드래그 앤 드롭은 Zen 이 파일을 다 쓰기 전에 넘겨서 카톡에 빈 파일이 가므로 이 경로를 쓴다.
-// WebPCap 이 없으면(윈도우·모바일·미실행) 아무것도 안 보이고 기존 동작 그대로.
+// ── 원클릭 원본 복사 (맥 WebPCap / 윈도우 짤 복사 도우미) ─────────────────────────
+// 로컬 도우미가 켜져 있으면(127.0.0.1:47321/ping 응답) 썸네일 클릭 한 번에 「원본 파일」을 클립보드로 → 카톡에서 ⌘V/Ctrl+V.
+// 브라우저는 클립보드에 파일을 넣을 수 없고, 드래그 앤 드롭은 Zen 이 파일을 다 쓰기 전에 넘겨 빈 파일이 되므로 이 경로를 쓴다.
+// 도우미가 없으면 기존 동작 그대로. 윈도우 데스크톱에서만 작은 다운로드 링크를 보여준다.
 const WEBPCAP = 'http://127.0.0.1:47321';
+const HELPER_APPS = ['WebPCap', 'JjalCopy'];
+const WIN_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/latest/download/JjalCopy.exe';
 const webpcapReady = ref(false);
-const isMac = /Mac/i.test(navigator.userAgentData?.platform || navigator.platform || navigator.userAgent);
+const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
+const isMac = /Mac/i.test(platformStr) && navigator.maxTouchPoints <= 1;   // iPad(데스크톱 모드) 제외
+const isWindows = /Win/i.test(platformStr);
+const pasteKey = isMac ? '⌘V' : 'Ctrl+V';
+const showWinHelperLink = computed(() => isWindows && !webpcapReady.value && !isMobileCustom.value);
 const probeWebPCap = async () => {
-    if (!isMac) return;
+    if (!isMac && !isWindows) return;
     try {
         const r = await fetch(`${WEBPCAP}/ping`, { signal: AbortSignal.timeout(800) });
-        webpcapReady.value = (await r.json())?.app === 'WebPCap';
+        webpcapReady.value = HELPER_APPS.includes((await r.json())?.app);
     } catch {
         webpcapReady.value = false;
     }
@@ -448,7 +458,7 @@ const copyViaWebPCap = async (image) => {
         });
         const j = await r.json().catch(() => ({}));
         if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
-        appSnackbars.value.showSnackbar({ message: `"${image.name}" 원본 복사 완료 — 카톡·Slack에서 ⌘V` });
+        appSnackbars.value.showSnackbar({ message: `"${image.name}" 원본 복사 완료 — 카톡·Slack에서 ${pasteKey}` });
     } catch (e) {
         appSnackbars.value.showSnackbar({ message: `WebPCap 복사 실패: ${e.message}`, type: 'error' });
         probeWebPCap();
@@ -577,6 +587,15 @@ const deleteFromFav = (event, image) => {
 </script>
 
 <style scoped>
+.helper-link {
+    font-size: 0.8em;
+    color: #888;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.helper-link:hover {
+    color: rgb(var(--v-theme-primary));
+}
 .image-container {
     position: relative;
     display: flex;
