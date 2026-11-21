@@ -133,6 +133,8 @@ function md5Index() {
   if (!md5Cache) {
     md5Cache = new Map();
     for (const rec of listImages()) {
+      // webp 전환(2026-11-21) 후 file 은 변환본이라, 업로드 원본과 비교하려면 레코드에 저장한 원본 md5 를 쓴다
+      if (rec.md5) { md5Cache.set(rec.md5, { id: rec.id, name: rec.name, file: rec.file }); continue; }
       const p = path.join(PUBLIC_DIR, rec.file);
       if (fs.existsSync(p)) md5Cache.set(md5File(p), { id: rec.id, name: rec.name, file: rec.file });
     }

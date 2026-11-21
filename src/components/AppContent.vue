@@ -95,7 +95,7 @@
                             <div v-if="selectMode" class="select-mark">
                                 <v-icon size="18" :icon="selectedIds.includes(img.id) ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline'"></v-icon>
                             </div>
-                            <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
+                            <div v-if="isAnimated(img)" class="gif-badge">GIF</div>
                             <div class="hover-text">{{ img.name }}</div>
                         </div>
                     </template>
@@ -109,7 +109,7 @@
                             @dragstart="onThumbDragStart($event, img)" @dragend="onThumbDragEnd($event, img)">
                             <v-img v-if="img.file" :width="100" :max-width="100" :min-width="100" :max-height="100"
                                 aspect-ratio="1" cover :eager="!!img.thumb" :transition="false" class="elevation-3" :src="img.thumb || img.file"></v-img>
-                            <div v-if="img.file.indexOf('gif') !== -1" class="gif-badge">GIF</div>
+                            <div v-if="isAnimated(img)" class="gif-badge">GIF</div>
                             <div class="hover-text">{{ img.name }}</div>
                             <div class="delete" @click="deleteFromFav($event, img)">X</div>
                         </div>
@@ -172,6 +172,8 @@ import { parseFilterQuery, buildFilterQuery, recentIds, orderByIds } from '@/uti
 
 const { width } = useDisplay();
 const isMobileCustom = computed(() => width.value <= 1024);
+// 움직이는 짤인지: webp 전환(2026-11-21) 후엔 확장자로 알 수 없어서 데이터의 animated 를 본다 (옛 .gif 경로도 호환)
+const isAnimated = (img) => !!img?.animated || /\.gif$/i.test(img?.file || '');
 
 const search = ref(null);
 const images = ref([]);
@@ -324,7 +326,7 @@ const filteredImages = computed(() => {
     }
     // 공유받은 짤은 받는 사람의 'GIF 제외' 설정 때문에 숨겨지지 않게 한다
     if (excludeGif.value && !isShared) {
-        filtered = filtered.filter(img => img.file.indexOf('gif') == -1);
+        filtered = filtered.filter(img => !isAnimated(img));
     }
     return filtered;
 })
@@ -474,7 +476,7 @@ const copyImageToClipboard = async (image) => {
 
     if (webpcapReady.value) return copyViaWebPCap(image);
 
-    if (image.file.indexOf('gif') != -1) {
+    if (isAnimated(image)) {
         // 짤톡 확장 프로그램이 설치돼 있으면(<html data-jjaltok>) 더블클릭으로 바로 저장되므로 안내하지 않는다
         if (document.documentElement.dataset.jjaltok) return;
         appSnackbars.value.showSnackbar({

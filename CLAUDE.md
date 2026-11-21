@@ -35,8 +35,8 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
    - 자유 키워드(`tag` 필드)는 개념 하나당 한글/영어를 항상 짝으로 넣는다 (예: "고양이, Cat").
 4. `public/assets/data/new-images.manifest.json`에 `[{ sourceFilename, name, emotion: [...], situation: [...], tag }, ...]` 형태로 작성한다.
 5. `yarn import-images` 실행 → `public/assets/data/import-tagged-images.js`가:
-   - 파일명을 UUID + 원본 확장자로 바꾸고 확장자별 폴더(`gif`/`jpg`/`png`/`webp`)로 이동 (한글이 파일 경로에 남지 않도록 — 과거 배포 후 "이미지 없음" 에러의 원인이었음)
-   - `generate-thumbnail.js`로 그리드용 썸네일을 `public/assets/thumbs/`에 생성 — **GIF는 애니메이션을 유지한 움직이는 webp**로, 나머지(JPG/PNG/WEBP)는 정지 webp로 만든다(240x240). GIF를 정지 프레임으로 만들면 용량은 별로 안 줄면서 움직임만 사라지므로, GIF는 항상 animated webp로 유지할 것.
+   - **webp 로 변환**해 `assets/webp/<UUID>.webp` 로 저장하고 원본은 지운다(`webp-convert.js` — 움직이는 짤 q75·PNG q90·JPG q80, 애니메이션·프레임 지연 유지). 레코드는 원본 형식별 `sources/<gif|jpg|png|webp>.json` 에 들어가고 `md5`(원본 기준)·`animated`(움직이면 true)가 붙는다. 파일명은 UUID 라 한글이 경로에 남지 않는다 (과거 배포 후 "이미지 없음" 에러의 원인이었음)
+   - `generate-thumbnail.js`로 그리드용 썸네일을 `public/assets/thumbs/`에 생성 — **움직이는 이미지는 애니메이션을 유지한 움직이는 webp**로, 정지 이미지는 정지 webp로 만든다(240x240). 확장자가 아니라 실제 프레임 수로 판단한다. 움직이는 짤을 정지 프레임으로 만들면 용량은 별로 안 줄면서 움직임만 사라지므로 항상 animated webp로 유지할 것.
    - 모든 신규 레코드의 id를 `sources/*.json` 4개 파일 전체를 스캔한 전역 최대값+1로 채번한다(파일별로 따로 채번하면 다른 타입 파일과 id가 충돌할 수 있음).
    - 모든 한글 문자열을 `.normalize('NFC')`로 정규화해서 `public/assets/data/sources/<type>.json`에 레코드를 추가한다.
 6. `yarn generate:data`로 `data.json`을 재생성한다.
@@ -52,8 +52,10 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 {
     "id": "300",
     "name": "표시용 이름",
-    "file": "assets/gif/<uuid>.gif",
+    "file": "assets/webp/<uuid>.webp",
     "thumb": "assets/thumbs/<uuid>.webp",
+    "md5": "<원본 파일 md5>",
+    "animated": true,
     "emotion": ["웃김", "황당"],
     "situation": ["놀리기/드립"],
     "tag": "고양이, Cat, ...",
@@ -61,7 +63,9 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 }
 ```
 
-- `file`: 클립보드 복사/다운로드에 쓰이는 원본. 항상 UUID 파일명, 한글 금지.
+- `file`: 클립보드 복사/다운로드에 쓰이는 원본. **항상 `assets/webp/<UUID>.webp`** (2026-11-21 전체 webp 전환: 305MB→66MB, 22%). 한글 금지.
+- `md5`: 업로드 원본의 md5. 관리 화면 「이미 등록된 짤」 감지가 webp 변환본이 아니라 원본끼리 비교하도록 남긴다.
+- `animated`: 움직이는 짤이면 `true`. 사이트의 GIF 배지·「GIF 제외」(`nogif`)·복사 동작이 확장자 대신 이걸 본다. (`sources/gif.json` = 원래 GIF 였던 짤)
 - `added`: 추가 날짜(YYYY-MM-DD). `yarn import-images` 가 자동으로 넣는다. "최근 추가 N개"가 이걸 먼저 본다(옛 짤엔 없음). id는 2026-10-02 중복 정리로 옛 짤 18개가 312~329 를 받아서 id 순서만으로는 최근 판단이 안 된다.
 - `thumb`: 그리드 표시 전용 경량 썸네일. GIF 원본이면 움직이는 webp, 아니면 정지 webp. 프론트엔드는 `img.thumb || img.file`로 우선 썸네일을 쓰고 없으면 원본 폴백.
 - 기존 ~310개 레거시 이미지(2026-01-01 이전에 들어온 것들)는 `category_1`/`category_2`(파일형식) 필드가 남아있지만 프론트엔드는 더 이상 참조하지 않는 죽은 필드다 — 지우지 않아도 무해함.
@@ -72,10 +76,13 @@ history 라우터라 `/?...` 형태(2026-10-02 해시 라우터에서 전환 —
 
 - `search=카드` 검색어 / `emotion=웃김,황당` · `situation=한턱/쏘기` 칩 필터(쉼표 구분, taxonomy에 없는 값은 무시) / `nogif=1` GIF 제외
 - `ids=309,310,311` 골라서 공유한 짤만 그 순서대로 표시. 검색창의 공유 아이콘 → 선택 모드 → "링크 복사". "최근 추가 N개"는 id 큰 순(= 최근 추가).
-- 1개만 골라 공유하면 `/s/<id>.html` 링크가 복사된다. `yarn build` 마지막에 `generate-share-pages.js` 가 짤마다 그 짤을 og:image 로 넣은 정적 페이지를 `dist/s/`에 만들고, 열면 `/?ids=<id>` 로 넘어간다. **Amplify 재작성 규칙의 예외 확장자에 `html|xml` 이 있어야 동작**(없으면 index.html 로 덮임, 2026-10-02 추가).
+- 1개만 골라 공유하면 `/s/<id>.html` 링크가 복사된다. `yarn build` 마지막에 `generate-share-pages.js` 가 짤마다 정적 페이지를 `dist/s/`에 만들고, 열면 `/?ids=<id>` 로 넘어간다. **og:image 는 원본 webp 가 아니라 빌드 때 만든 `dist/s/<id>.jpg`(첫 프레임, 최대 800px)** — 미리보기 봇이 webp·애니메이션을 못 읽을 수 있어서. **Amplify 재작성 규칙의 예외 확장자에 `html|xml` 이 있어야 동작**(없으면 index.html 로 덮임, 2026-10-02 추가).
 - 링크 미리보기(OG 태그)는 `index.html`에 정적으로 있음. 검색·필터·여러 개 공유 링크는 모두 같은 대표 카드(`public/og-image.jpg`, 1200x630)를 쓴다.
 
 ## 알아둘 것
+
+- **이미지는 webp 만 쓴다**(2026-11-21 오너 결정). `public/assets/{gif,jpg,png}` 는 비어 있고 새 짤도 import 때 webp 로 변환된다. 옛 원본은 git 기록(`e9a565f` 이전)에 남아 있다. 일괄 변환 스크립트: `public/assets/data/convert-to-webp.js`(미리보기 / `--apply`).
+- 원클릭 원본 복사: 로컬 도우미(맥 WebPCap / 윈도우 `helper/windows` JjalCopy)가 `127.0.0.1:47321` 에 응답하면 썸네일 클릭 → 원본 파일을 클립보드로. 🔴 윈도우 카톡은 클립보드 파일 붙여넣기를 받지 않는다(탐색기 형식 그대로 넣어도 실패, 2026-11-21 실측).
 
 - 한글 파일 경로는 절대 만들지 말 것(배포 후 이미지 깨짐의 과거 원인). 표시 텍스트(이름/태그/감정/상황)는 한글 가능하지만 반드시 NFC 정규화.
 - `public/assets/data/*.js`는 `.gitignore`에서 제외되어 있어 새 스크립트를 추가해도 정상적으로 git에 추적된다.

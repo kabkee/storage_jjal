@@ -10,6 +10,10 @@ const SITE_NAME = '값기의 짤방 모음';
 const DATA_PATH = path.join(__dirname, 'data.json');
 const OUT_DIR = path.join(__dirname, '../../../dist/s');
 
+// og:image 는 빌드 때 만든 /s/<id>.jpg 를 쓴다. 짤 원본이 webp 라서(2026-11-21) 카톡 등 미리보기 봇이
+// webp·애니메이션을 못 읽을 수 있으므로, 첫 프레임을 JPG(최대 800px)로 따로 만든다.
+const OG_MAX = 800;
+
 const escapeHtml = (s) => String(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -19,7 +23,7 @@ const escapeHtml = (s) => String(s)
 function buildSharePage(img, siteUrl = SITE_URL) {
     const id = String(img.id);
     const name = escapeHtml((img.name || SITE_NAME).normalize('NFC'));
-    const imageUrl = `${siteUrl}/${String(img.file).replace(/^\//, '')}`;
+    const imageUrl = `${siteUrl}/s/${id}.jpg`;
     const pageUrl = `${siteUrl}/s/${id}.html`;
     const appUrl = `/?ids=${id}`;
     return `<!DOCTYPE html>
@@ -48,6 +52,31 @@ function buildSharePage(img, siteUrl = SITE_URL) {
 `;
 }
 
+// 짤마다 og:image 용 JPG(첫 프레임, 최대 800px)를 만든다. 실패한 건 경고만 하고 넘어간다.
+async function generateOgImages(images, outDir = OUT_DIR, publicDir = path.join(__dirname, '../..')) {
+    const sharp = require('sharp');
+    fs.mkdirSync(outDir, { recursive: true });
+    let count = 0;
+    const list = images.filter(img => /^\d+$/.test(String(img.id)) && img.file);
+    let i = 0;
+    await Promise.all(Array.from({ length: 6 }, async () => {
+        while (i < list.length) {
+            const img = list[i++];
+            try {
+                await sharp(path.join(publicDir, String(img.file).replace(/^\//, '')), { limitInputPixels: false })
+                    .resize(OG_MAX, OG_MAX, { fit: 'inside', withoutEnlargement: true })
+                    .flatten({ background: '#ffffff' })
+                    .jpeg({ quality: 82, mozjpeg: true })
+                    .toFile(path.join(outDir, `${img.id}.jpg`));
+                count++;
+            } catch (e) {
+                console.warn(`⚠️ og 이미지 실패 id ${img.id}: ${e.message}`);
+            }
+        }
+    }));
+    return count;
+}
+
 function generateSharePages(images, outDir = OUT_DIR) {
     // id가 겹치면 /s/<id>.html 이 서로 덮어써 엉뚱한 짤이 미리보기에 뜬다 → 빌드를 멈춘다
     const seen = new Set();
@@ -64,9 +93,12 @@ function generateSharePages(images, outDir = OUT_DIR) {
 }
 
 if (require.main === module) {
-    const images = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
-    const count = generateSharePages(images);
-    console.log(`✅ 공유 페이지 ${count}개 생성: dist/s/<id>.html`);
+    (async () => {
+        const images = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
+        const count = generateSharePages(images);
+        const og = await generateOgImages(images);
+        console.log(`✅ 공유 페이지 ${count}개 + 미리보기 JPG ${og}개 생성: dist/s/<id>.{html,jpg}`);
+    })().catch(e => { console.error(e); process.exit(1); });
 }
 
-module.exports = { buildSharePage, generateSharePages };
+module.exports = { buildSharePage, generateSharePages, generateOgImages };

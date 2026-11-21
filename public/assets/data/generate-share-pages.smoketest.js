@@ -8,14 +8,12 @@ const SITE = 'https://example.test';
 
 // 짤 이미지가 og:image 로, 이름이 og:title 로 들어가고 SPA 로 넘어간다
 const html = buildSharePage({ id: '311', name: '카드 결제', file: 'assets/jpg/abc.jpg' }, SITE);
-assert.ok(html.includes('<meta property="og:image" content="https://example.test/assets/jpg/abc.jpg" />'), 'og:image missing');
+// og:image 는 원본(webp)이 아니라 빌드 때 만든 미리보기 JPG (카톡 등 봇이 webp 를 못 읽을 수 있음)
+assert.ok(html.includes('<meta property="og:image" content="https://example.test/s/311.jpg" />'), 'og:image missing');
 assert.ok(html.includes('<meta property="og:title" content="카드 결제" />'), 'og:title missing');
 assert.ok(html.includes('url=/?ids=311'), 'redirect missing');
 assert.ok(!html.includes('#'), 'no hash links: KakaoTalk skips previews for URLs with #');
 
-// 앞에 / 가 붙은 file 도 // 없이 이어 붙인다
-assert.ok(buildSharePage({ id: '1', name: 'x', file: '/assets/gif/a.gif' }, SITE)
-    .includes('content="https://example.test/assets/gif/a.gif"'), 'leading slash not handled');
 
 // 이름에 HTML 특수문자가 있어도 태그가 깨지지 않는다
 const evil = buildSharePage({ id: '2', name: '"><script>x</script>', file: 'assets/jpg/b.jpg' }, SITE);

@@ -2,7 +2,7 @@
     {
         "id": "129",
         "name": "일어나하체해야지",
-        "file": "assets/png/cf965da2-0c4c-4efc-af84-99a98e16a8ff.png",
+        "file": "assets/webp/cf965da2-0c4c-4efc-af84-99a98e16a8ff.webp",
         "tag": "jpg,comic_book,pick,ping-pong_ball, 일어나, 일어나, 슬픔, 공포, 만화, 텍스트, 일어나, 슬픔, 공포, 만화, 텍스트, Wake up, Sadness, Fear, Manga, Text",
         "category_1": "PNG",
         "category_2": null,
@@ -12,12 +12,13 @@
         "situation": [
             "재촉/독촉"
         ],
-        "thumb": "assets/thumbs/cf965da2-0c4c-4efc-af84-99a98e16a8ff.webp"
+        "thumb": "assets/thumbs/cf965da2-0c4c-4efc-af84-99a98e16a8ff.webp",
+        "md5": "1ed34fa3dcfb396f431b713230736aca"
     },
     {
         "id": "130",
         "name": "그랜절",
-        "file": "assets/png/d2a4218c-2c8b-4334-bb76-cb1cd3fac990.png",
+        "file": "assets/webp/d2a4218c-2c8b-4334-bb76-cb1cd3fac990.webp",
         "tag": "jpg,comic_book,maillot,book_jacket, 카툰, 코믹, 일상, 밈, 항복, 뇌절, 밈, 만화, 일상, 코미디",
         "category_1": "PNG",
         "category_2": null,
@@ -27,12 +28,13 @@
         "situation": [
             "사과"
         ],
-        "thumb": "assets/thumbs/d2a4218c-2c8b-4334-bb76-cb1cd3fac990.webp"
+        "thumb": "assets/thumbs/d2a4218c-2c8b-4334-bb76-cb1cd3fac990.webp",
+        "md5": "ebffe83f6e7bdbea7ca58ecbf5324bd9"
     },
     {
         "id": "131",
         "name": "네",
-        "file": "assets/png/1bd233ae-5aae-435f-a883-69cdc04c1a2d.png",
+        "file": "assets/webp/1bd233ae-5aae-435f-a883-69cdc04c1a2d.webp",
         "tag": "jpg,mask,piggy_bank,football_helmet, 펭수, 네!, 헤드폰, 당황, 웃김, 인터넷 밈, 한국 캐릭터, 아이콘, 귀여운, 애니메이션, Pengsoo, Yes!, Headphones, Flustered, Funny, Internet Meme, Korean Character, Icon, Cute, Animation",
         "category_1": "PNG",
         "category_2": null,
@@ -42,12 +44,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/1bd233ae-5aae-435f-a883-69cdc04c1a2d.webp"
+        "thumb": "assets/thumbs/1bd233ae-5aae-435f-a883-69cdc04c1a2d.webp",
+        "md5": "d06086d0650b66c4972e79c74e5badf7"
     },
     {
         "id": "132",
         "name": "가즈아_낙타",
-        "file": "assets/png/e841598a-c3a3-46f3-a4ba-50b0e56a382d.png",
+        "file": "assets/webp/e841598a-c3a3-46f3-a4ba-50b0e56a382d.webp",
         "tag": "jpg,oxygen_mask,muzzle,lab_coat, 카즈아, 노래, 춤, 웃음, K팝, 아이돌, meme, singer, laughing, K-pop, idol, singing",
         "category_1": "PNG",
         "category_2": null,
@@ -58,12 +61,13 @@
         "situation": [
             "재촉/독촉"
         ],
-        "thumb": "assets/thumbs/e841598a-c3a3-46f3-a4ba-50b0e56a382d.webp"
+        "thumb": "assets/thumbs/e841598a-c3a3-46f3-a4ba-50b0e56a382d.webp",
+        "md5": "17add29da89aa619eaba986ea5e8bd2f"
     },
     {
         "id": "133",
         "name": "비오게하소서",
-        "file": "assets/png/526bbfd8-7984-4156-8ec7-eefab6747b74.png",
+        "file": "assets/webp/526bbfd8-7984-4156-8ec7-eefab6747b74.webp",
         "tag": "jpg,otter,badger,marmot, 너구리, 춤추는 너구리, 밈, 귀여운, 동물, 맹금류, 너구리 밈, 춤, 듀오, 맹금류 춤, Raccoon, Dancing Raccoon, Meme, Cute, Animal, Raptor, Raccoon Meme, Dance, Duo, Raptor Dance",
         "category_1": "PNG",
         "category_2": null,
@@ -73,12 +77,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/526bbfd8-7984-4156-8ec7-eefab6747b74.webp"
+        "thumb": "assets/thumbs/526bbfd8-7984-4156-8ec7-eefab6747b74.webp",
+        "md5": "bb4fb74315a86aac6fa41d0e6cc672cc"
     },
     {
         "id": "134",
         "name": "쇠사슬",
-        "file": "assets/png/c19daeed-ebd0-4ede-af24-0cb786aedb6c.png",
+        "file": "assets/webp/c19daeed-ebd0-4ede-af24-0cb786aedb6c.webp",
         "tag": "jpg,suit,Windsor_tie,bolo_tie, 두 남자, 남자, 정장, 중절모, 수염, 진지함, 한국 영화, Gangster, Man, Suit, Fedora, Mustache, Serious, Korean Film",
         "category_1": "PNG",
         "category_2": null,
@@ -88,12 +93,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/c19daeed-ebd0-4ede-af24-0cb786aedb6c.webp"
+        "thumb": "assets/thumbs/c19daeed-ebd0-4ede-af24-0cb786aedb6c.webp",
+        "md5": "760305a5a55d663b3cb3d92bf834cdd3"
     },
     {
         "id": "135",
         "name": "눈을 붙이시지요",
-        "file": "assets/png/f0a90c19-fd5b-4f2a-b6ad-dafd61e6d98f.png",
+        "file": "assets/webp/f0a90c19-fd5b-4f2a-b6ad-dafd61e6d98f.webp",
         "tag": "jpg,comic_book,jigsaw_puzzle,book_jacket, 장군, 저, 이만 들어가서 눈 좀 붙이시죠, 음, 떡, 장군, 장군님, 한국 만화, 곰인형, 촛불, 맹세, General, Sir, I'll leave now, Let's sleep a bit, Hmm, Thud, Korean comics, Teddy bear, Candle, Oath",
         "category_1": "PNG",
         "category_2": null,
@@ -103,12 +109,13 @@
         "situation": [
             "위로/공감"
         ],
-        "thumb": "assets/thumbs/f0a90c19-fd5b-4f2a-b6ad-dafd61e6d98f.webp"
+        "thumb": "assets/thumbs/f0a90c19-fd5b-4f2a-b6ad-dafd61e6d98f.webp",
+        "md5": "32f32e9c669a45e464f9f16e30923ad6"
     },
     {
         "id": "136",
         "name": "파파",
-        "file": "assets/png/142dc9d9-6971-4e0f-963d-c1fe315c57bb.png",
+        "file": "assets/webp/142dc9d9-6971-4e0f-963d-c1fe315c57bb.webp",
         "tag": "jpg,cab,car_mirror,school_bus, SNL, 주성치, 택시, 동 일 아, 웃음, 코미디, SNL Korea, Comedy, Taxi, Laughter, Sung-joo Lee",
         "category_1": "PNG",
         "category_2": null,
@@ -118,12 +125,13 @@
         "situation": [
             "인사"
         ],
-        "thumb": "assets/thumbs/142dc9d9-6971-4e0f-963d-c1fe315c57bb.webp"
+        "thumb": "assets/thumbs/142dc9d9-6971-4e0f-963d-c1fe315c57bb.webp",
+        "md5": "9176cc15060fbdfbbb58a1c79fdb7e96"
     },
     {
         "id": "137",
         "name": "압도적감사",
-        "file": "assets/png/4a9b93bd-107f-4d18-b33c-45d8ccbdb524.png",
+        "file": "assets/webp/4a9b93bd-107f-4d18-b33c-45d8ccbdb524.webp",
         "tag": "jpg,cellular_telephone,hair_spray,rubber_eraser, 감사합니다, 만화, 슬픔, 눈물, 감동, 만화 캐릭터, 압도적 감사, Thank you, Manga, Sadness, Tears, Emotional, Manga Character, Overwhelmed Gratitude",
         "category_1": "PNG",
         "category_2": null,
@@ -134,12 +142,13 @@
         "situation": [
             "감사"
         ],
-        "thumb": "assets/thumbs/4a9b93bd-107f-4d18-b33c-45d8ccbdb524.webp"
+        "thumb": "assets/thumbs/4a9b93bd-107f-4d18-b33c-45d8ccbdb524.webp",
+        "md5": "ad2f5ce9fff00c3f8989a6b002f32218"
     },
     {
         "id": "138",
         "name": "웃어",
-        "file": "assets/png/9f9f866f-f5b5-4c3d-ac60-6b80a5418c6d.png",
+        "file": "assets/webp/9f9f866f-f5b5-4c3d-ac60-6b80a5418c6d.webp",
         "tag": "jpg,Egyptian_cat,Angora,toilet_seat, 고양이, 밈, 무표정, 귀여운, 초상화, Cat, Meme, Polite Cat, Cute, Portrait",
         "category_1": "PNG",
         "category_2": null,
@@ -150,12 +159,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/9f9f866f-f5b5-4c3d-ac60-6b80a5418c6d.webp"
+        "thumb": "assets/thumbs/9f9f866f-f5b5-4c3d-ac60-6b80a5418c6d.webp",
+        "md5": "464c517ec1fbd4ffcf0c146878d55b80"
     },
     {
         "id": "139",
         "name": "할수있는거지",
-        "file": "assets/png/7b49c2f5-6580-4b56-8930-e82e23644cf4.png",
+        "file": "assets/webp/7b49c2f5-6580-4b56-8930-e82e23644cf4.webp",
         "tag": "jpg,shower_cap,Band_Aid,wig, 아나킨 스카이워커, 파드메 아미달라, 스타워즈, 로맨스, 젊음, 밈, Anakin Skywalker, Padmé Amidala, Star Wars, romance, youth, meme",
         "category_1": "PNG",
         "category_2": null,
@@ -165,12 +175,13 @@
         "situation": [
             "질문/궁금"
         ],
-        "thumb": "assets/thumbs/7b49c2f5-6580-4b56-8930-e82e23644cf4.webp"
+        "thumb": "assets/thumbs/7b49c2f5-6580-4b56-8930-e82e23644cf4.webp",
+        "md5": "300de6f9bb6b7bbaa05d9717de9f5f77"
     },
     {
         "id": "140",
         "name": "용사여2",
-        "file": "assets/png/8e0eed02-578a-4fc5-95c9-d7cca86e7e2c.png",
+        "file": "assets/webp/8e0eed02-578a-4fc5-95c9-d7cca86e7e2c.webp",
         "tag": "jpg,envelope,binder,analog_clock, 일어나세요, 용사여!, Wake up, hero!, 코끼리 코, Elephant trunk, 만화, Comics, 그림, Drawing, 남자, Man",
         "category_1": "PNG",
         "category_2": null,
@@ -180,12 +191,13 @@
         "situation": [
             "재촉/독촉"
         ],
-        "thumb": "assets/thumbs/8e0eed02-578a-4fc5-95c9-d7cca86e7e2c.webp"
+        "thumb": "assets/thumbs/8e0eed02-578a-4fc5-95c9-d7cca86e7e2c.webp",
+        "md5": "6b9e5fdd7697bf18165e848876f8af42"
     },
     {
         "id": "141",
         "name": "KakaoTalk_Photo_2021-10-20-13-20-43",
-        "file": "assets/png/KakaoTalk_Photo_2021-10-20-13-20-43.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-10-20-13-20-43.webp",
         "tag": "jpg,comic_book,jigsaw_puzzle,bib, 감정, 눈물, 안녕, 어린이, 한국, 감동, 애니메이션, 슬픔, 추억, 가족, Emotion, Tears, Goodbye, Children, Korea, Touching, Animation, Sadness, Memory, Family",
         "category_1": "PNG",
         "category_2": null,
@@ -195,12 +207,13 @@
         "situation": [
             "축하"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-10-20-13-20-43.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-10-20-13-20-43.webp",
+        "md5": "ac4f4e03e628b27453af761a6cc10591"
     },
     {
         "id": "142",
         "name": "눈싸람만들래",
-        "file": "assets/png/3cad4437-c4cc-4f74-b8e8-bf0af41bcbc7.png",
+        "file": "assets/webp/3cad4437-c4cc-4f74-b8e8-bf0af41bcbc7.webp",
         "tag": "jpg,theater_curtain,hair_spray,television, 겨울왕국, 안나, 눈사람, 아이, 귀여움, 장난, Frozen, Anna, snowman, child, cute, playful",
         "category_1": "PNG",
         "category_2": null,
@@ -211,12 +224,13 @@
         "situation": [
             "질문/궁금"
         ],
-        "thumb": "assets/thumbs/3cad4437-c4cc-4f74-b8e8-bf0af41bcbc7.webp"
+        "thumb": "assets/thumbs/3cad4437-c4cc-4f74-b8e8-bf0af41bcbc7.webp",
+        "md5": "34594193b1e29cf87b241e667a9b9912"
     },
     {
         "id": "143",
         "name": "KakaoTalk_Photo_2021-07-28-17-49-42",
-        "file": "assets/png/KakaoTalk_Photo_2021-07-28-17-49-42.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-07-28-17-49-42.webp",
         "tag": "jpg,mask,whistle,pick, Embarrassed, Shy, Blush, Pain, Discomfort, Embarrassment, Social anxiety, Korean sticker, Korean meme, 밈",
         "category_1": "PNG",
         "category_2": null,
@@ -226,12 +240,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-07-28-17-49-42.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-07-28-17-49-42.webp",
+        "md5": "e25523b2cab5f8af2becd438ad161f86"
     },
     {
         "id": "144",
         "name": "좋은밤되고 잘가요",
-        "file": "assets/png/433ac3e4-5d05-46f4-90e8-6024aee0c5db.png",
+        "file": "assets/webp/433ac3e4-5d05-46f4-90e8-6024aee0c5db.webp",
         "tag": "jpg,lab_coat,wig,candle, Korean: 젠틀맨, 안경, 웃음, 라디오, 텍스트, 밈, 턱, 머리, 셔츠, 방송, 유명인, 방송인, 연예인, 방송국, 라디오 방송, English: Gentleman, Glasses, Smile, Radio, Text, Meme, Chin, Hair, Shirt, Broadcast, Celebrity, Broadcaster, Entertainer, Broadcasting station, Radio broadcast",
         "category_1": "PNG",
         "category_2": null,
@@ -241,12 +256,13 @@
         "situation": [
             "인사"
         ],
-        "thumb": "assets/thumbs/433ac3e4-5d05-46f4-90e8-6024aee0c5db.webp"
+        "thumb": "assets/thumbs/433ac3e4-5d05-46f4-90e8-6024aee0c5db.webp",
+        "md5": "52d34f531dcc6ef1713278945da4e08d"
     },
     {
         "id": "145",
         "name": "KakaoTalk_Photo_2021-07-29-17-29-29",
-        "file": "assets/png/KakaoTalk_Photo_2021-07-29-17-29-29.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-07-29-17-29-29.webp",
         "tag": "jpg,comic_book,safety_pin,stethoscope, 귀여워, Cute, Man, Drawing, Comic, Speech bubble, Portrait, Monotone, Expression, Sulking",
         "category_1": "PNG",
         "category_2": null,
@@ -257,12 +273,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-07-29-17-29-29.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-07-29-17-29-29.webp",
+        "md5": "7580fc2f8b6da25bc4d482b511e517b3"
     },
     {
         "id": "146",
         "name": "KakaoTalk_20170821_122904367",
-        "file": "assets/png/KakaoTalk_20170821_122904367.png",
+        "file": "assets/webp/KakaoTalk_20170821_122904367.webp",
         "tag": "jpg,mousetrap,toyshop,candle, 고양이, 생일, 케이크, 슬픔, 귀여운, 뚱한 표정, 냥이, 꼬맹이, 짠함, triste, birthday, cake, sad, cute, cat, grumpy, party, meme, melancholic, catgoestobday",
         "category_1": "PNG",
         "category_2": null,
@@ -272,12 +289,13 @@
         "situation": [
             "축하"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_20170821_122904367.webp"
+        "thumb": "assets/thumbs/KakaoTalk_20170821_122904367.webp",
+        "md5": "9893a554ca47069989843311442db2eb"
     },
     {
         "id": "147",
         "name": "용사여1",
-        "file": "assets/png/bada7c23-aeaa-4cd2-9922-bb878a3a2bfc.png",
+        "file": "assets/webp/bada7c23-aeaa-4cd2-9922-bb878a3a2bfc.webp",
         "tag": "jpg,Great_Pyrenees,dingo,kuvasz, 깨어나세요 용사여, 강아지, 잠, 꿈, 귀여움, 밈, 멍뭉이, Wake up, hero, dog, sleeping, dream, cute, meme",
         "category_1": "PNG",
         "category_2": null,
@@ -287,12 +305,13 @@
         "situation": [
             "재촉/독촉"
         ],
-        "thumb": "assets/thumbs/bada7c23-aeaa-4cd2-9922-bb878a3a2bfc.webp"
+        "thumb": "assets/thumbs/bada7c23-aeaa-4cd2-9922-bb878a3a2bfc.webp",
+        "md5": "6de632117964f7cd101dbc49e7e02a02"
     },
     {
         "id": "148",
         "name": "KakaoTalk_Photo_2021-11-05-17-27-44",
-        "file": "assets/png/KakaoTalk_Photo_2021-11-05-17-27-44.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-11-05-17-27-44.webp",
         "tag": "jpg,Siberian_husky,Egyptian_cat,black-footed_ferret, 울음, 고양이, 밈, 슬픔, 귀여움, 멍청함, 고양이 밈, 슬픈 고양이, Sad cat, Crying cat, Meme, Cat, Sadness, Cute, Silly",
         "category_1": "PNG",
         "category_2": null,
@@ -303,12 +322,13 @@
         "situation": [
             "사과"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-11-05-17-27-44.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-11-05-17-27-44.webp",
+        "md5": "57241eb8abc0796dba4fa6e23bc8267a"
     },
     {
         "id": "149",
         "name": "sb",
-        "file": "assets/png/sb.png",
+        "file": "assets/webp/sb.webp",
         "tag": "jpg,tray,book_jacket,printer, It doesn't work, why?, It works, why?, Confusion, Frustration, Computer, Internet meme, Rage comic, Programming humor, Solution, Work, 한국어, 영어, 작동 안 함, 왜?, 작동함, 혼란, 좌절, 컴퓨터, 인터넷 밈, 레이지 코믹, 프로그래밍 유머, 해결책, 작업",
         "category_1": "PNG",
         "category_2": null,
@@ -319,12 +339,13 @@
         "situation": [
             "회사/업무"
         ],
-        "thumb": "assets/thumbs/sb.webp"
+        "thumb": "assets/thumbs/sb.webp",
+        "md5": "9e14a25f6505aec3e4a33f5b05676a52"
     },
     {
         "id": "150",
         "name": "쉿",
-        "file": "assets/png/380be6e4-47df-4ae5-8a2c-5352c84b3c5d.png",
+        "file": "assets/webp/380be6e4-47df-4ae5-8a2c-5352c84b3c5d.webp",
         "tag": "jpg,Windsor_tie,suit,groom, 이재용, 쉿, 비밀, 웃음, 사업가, 삼성, 이정재, 밈, Lee Jae-yong, Shh, Secret, Laughter, Businessman, Samsung, Lee Jung-jae, Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -335,12 +356,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/380be6e4-47df-4ae5-8a2c-5352c84b3c5d.webp"
+        "thumb": "assets/thumbs/380be6e4-47df-4ae5-8a2c-5352c84b3c5d.webp",
+        "md5": "fc7e0bce71d2ff32e237335564e2ab4b"
     },
     {
         "id": "151",
         "name": "안철수명언",
-        "file": "assets/png/5322e28b-d78b-434a-ba47-50089732fb3f.png",
+        "file": "assets/webp/5322e28b-d78b-434a-ba47-50089732fb3f.webp",
         "tag": "jpg,cowboy_hat,bearskin,bow_tie, 인간의 욕심은 끝이 있을 수도 없을 수도 있습니다, 자세한건 다음에 말씀드리겠습니다., Men, Korean, Speech, Human greed, Interview, Discussion, Quote, Politics",
         "category_1": "PNG",
         "category_2": null,
@@ -351,12 +373,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/5322e28b-d78b-434a-ba47-50089732fb3f.webp"
+        "thumb": "assets/thumbs/5322e28b-d78b-434a-ba47-50089732fb3f.webp",
+        "md5": "128f655538aadf81a322b1a39f0cf52b"
     },
     {
         "id": "152",
         "name": "귀에서피나_1",
-        "file": "assets/png/90695889-9ac9-47ca-8ec0-8493196f979e.png",
+        "file": "assets/webp/90695889-9ac9-47ca-8ec0-8493196f979e.webp",
         "tag": "jpg,harvestman,long-horned_beetle,hook, Drawing, Minimalist, Simple, Face, Ears, Happiness, Red, Doodle, Listening, Cartoon, 한국어, 그림, 미니멀리즘, 단순함, 얼굴, 귀, 행복, 빨강, 낙서, 듣기, 만화",
         "category_1": "PNG",
         "category_2": null,
@@ -367,12 +390,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/90695889-9ac9-47ca-8ec0-8493196f979e.webp"
+        "thumb": "assets/thumbs/90695889-9ac9-47ca-8ec0-8493196f979e.webp",
+        "md5": "cd9b286711d720e45e2b312afbd64a23"
     },
     {
         "id": "153",
         "name": "진행시켜",
-        "file": "assets/png/0a6a33ca-7a5a-4e4e-84e4-1b97a3f90242.png",
+        "file": "assets/webp/0a6a33ca-7a5a-4e4e-84e4-1b97a3f90242.webp",
         "tag": "jpg,groom,lab_coat,cellular_telephone, 중년 남성, 통화 중, 안경, 손가락질, 남자, 정장, 중후한, 진지한, Korean middle-aged man, on the phone, glasses, pointing finger, man, suit, dignified, serious",
         "category_1": "PNG",
         "category_2": null,
@@ -383,12 +407,13 @@
             "회사/업무",
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/0a6a33ca-7a5a-4e4e-84e4-1b97a3f90242.webp"
+        "thumb": "assets/thumbs/0a6a33ca-7a5a-4e4e-84e4-1b97a3f90242.webp",
+        "md5": "a54160dda564327d5a5f28d27a1a9cbe"
     },
     {
         "id": "154",
         "name": "조아써",
-        "file": "assets/png/6fb22be2-8b8b-4883-8860-d54b76afdab4.png",
+        "file": "assets/webp/6fb22be2-8b8b-4883-8860-d54b76afdab4.webp",
         "tag": "jpg,suit,bow_tie,stage, 웃음, 턱수염, 넥타이, 회색 머리, 안경, 중절모, 코미디, 밈, 한국어, 자막",
         "category_1": "PNG",
         "category_2": null,
@@ -399,12 +424,13 @@
             "밥/먹방/술",
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/6fb22be2-8b8b-4883-8860-d54b76afdab4.webp"
+        "thumb": "assets/thumbs/6fb22be2-8b8b-4883-8860-d54b76afdab4.webp",
+        "md5": "2f2c55d31aeed83d63691985df67b426"
     },
     {
         "id": "155",
         "name": "이해했어",
-        "file": "assets/png/a1505c1c-9133-48e0-a300-c4da132dcf27.png",
+        "file": "assets/webp/a1505c1c-9133-48e0-a300-c4da132dcf27.webp",
         "tag": "jpg,comic_book,macaw,packet, 아~ 그런거구나, 완벽히 이해했어., 알았어.. 완벽히!, 과연..., 그런거였나..., Detective Conan, Popuko and Pipimi, Manga, Anime, Character, Comedy",
         "category_1": "PNG",
         "category_2": null,
@@ -414,12 +440,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/a1505c1c-9133-48e0-a300-c4da132dcf27.webp"
+        "thumb": "assets/thumbs/a1505c1c-9133-48e0-a300-c4da132dcf27.webp",
+        "md5": "57c0565c168f27fc6edc20a3bbb1ed2e"
     },
     {
         "id": "156",
         "name": "귀에서피나_2",
-        "file": "assets/png/c3fb6048-cf86-491f-9183-2930fdbf8371.png",
+        "file": "assets/webp/c3fb6048-cf86-491f-9183-2930fdbf8371.webp",
         "tag": "jpg,trench_coat,electric_fan,hair_slide, Explosion, Bleeding, Tears, Blood, Funny, Humor, Sadness, Pain, Shock, Nosebleed, Korean onomatopoeia, Piku, 피, 픽, Korean meme",
         "category_1": "PNG",
         "category_2": null,
@@ -430,12 +457,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/c3fb6048-cf86-491f-9183-2930fdbf8371.webp"
+        "thumb": "assets/thumbs/c3fb6048-cf86-491f-9183-2930fdbf8371.webp",
+        "md5": "3353c8d03acb647bc9bb500af2fbc2a5"
     },
     {
         "id": "157",
         "name": "KakaoTalk_Photo_2021-07-29-17-30-27",
-        "file": "assets/png/KakaoTalk_Photo_2021-07-29-17-30-27.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-07-29-17-30-27.webp",
         "tag": "jpg,suit,Loafer,military_uniform, Kim Jong Un, Donald Trump, Skateboard, Blue building, Politics, Meme, Funny, Surreal, Unexpected, International relations",
         "category_1": "PNG",
         "category_2": null,
@@ -446,12 +474,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-07-29-17-30-27.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-07-29-17-30-27.webp",
+        "md5": "bc09183bb9f4bd53b1feb11f33e10961"
     },
     {
         "id": "158",
         "name": "MyPhoto_1173209929_0236",
-        "file": "assets/png/MyPhoto_1173209929_0236.png",
+        "file": "assets/webp/MyPhoto_1173209929_0236.webp",
         "tag": "jpg,potter's_wheel,laptop,nipple, 아이, 어린이, 공부, 집중, 분노, 밈, Child, Kid, Studying, Concentrating, Angry, Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -462,12 +491,13 @@
         "situation": [
             "회사/업무"
         ],
-        "thumb": "assets/thumbs/MyPhoto_1173209929_0236.webp"
+        "thumb": "assets/thumbs/MyPhoto_1173209929_0236.webp",
+        "md5": "477619516a8470e260147604b482b109"
     },
     {
         "id": "159",
         "name": "널낚지",
-        "file": "assets/png/fb4cfbb3-7dd1-48a3-a0da-af9f705a8956.png",
+        "file": "assets/webp/fb4cfbb3-7dd1-48a3-a0da-af9f705a8956.webp",
         "tag": "jpg,tiger,macaw,punching_bag, 만화, 밈, 한국어, 노인, 코믹, 대사, 질문, 얼굴, 글자, 유머, Manhwa, Meme, Korean, Old Man, Comic, Dialogue, Question, Face, Text, Humor",
         "category_1": "PNG",
         "category_2": null,
@@ -478,12 +508,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/fb4cfbb3-7dd1-48a3-a0da-af9f705a8956.webp"
+        "thumb": "assets/thumbs/fb4cfbb3-7dd1-48a3-a0da-af9f705a8956.webp",
+        "md5": "638fb3c05be1129743e48289340b333c"
     },
     {
         "id": "160",
         "name": "KakaoTalk_Photo_2021-11-05-17-25-47",
-        "file": "assets/png/KakaoTalk_Photo_2021-11-05-17-25-47.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-11-05-17-25-47.webp",
         "tag": "jpg,academic_gown,wig,red_wine, 노인, 식사, 수저, 보살핌, 가족, 밥, 또 이러신다, Rice, Meal, Spoon-feeding, Elderly, Care, Family, Food",
         "category_1": "PNG",
         "category_2": null,
@@ -494,12 +525,13 @@
         "situation": [
             "밥/먹방/술"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-11-05-17-25-47.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-11-05-17-25-47.webp",
+        "md5": "6a2e24fd943b7ae99d62dd885fe6ca52"
     },
     {
         "id": "161",
         "name": "귀에서피나_3",
-        "file": "assets/png/21b61208-56ed-4479-861c-8ba903644bf1.png",
+        "file": "assets/webp/21b61208-56ed-4479-861c-8ba903644bf1.webp",
         "tag": "jpg,doormat,comic_book,wall_clock, 피, 쑥, 갸, 아, 악, 몽키, 고통, 귀, 귀빵맹이, meme",
         "category_1": "PNG",
         "category_2": null,
@@ -509,12 +541,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/21b61208-56ed-4479-861c-8ba903644bf1.webp"
+        "thumb": "assets/thumbs/21b61208-56ed-4479-861c-8ba903644bf1.webp",
+        "md5": "c0cb4afc751cc42cad353487370aae25"
     },
     {
         "id": "162",
         "name": "내일로미루기",
-        "file": "assets/png/e621c4a5-bdf8-4124-a8c4-aca5106753b0.png",
+        "file": "assets/webp/e621c4a5-bdf8-4124-a8c4-aca5106753b0.webp",
         "tag": "jpg,comic_book,sunglasses,web_site, Korean meme, Korean variety show, meme, funny, quote, K-pop, handsome, text, joke, procrastination",
         "category_1": "PNG",
         "category_2": null,
@@ -526,12 +559,13 @@
             "회사/업무",
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/e621c4a5-bdf8-4124-a8c4-aca5106753b0.webp"
+        "thumb": "assets/thumbs/e621c4a5-bdf8-4124-a8c4-aca5106753b0.webp",
+        "md5": "0ac0c07ff02f52678bf73cfcbc22d313"
     },
     {
         "id": "163",
         "name": "눈물짤",
-        "file": "assets/png/f241c532-bfe2-4f77-ae6b-cb8f7064ed15.png",
+        "file": "assets/webp/f241c532-bfe2-4f77-ae6b-cb8f7064ed15.webp",
         "tag": "jpg,suit,Windsor_tie,mortarboard, Korean man, smiling, middle-aged, suit, portrait, meme, actor, comedy, drama, Korean drama",
         "category_1": "PNG",
         "category_2": null,
@@ -541,12 +575,13 @@
         "situation": [
             "위로/공감"
         ],
-        "thumb": "assets/thumbs/f241c532-bfe2-4f77-ae6b-cb8f7064ed15.webp"
+        "thumb": "assets/thumbs/f241c532-bfe2-4f77-ae6b-cb8f7064ed15.webp",
+        "md5": "c4a3bee5993ae0107fafcd784a6176cb"
     },
     {
         "id": "164",
         "name": "혼란하다2",
-        "file": "assets/png/64cb1b94-79e2-4692-bbbf-1318d0c1bd41.png",
+        "file": "assets/webp/64cb1b94-79e2-4692-bbbf-1318d0c1bd41.webp",
         "tag": "jpg,envelope,binder,comic_book, 혼란하다 혼란해, 하하하, 무럭, 쑥쑥쑥, 악마, 근육, 귀여운, 만화, 밈, 한국어",
         "category_1": "PNG",
         "category_2": null,
@@ -556,12 +591,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/64cb1b94-79e2-4692-bbbf-1318d0c1bd41.webp"
+        "thumb": "assets/thumbs/64cb1b94-79e2-4692-bbbf-1318d0c1bd41.webp",
+        "md5": "4ea25b05c92e711283c4bea2f0584f5b"
     },
     {
         "id": "165",
         "name": "화이팅",
-        "file": "assets/png/7a58ab44-2593-438d-848f-5cfb9a714aed.png",
+        "file": "assets/webp/7a58ab44-2593-438d-848f-5cfb9a714aed.webp",
         "tag": "jpg,ski_mask,pick,punching_bag, 화이팅, 파이팅, 응원, 긍정, 격려, 밈, 그림, 만화, 웃음, 한국어, Fighting, Cheering, Encouragement, Positive, Meme, Illustration, Cartoon, Humour, Korean, Thumb up",
         "category_1": "PNG",
         "category_2": null,
@@ -571,12 +607,13 @@
         "situation": [
             "위로/공감"
         ],
-        "thumb": "assets/thumbs/7a58ab44-2593-438d-848f-5cfb9a714aed.webp"
+        "thumb": "assets/thumbs/7a58ab44-2593-438d-848f-5cfb9a714aed.webp",
+        "md5": "3ed21ad8b41b359f62e2701772064390"
     },
     {
         "id": "166",
         "name": "귀여워1",
-        "file": "assets/png/f3db2774-4879-49a7-8e59-c0142820d40b.png",
+        "file": "assets/webp/f3db2774-4879-49a7-8e59-c0142820d40b.webp",
         "tag": "jpg,book_jacket,comic_book,mask, 귀여워, blush, meme, embarrassed, manga, cute, blushing, feel, funny, Korean",
         "category_1": "PNG",
         "category_2": null,
@@ -587,12 +624,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/f3db2774-4879-49a7-8e59-c0142820d40b.webp"
+        "thumb": "assets/thumbs/f3db2774-4879-49a7-8e59-c0142820d40b.webp",
+        "md5": "c15fc759d9e846b6e2ee1ba75e88eeda"
     },
     {
         "id": "167",
         "name": "KakaoTalk_Photo_2021-10-31-15-34-19",
-        "file": "assets/png/KakaoTalk_Photo_2021-10-31-15-34-19.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-10-31-15-34-19.webp",
         "tag": "jpg,giant_panda,lesser_panda,gibbon, Panda, Giant Panda, Bamboo Bear, Animal, Cute, Funny, Wildlife, Climbing, Tree, Nature, 熊猫, 大熊猫, 竹熊, 动物, 可爱, 有趣, 野生动物, 爬树, 树, 自然",
         "category_1": "PNG",
         "category_2": null,
@@ -602,12 +640,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-10-31-15-34-19.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-10-31-15-34-19.webp",
+        "md5": "5a938112d4ff97b24ce4198c92d188c9"
     },
     {
         "id": "168",
         "name": "남친지나간다",
-        "file": "assets/png/54a547ce-f45a-441f-8060-68466cdfae5a.png",
+        "file": "assets/webp/54a547ce-f45a-441f-8060-68466cdfae5a.webp",
         "tag": "jpg,comic_book,bathing_cap,mask, Pepe the Frog, Sadness, Hurt, Jealousy, Text, Dialogue, Korean, Meme, Sad meme, Relationship meme",
         "category_1": "PNG",
         "category_2": null,
@@ -617,12 +656,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/54a547ce-f45a-441f-8060-68466cdfae5a.webp"
+        "thumb": "assets/thumbs/54a547ce-f45a-441f-8060-68466cdfae5a.webp",
+        "md5": "3a23ac8fafc51be92a83f3ad92da570c"
     },
     {
         "id": "169",
         "name": "내얘긴가하고들어와봄",
-        "file": "assets/png/d17d6d7b-f227-46e7-9b25-1de27f227ee7.png",
+        "file": "assets/webp/d17d6d7b-f227-46e7-9b25-1de27f227ee7.webp",
         "tag": "jpg,switch,binder,hard_disc, Pepe the Frog, Sad, Despair, Computer, Meme, 내 얘긴가 하고 들어와 봄, Sadness, Internet, Onlooker, Felt cute, might delete later",
         "category_1": "PNG",
         "category_2": null,
@@ -632,12 +672,13 @@
         "situation": [
             "질문/궁금"
         ],
-        "thumb": "assets/thumbs/d17d6d7b-f227-46e7-9b25-1de27f227ee7.webp"
+        "thumb": "assets/thumbs/d17d6d7b-f227-46e7-9b25-1de27f227ee7.webp",
+        "md5": "1ac155bd807debc23a9ffc69eaba91c6"
     },
     {
         "id": "170",
         "name": "iknow",
-        "file": "assets/png/iknow.png",
+        "file": "assets/webp/iknow.webp",
         "tag": "jpg,comic_book,book_jacket,packet, 아~ 완벽히 이해했어!, I completely understand, Pop Team Epic, Anime meme, 이해못했음, Didn't understand, Comic, Cartoon, Internet meme, Speech bubble",
         "category_1": "PNG",
         "category_2": null,
@@ -647,12 +688,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/iknow.webp"
+        "thumb": "assets/thumbs/iknow.webp",
+        "md5": "7062cd109204cc895089b072bdd29faf"
     },
     {
         "id": "171",
         "name": "아음",
-        "file": "assets/png/fc69829f-630e-4901-9851-0024920f6075.png",
+        "file": "assets/webp/fc69829f-630e-4901-9851-0024920f6075.webp",
         "tag": "jpg,mortarboard,ice_lolly,sunscreen, 당황, 난처, 웃음, 립스틱, 귀걸이, 한국, K-POP, 아이돌, 춤, 무대, Embarrassed, Awkward, Smile, Lipstick, Earrings, Korean, K-POP, Idol, Dance, Stage",
         "category_1": "PNG",
         "category_2": null,
@@ -662,12 +704,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/fc69829f-630e-4901-9851-0024920f6075.webp"
+        "thumb": "assets/thumbs/fc69829f-630e-4901-9851-0024920f6075.webp",
+        "md5": "8cebe6018afaeb49c6824f61c812547d"
     },
     {
         "id": "172",
         "name": "KakaoTalk_20180223_135705392",
-        "file": "assets/png/KakaoTalk_20180223_135705392.png",
+        "file": "assets/webp/KakaoTalk_20180223_135705392.webp",
         "tag": "jpg,comic_book,jersey,sweatshirt, 웃음, 밈, 얼굴, 재미, 웃긴, 합성, 캡처, 짤, 만화, 게임, Laughter, Meme, Face, Funny, Hilarious, Edits, Screenshot, Viral, Cartoon, Gaming",
         "category_1": "PNG",
         "category_2": null,
@@ -678,12 +721,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_20180223_135705392.webp"
+        "thumb": "assets/thumbs/KakaoTalk_20180223_135705392.webp",
+        "md5": "c3ad7863e75dae0de6b3f6f8cb01950d"
     },
     {
         "id": "173",
         "name": "할수있는거2",
-        "file": "assets/png/400ba75d-b67d-4c84-93ae-b620d8a4ddb0.png",
+        "file": "assets/webp/400ba75d-b67d-4c84-93ae-b620d8a4ddb0.webp",
         "tag": "jpg,shower_cap,wig,mortarboard, Anakin Skywalker, Padmé Amidala, Star Wars, Attack of the Clones, Young Anakin, Meme, Funny, Laughing, Shocked, Star Wars Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -693,12 +737,13 @@
         "situation": [
             "질문/궁금"
         ],
-        "thumb": "assets/thumbs/400ba75d-b67d-4c84-93ae-b620d8a4ddb0.webp"
+        "thumb": "assets/thumbs/400ba75d-b67d-4c84-93ae-b620d8a4ddb0.webp",
+        "md5": "2398391dce19cc3f0f56d3e24bd373e1"
     },
     {
         "id": "174",
         "name": "자세한내용은생략",
-        "file": "assets/png/4ac17110-f8b9-4d92-89a1-3e5027cfd02e.png",
+        "file": "assets/webp/4ac17110-f8b9-4d92-89a1-3e5027cfd02e.webp",
         "tag": "jpg,comic_book,book_jacket,mask, 만화, 남성, 진지함, 텍스트, 만화책, 한국어, Korean, Manga, Male, Serious, Text, Comic book",
         "category_1": "PNG",
         "category_2": null,
@@ -708,12 +753,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/4ac17110-f8b9-4d92-89a1-3e5027cfd02e.webp"
+        "thumb": "assets/thumbs/4ac17110-f8b9-4d92-89a1-3e5027cfd02e.webp",
+        "md5": "d8d858712531f77236a878447be1411a"
     },
     {
         "id": "175",
         "name": "웃어2",
-        "file": "assets/png/00aebb9b-55ff-4c80-8382-fdbdcd24a9b2.png",
+        "file": "assets/webp/00aebb9b-55ff-4c80-8382-fdbdcd24a9b2.webp",
         "tag": "jpg,Rhodesian_ridgeback,redbone,miniature_pinscher, 강아지, 닥스훈트, 붓기, 코, 혀, 귀여운, 밈, 개, dog, dachshund, swelling, nose, tongue, cute, meme",
         "category_1": "PNG",
         "category_2": null,
@@ -724,12 +770,13 @@
         "situation": [
             "인사"
         ],
-        "thumb": "assets/thumbs/00aebb9b-55ff-4c80-8382-fdbdcd24a9b2.webp"
+        "thumb": "assets/thumbs/00aebb9b-55ff-4c80-8382-fdbdcd24a9b2.webp",
+        "md5": "635bc71b5cbde0bf251fbdab95c072b3"
     },
     {
         "id": "176",
         "name": "냥따봉",
-        "file": "assets/png/2e0e178a-e630-4d1f-b967-f8b18b75a86d.png",
+        "file": "assets/webp/2e0e178a-e630-4d1f-b967-f8b18b75a86d.webp",
         "tag": "jpg,Siamese_cat,Siberian_husky,Egyptian_cat, 슬픈 고양이, 긍정, 엄지 척, 밈, 고양이, Sad Cat, Thumbs Up, Meme, Cat, Sadness",
         "category_1": "PNG",
         "category_2": null,
@@ -740,12 +787,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/2e0e178a-e630-4d1f-b967-f8b18b75a86d.webp"
+        "thumb": "assets/thumbs/2e0e178a-e630-4d1f-b967-f8b18b75a86d.webp",
+        "md5": "a69bf086c4d063851cf1a9cd171f7709"
     },
     {
         "id": "177",
         "name": "Screen Shot 2021-12-28 at 11.53.48",
-        "file": "assets/png/a9a331fb-f977-4d7c-8803-6dfdfc79e7f4.png",
+        "file": "assets/webp/a9a331fb-f977-4d7c-8803-6dfdfc79e7f4.webp",
         "tag": "jpg,Windsor_tie,neck_brace,wig, 웃음, 과장된 표정, 밈, 헤어스타일, 수염, 정장, 체크 셔츠, 한국, Funny face, Exaggerated expression, Meme, Hairstyle, Mustache, Suit, Plaid shirt, Korean",
         "category_1": "PNG",
         "category_2": null,
@@ -755,12 +803,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/a9a331fb-f977-4d7c-8803-6dfdfc79e7f4.webp"
+        "thumb": "assets/thumbs/a9a331fb-f977-4d7c-8803-6dfdfc79e7f4.webp",
+        "md5": "eb6cdc09a97a8da4984abd255d207b2d"
     },
     {
         "id": "178",
         "name": "e4798944b8d22a023a50f974c8d9c51ff604e7b0e6900f9ac53a43965300eb9a",
-        "file": "assets/png/e4798944b8d22a023a50f974c8d9c51ff604e7b0e6900f9ac53a43965300eb9a.png",
+        "file": "assets/webp/e4798944b8d22a023a50f974c8d9c51ff604e7b0e6900f9ac53a43965300eb9a.webp",
         "tag": "jpg,pick,comic_book,football_helmet, Korean: 읍소, 빌다, 사죄, 죄송, 후회, 굴욕, 맹세, 찌질함, 꼼짝마, 싹싹빌다, English: Pleading, Begging, Apology, Sorry, Regret, Humiliation, Oath, Pathetic, Freeze, Groveling",
         "category_1": "PNG",
         "category_2": null,
@@ -770,12 +819,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/e4798944b8d22a023a50f974c8d9c51ff604e7b0e6900f9ac53a43965300eb9a.webp"
+        "thumb": "assets/thumbs/e4798944b8d22a023a50f974c8d9c51ff604e7b0e6900f9ac53a43965300eb9a.webp",
+        "md5": "a853658f5e0b5f624d04eabc0f0221c4"
     },
     {
         "id": "179",
         "name": "마지막퍼즐조각",
-        "file": "assets/png/55e14988-b157-4b36-981f-a803554fc7f9.png",
+        "file": "assets/webp/55e14988-b157-4b36-981f-a803554fc7f9.webp",
         "tag": "jpg,jigsaw_puzzle,ballpoint,nematode, 퍼즐, 연결, 문제 해결, 생각, 퀴즈, 기회, 새로운 시작, 지혜, 통찰, 완료, Puzzle, Connection, Problem Solving, Thinking, Quiz, Opportunity, New Beginning, Wisdom, Insight, Completion",
         "category_1": "PNG",
         "category_2": null,
@@ -785,12 +835,13 @@
         "situation": [
             "축하"
         ],
-        "thumb": "assets/thumbs/55e14988-b157-4b36-981f-a803554fc7f9.webp"
+        "thumb": "assets/thumbs/55e14988-b157-4b36-981f-a803554fc7f9.webp",
+        "md5": "bcbaf4542156cbb01257508b4555766e"
     },
     {
         "id": "180",
         "name": "사람이아니무니다",
-        "file": "assets/png/12aef434-1d28-4a8d-a12a-f4730cce0462.png",
+        "file": "assets/webp/12aef434-1d28-4a8d-a12a-f4730cce0462.webp",
         "tag": "jpg,jersey,brassiere,sweatshirt, Korean:, 개그, 코미디, 밈, 웃김, 분장, 여자 분장, 패러디, 촌스러운, 어색한, English:, Comedy, Meme, Funny, Costume, Drag, Parody, Awkward, Overacting, Silly",
         "category_1": "PNG",
         "category_2": null,
@@ -801,12 +852,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/12aef434-1d28-4a8d-a12a-f4730cce0462.webp"
+        "thumb": "assets/thumbs/12aef434-1d28-4a8d-a12a-f4730cce0462.webp",
+        "md5": "2cfa4dc32755266d64595c4bae96e2ea"
     },
     {
         "id": "182",
         "name": "시욱이가범인",
-        "file": "assets/png/8840d512-b391-4099-9aaa-4dcb6ce28c87.png",
+        "file": "assets/webp/8840d512-b391-4099-9aaa-4dcb6ce28c87.webp",
         "tag": "jpg,comic_book,knee_pad,pill_bottle, Teacher, Student, School, Book, Raising Hand, Learning, Education, Korean Text, Funny, Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -816,12 +868,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/8840d512-b391-4099-9aaa-4dcb6ce28c87.webp"
+        "thumb": "assets/thumbs/8840d512-b391-4099-9aaa-4dcb6ce28c87.webp",
+        "md5": "9430dfe27a2adc6cc45fce88b757c416"
     },
     {
         "id": "183",
         "name": "다내꺼다",
-        "file": "assets/png/8f286af3-2d77-4631-84a2-87274742378c.png",
+        "file": "assets/webp/8f286af3-2d77-4631-84a2-87274742378c.webp",
         "tag": "jpg,kimono,barbell,vestment, 서예, 붓글씨, 한국 전통 의상, 훈민정음, 문화, 100% 통신, Yonhap News, Calligraphy, Korean traditional clothing, Hunminjeongeum, Culture, 100% Tongshin, Yonhap News",
         "category_1": "PNG",
         "category_2": null,
@@ -831,12 +884,13 @@
         "situation": [
             "자랑"
         ],
-        "thumb": "assets/thumbs/8f286af3-2d77-4631-84a2-87274742378c.webp"
+        "thumb": "assets/thumbs/8f286af3-2d77-4631-84a2-87274742378c.webp",
+        "md5": "6a481fa311fd820d8d457da33d19bc74"
     },
     {
         "id": "184",
         "name": "중대장은무척실망했다",
-        "file": "assets/png/75262da4-fa99-4a4c-934d-6a7876696467.png",
+        "file": "assets/webp/75262da4-fa99-4a4c-934d-6a7876696467.webp",
         "tag": "jpg,bulletproof_vest,ski_mask,pick, 중대장, 군인, 실망, 밈, 만화, 중대장님, 한국, 장교, 군대, 훈련, Captain, Soldier, Disappointed, Meme, Cartoon, Korean Army, Officer, Military, Training",
         "category_1": "PNG",
         "category_2": null,
@@ -846,12 +900,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/75262da4-fa99-4a4c-934d-6a7876696467.webp"
+        "thumb": "assets/thumbs/75262da4-fa99-4a4c-934d-6a7876696467.webp",
+        "md5": "2dd4cc5057cb4b1ded3fb8af012ad921"
     },
     {
         "id": "185",
         "name": "따봉",
-        "file": "assets/png/f3e329e0-8f17-4a3f-bd88-af167641759b.png",
+        "file": "assets/webp/f3e329e0-8f17-4a3f-bd88-af167641759b.webp",
         "tag": "jpg,weasel,meerkat,black-footed_ferret, 고슴도치, 엄지 척, 귀여움, 긍정, 동물, 아기 동물, 손, 초점, 솜털, 힐링, Hedgehog, Thumbs up, Cute, Positive, Animal, Baby animal, Hand, Focus, Fluffy, Healing",
         "category_1": "PNG",
         "category_2": null,
@@ -861,12 +916,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/f3e329e0-8f17-4a3f-bd88-af167641759b.webp"
+        "thumb": "assets/thumbs/f3e329e0-8f17-4a3f-bd88-af167641759b.webp",
+        "md5": "9ba7318a163a897c3edaf9cf0b606578"
     },
     {
         "id": "186",
         "name": "찰리가범인",
-        "file": "assets/png/6ed2e114-0e15-405b-ab7f-f76836be0e17.png",
+        "file": "assets/webp/6ed2e114-0e15-405b-ab7f-f76836be0e17.webp",
         "tag": "jpg,comic_book,knee_pad,pill_bottle, Teacher, student, classroom, book, school, learning, question, answer, Korean text, drawing, 선생님, 학생, 교실, 책, 학교, 학습, 질문, 대답, 한국어, 그림",
         "category_1": "PNG",
         "category_2": null,
@@ -876,12 +932,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/6ed2e114-0e15-405b-ab7f-f76836be0e17.webp"
+        "thumb": "assets/thumbs/6ed2e114-0e15-405b-ab7f-f76836be0e17.webp",
+        "md5": "31711375dba22e869388f4cb5538cd0c"
     },
     {
         "id": "187",
         "name": "참쉽쥬",
-        "file": "assets/png/5dae1e88-a166-4660-b3fe-755cecb2ee39.png",
+        "file": "assets/webp/5dae1e88-a166-4660-b3fe-755cecb2ee39.webp",
         "tag": "jpg,stethoscope,lab_coat,racket, 이영자, 셰프, 요리, 감탄, 밈, 이영자 밈, 셰프복, 훈훈, 참 쉽죠?, Lee Young-ja, Chef, Cooking, Amazement, Meme, Lee Young-ja Meme, Chef Uniform, Warm-hearted, It's easy, right?",
         "category_1": "PNG",
         "category_2": null,
@@ -891,12 +948,13 @@
         "situation": [
             "밥/먹방/술"
         ],
-        "thumb": "assets/thumbs/5dae1e88-a166-4660-b3fe-755cecb2ee39.webp"
+        "thumb": "assets/thumbs/5dae1e88-a166-4660-b3fe-755cecb2ee39.webp",
+        "md5": "4c113cf13d239a8d52e50741dbf8dd82"
     },
     {
         "id": "188",
         "name": "launch_i_said_lunch",
-        "file": "assets/png/launch_i_said_lunch.png",
+        "file": "assets/webp/launch_i_said_lunch.webp",
         "tag": "jpg,book_jacket,ballplayer,comic_book, 김정은, 런치, 오해, 군인, 밈, Kim Jong Un, Lunch, Misunderstanding, Military, Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -906,12 +964,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/launch_i_said_lunch.webp"
+        "thumb": "assets/thumbs/launch_i_said_lunch.webp",
+        "md5": "7724d1a904b1e72aaf649e41c5f8062e"
     },
     {
         "id": "189",
         "name": "웃프다",
-        "file": "assets/png/ca167309-98bb-403e-a915-42f6ea0424b5.png",
+        "file": "assets/webp/ca167309-98bb-403e-a915-42f6ea0424b5.webp",
         "tag": "jpg,Windsor_tie,academic_gown,neck_brace, SBS, 스브스, Korean drama, k-drama, middle-aged man, smiling, happy, actor, TV show, entertainment",
         "category_1": "PNG",
         "category_2": null,
@@ -922,12 +981,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/ca167309-98bb-403e-a915-42f6ea0424b5.webp"
+        "thumb": "assets/thumbs/ca167309-98bb-403e-a915-42f6ea0424b5.webp",
+        "md5": "f3cc327f5aae3564c1a85f3c8bcf454b"
     },
     {
         "id": "190",
         "name": "파파-한별아",
-        "file": "assets/png/0d71b22c-3014-4573-ad8e-a542175eccd5.png",
+        "file": "assets/webp/0d71b22c-3014-4573-ad8e-a542175eccd5.webp",
         "tag": "jpg,car_mirror,cab,school_bus, SNL, 한별아, 택시, 감정, 놀람, 코미디, SNL Korea, Hanbyeol-ah, Taxi, Emotion, Surprise, Comedy",
         "category_1": "PNG",
         "category_2": null,
@@ -938,12 +998,13 @@
         "situation": [
             "인사"
         ],
-        "thumb": "assets/thumbs/0d71b22c-3014-4573-ad8e-a542175eccd5.webp"
+        "thumb": "assets/thumbs/0d71b22c-3014-4573-ad8e-a542175eccd5.webp",
+        "md5": "0991f04dd12400924271c7f5dfe177b9"
     },
     {
         "id": "191",
         "name": "산",
-        "file": "assets/png/6c63f639-9893-4133-844d-a122025a6276.png",
+        "file": "assets/webp/6c63f639-9893-4133-844d-a122025a6276.webp",
         "tag": "jpg,bulletproof_vest,neck_brace,Windsor_tie, Korean: 웃음, 여성, 수화, 산, 한국, 텔레비전, 밈, 배우, English: laughter, woman, sign language, mountain, Korea, television, meme, actress",
         "category_1": "PNG",
         "category_2": null,
@@ -954,12 +1015,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/6c63f639-9893-4133-844d-a122025a6276.webp"
+        "thumb": "assets/thumbs/6c63f639-9893-4133-844d-a122025a6276.webp",
+        "md5": "c64afb2641effd5e0eb4a2f48e7ab03a"
     },
     {
         "id": "192",
         "name": "Screen Shot 2021-07-29 at 17.33.22",
-        "file": "assets/png/5d09332d-481c-4134-b73b-af3ecd4e4bf7.png",
+        "file": "assets/webp/5d09332d-481c-4134-b73b-af3ecd4e4bf7.webp",
         "tag": "jpg,comic_book,book_jacket,maillot, 애니메이션, 왕관, 안녕하세요, 안녕, 슬픔, 만화, 춤, 행복, 모험, 소녀, Anime, Crown, Hello, Goodbye, Sadness, Cartoon, Dance, Happiness, Adventure, Girl",
         "category_1": "PNG",
         "category_2": null,
@@ -970,12 +1032,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/5d09332d-481c-4134-b73b-af3ecd4e4bf7.webp"
+        "thumb": "assets/thumbs/5d09332d-481c-4134-b73b-af3ecd4e4bf7.webp",
+        "md5": "820f7d142f32d166a943c5d5dc1cc564"
     },
     {
         "id": "193",
         "name": "KakaoTalk_Photo_2021-08-03-00-20-04",
-        "file": "assets/png/KakaoTalk_Photo_2021-08-03-00-20-04.png",
+        "file": "assets/webp/KakaoTalk_Photo_2021-08-03-00-20-04.webp",
         "tag": "jpg,web_site,bow_tie,Windsor_tie, ??? 아빠.. 지금 우리나라가 지고 있는 거야..?, 사랑짱, 우리나라는 이미 올라갔어요!, 아빠, 아버지, 딸, 사랑, 훈훈, 긍정, 힐링, 밈, 텍스트, 2021.07.31, ???: Dad.. is our country losing now..?, Darling, our country has already risen!, Dad, Father, Daughter, Love, Heartwarming, Positive, Healing, Meme, Text, 2021.07.31",
         "category_1": "PNG",
         "category_2": null,
@@ -986,12 +1049,13 @@
         "situation": [
             "위로/공감"
         ],
-        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-08-03-00-20-04.webp"
+        "thumb": "assets/thumbs/KakaoTalk_Photo_2021-08-03-00-20-04.webp",
+        "md5": "f0562673afd63ea1185b15784c7e887d"
     },
     {
         "id": "194",
         "name": "아그래요",
-        "file": "assets/png/54474113-cdc7-4581-950b-2ffe7f2743e3.png",
+        "file": "assets/webp/54474113-cdc7-4581-950b-2ffe7f2743e3.webp",
         "tag": "jpg,thimble,toilet_tissue,goose, 눈, 부엉이, 놀람, 어이없음, 뭐, 정말?, 아, 그래요?, Snow owl, surprise, disbelief, What, Really?",
         "category_1": "PNG",
         "category_2": null,
@@ -1002,12 +1066,13 @@
         "situation": [
             "질문/궁금"
         ],
-        "thumb": "assets/thumbs/54474113-cdc7-4581-950b-2ffe7f2743e3.webp"
+        "thumb": "assets/thumbs/54474113-cdc7-4581-950b-2ffe7f2743e3.webp",
+        "md5": "2ec2a9ea071e2f0ba7dfebdc7edc7310"
     },
     {
         "id": "195",
         "name": "창작자막",
-        "file": "assets/png/76894852-8ac6-4e4a-baeb-a2ba7191fe73.png",
+        "file": "assets/webp/76894852-8ac6-4e4a-baeb-a2ba7191fe73.webp",
         "tag": "jpg,screen,scoreboard,monitor, GOM Player, 1Dead, Season, 2012, BDRip, x264, AC3, mp4, sailboat, sunset, sea, movie, subtitles, text, Korean, English, fun, enjoyed, original, content, unrelated, noticed, difference, enjoy, don't care, watch other movies, ending, none",
         "category_1": "PNG",
         "category_2": null,
@@ -1018,12 +1083,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/76894852-8ac6-4e4a-baeb-a2ba7191fe73.webp"
+        "thumb": "assets/thumbs/76894852-8ac6-4e4a-baeb-a2ba7191fe73.webp",
+        "md5": "1e3d063c758408f41021981bed7069ce"
     },
     {
         "id": "196",
         "name": "Screen Shot 2021-07-29 at 17.32.49",
-        "file": "assets/png/81837c5c-cfec-4d8a-83e1-b1b4f0429ff8.png",
+        "file": "assets/webp/81837c5c-cfec-4d8a-83e1-b1b4f0429ff8.webp",
         "tag": "jpg,comic_book,envelope,book_jacket, 외계인, 펀치, 폭력, 만화, meme, Korean meme, alien, punch, violence, comic, meme",
         "category_1": "PNG",
         "category_2": null,
@@ -1033,12 +1099,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/81837c5c-cfec-4d8a-83e1-b1b4f0429ff8.webp"
+        "thumb": "assets/thumbs/81837c5c-cfec-4d8a-83e1-b1b4f0429ff8.webp",
+        "md5": "34610e6f77f7477c589fb244a3ecf466"
     },
     {
         "id": "278",
         "name": "김연아웃음프읖",
-        "file": "assets/png/45ce166d-20a9-4afc-b92d-ea0554adb78c.png",
+        "file": "assets/webp/45ce166d-20a9-4afc-b92d-ea0554adb78c.webp",
         "tag": "png, 우남쌩, 김연아, Vancouver 2010, 피겨 스케이팅, 올림픽, 감정, 선수, 스포츠, SBS, Live, Korean figure skater, Vancouver 2010, Figure skating, Olympics, Emotion, Athlete, Sports, SBS, Live",
         "category_1": "PNG",
         "category_2": null,
@@ -1049,12 +1116,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/45ce166d-20a9-4afc-b92d-ea0554adb78c.webp"
+        "thumb": "assets/thumbs/45ce166d-20a9-4afc-b92d-ea0554adb78c.webp",
+        "md5": "253a59305a3d17c84318d5a240a47138"
     },
     {
         "id": "323",
         "name": "아아아아아아",
-        "file": "assets/png/d703d824-fb30-485c-8d9f-eb08bab9161c.png",
+        "file": "assets/webp/d703d824-fb30-485c-8d9f-eb08bab9161c.webp",
         "tag": "png, 우남쌩, 아, crying, pain, anguish, grief, manga, anime, sound effect, expression, anguish, 아, crying, pain, anguish, grief, manga, anime, sound effect, expression",
         "category_1": "PNG",
         "category_2": null,
@@ -1064,12 +1132,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/d703d824-fb30-485c-8d9f-eb08bab9161c.webp"
+        "thumb": "assets/thumbs/d703d824-fb30-485c-8d9f-eb08bab9161c.webp",
+        "md5": "45ecb47863d5b630bba0c6c268c4bdf9"
     },
     {
         "id": "324",
         "name": "애인이되어줄래물론장애인",
-        "file": "assets/png/62028f53-0fa3-4c38-8c2c-60a3a1c84f95.png",
+        "file": "assets/webp/62028f53-0fa3-4c38-8c2c-60a3a1c84f95.webp",
         "tag": "png, 우남쌩, 애인... 되어줄래?, 좋... 좋아!!, 물론 장애인, Love proposal, Excited, Kicking, Comic strip, Korean meme, Funny comic, Absurdity, Korean, English",
         "category_1": "PNG",
         "category_2": null,
@@ -1080,12 +1149,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/62028f53-0fa3-4c38-8c2c-60a3a1c84f95.webp"
+        "thumb": "assets/thumbs/62028f53-0fa3-4c38-8c2c-60a3a1c84f95.webp",
+        "md5": "a5152126e0f9d447871ebbc96cf06953"
     },
     {
         "id": "325",
         "name": "어휴저관종또왔네",
-        "file": "assets/png/2f2e125e-f01d-4fdb-96f6-5c5a6116517c.png",
+        "file": "assets/webp/2f2e125e-f01d-4fdb-96f6-5c5a6116517c.webp",
         "tag": "png, 우남쌩, Drawing, Korean text, Funny face, Shocked, Annoyance, Oh no, Oh my god, It's here again, meme, cartoon",
         "category_1": "PNG",
         "category_2": null,
@@ -1096,12 +1166,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/2f2e125e-f01d-4fdb-96f6-5c5a6116517c.webp"
+        "thumb": "assets/thumbs/2f2e125e-f01d-4fdb-96f6-5c5a6116517c.webp",
+        "md5": "c10559e509ac2032f1431b6412731067"
     },
     {
         "id": "285",
         "name": "와참재밌다짝",
-        "file": "assets/png/b749a07b-4e28-46b8-9f75-25a04ec6cca9.png",
+        "file": "assets/webp/b749a07b-4e28-46b8-9f75-25a04ec6cca9.webp",
         "tag": "png, 우남쌩, 와 참재밌다, Korean meme, Drawing, Humor, Korean text, Funny face, Clapping, Meme, Character, Funny",
         "category_1": "PNG",
         "category_2": null,
@@ -1112,12 +1183,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/b749a07b-4e28-46b8-9f75-25a04ec6cca9.webp"
+        "thumb": "assets/thumbs/b749a07b-4e28-46b8-9f75-25a04ec6cca9.webp",
+        "md5": "74970cd609a682ccc035738970678a9c"
     },
     {
         "id": "286",
         "name": "조카크레파스십팔색이야",
-        "file": "assets/png/9a862fa2-2344-4d68-b829-4029954528cb.png",
+        "file": "assets/webp/9a862fa2-2344-4d68-b829-4029954528cb.webp",
         "tag": "png, 우남쌩, 조커, Joker, 18세, 18 years old, 십팔색이야, 18 colors, meme, internet meme, Korean meme, rainbow",
         "category_1": "PNG",
         "category_2": null,
@@ -1127,12 +1199,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/9a862fa2-2344-4d68-b829-4029954528cb.webp"
+        "thumb": "assets/thumbs/9a862fa2-2344-4d68-b829-4029954528cb.webp",
+        "md5": "87cdddc7f4aa97b32adcba282a09e625"
     },
     {
         "id": "287",
         "name": "호이가계속되면그게둘리인줄알아요",
-        "file": "assets/png/ae9cf775-2a4e-4ef5-95d3-50313cbeb49b.png",
+        "file": "assets/webp/ae9cf775-2a4e-4ef5-95d3-50313cbeb49b.webp",
         "tag": "png, 우남쌩, 캐릭터, 귀여움, 만화, 밈, 글씨, 한국어, Me?, Cartoon, Cute, Meme, Korean, Text",
         "category_1": "PNG",
         "category_2": null,
@@ -1143,12 +1216,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/ae9cf775-2a4e-4ef5-95d3-50313cbeb49b.webp"
+        "thumb": "assets/thumbs/ae9cf775-2a4e-4ef5-95d3-50313cbeb49b.webp",
+        "md5": "22d8491e1675837ecdfd5b9b068ae07e"
     },
     {
         "id": "326",
         "name": "뭐지",
-        "file": "assets/png/8db715d5-cbdb-451f-befe-9df3fb9117b6.png",
+        "file": "assets/webp/8db715d5-cbdb-451f-befe-9df3fb9117b6.webp",
         "tag": "png, 우남쌩, 고양이, 귀여움, 놀람, 밈, 펫, 고양이 밈, Scottish Fold, Cat, Cute, Surprise, Meme, Pet, Cat Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -1158,12 +1232,13 @@
         "situation": [
             "질문/궁금"
         ],
-        "thumb": "assets/thumbs/8db715d5-cbdb-451f-befe-9df3fb9117b6.webp"
+        "thumb": "assets/thumbs/8db715d5-cbdb-451f-befe-9df3fb9117b6.webp",
+        "md5": "4ff9f4ff728cca629674e23d62625206"
     },
     {
         "id": "290",
         "name": "어의가없네",
-        "file": "assets/png/b8609186-53f6-41a2-adf6-68ed3f6838c1.png",
+        "file": "assets/webp/b8609186-53f6-41a2-adf6-68ed3f6838c1.webp",
         "tag": "png, 유아인, 배우, 놀람, 당황, \"어이가 없네\", Yoo Ah-in, Actor, Surprised, Bewildered, \"What a shock\"",
         "category_1": "PNG",
         "category_2": null,
@@ -1173,12 +1248,13 @@
         "situation": [
             "비난/지적"
         ],
-        "thumb": "assets/thumbs/b8609186-53f6-41a2-adf6-68ed3f6838c1.webp"
+        "thumb": "assets/thumbs/b8609186-53f6-41a2-adf6-68ed3f6838c1.webp",
+        "md5": "b073dbf2a9da1f300500ddcc0f818d4f"
     },
     {
         "id": "291",
         "name": "얼마나좋아",
-        "file": "assets/png/b717609b-7729-4ac2-a955-d896a7cf3d9b.png",
+        "file": "assets/webp/b717609b-7729-4ac2-a955-d896a7cf3d9b.webp",
         "tag": "png, 장혁, 추노, 얼마나 좋아, How much do I like it, Intense emotion, Scream, Anime meme, Actor, Dramatic scene, Korean drama, Close-up, Media",
         "category_1": "PNG",
         "category_2": null,
@@ -1189,12 +1265,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/b717609b-7729-4ac2-a955-d896a7cf3d9b.webp"
+        "thumb": "assets/thumbs/b717609b-7729-4ac2-a955-d896a7cf3d9b.webp",
+        "md5": "d940d5f6e6b1fd84cdac09d55c1d8401"
     },
     {
         "id": "292",
         "name": "잘하자응",
-        "file": "assets/png/01702b6c-287f-4e3a-977f-f0d654f0d7e4.png",
+        "file": "assets/webp/01702b6c-287f-4e3a-977f-f0d654f0d7e4.webp",
         "tag": "png, 잘하자, 응?, Let's do well, okay?, Meme, Expression, Close-up, Persuasion, Exaggerated face, Funny, Chat sticker, Korean meme",
         "category_1": "PNG",
         "category_2": null,
@@ -1205,12 +1282,13 @@
         "situation": [
             "재촉/독촉"
         ],
-        "thumb": "assets/thumbs/01702b6c-287f-4e3a-977f-f0d654f0d7e4.webp"
+        "thumb": "assets/thumbs/01702b6c-287f-4e3a-977f-f0d654f0d7e4.webp",
+        "md5": "4975cd7e3eb73922201f951932a8a622"
     },
     {
         "id": "293",
         "name": "제발",
-        "file": "assets/png/fefadc92-57eb-419a-9c4c-c26922684764.png",
+        "file": "assets/webp/fefadc92-57eb-419a-9c4c-c26922684764.webp",
         "tag": "png, 우남쌩, 고양이, 귀여운, 애교, 부탁, 간절함, 냥이, Orange cat, cute, begging, pleading, cat",
         "category_1": "PNG",
         "category_2": null,
@@ -1220,12 +1298,13 @@
         "situation": [
             "재촉/독촉"
         ],
-        "thumb": "assets/thumbs/fefadc92-57eb-419a-9c4c-c26922684764.webp"
+        "thumb": "assets/thumbs/fefadc92-57eb-419a-9c4c-c26922684764.webp",
+        "md5": "56d6c2e933a5853229aae0e0b29b1252"
     },
     {
         "id": "294",
         "name": "kbs-우리말겨루기-남편-초성",
-        "file": "assets/png/2f63a86a-e349-45f3-9516-f1bd21038440.png",
+        "file": "assets/webp/2f63a86a-e349-45f3-9516-f1bd21038440.webp",
         "tag": "png, 우남쌩, Korean: 방송, 여성, 이름표, 남편, 칭찬, TV, 텔레비전, KBS1, English: broadcast, woman, name tag, husband, praise, TV, television, KBS1",
         "category_1": "PNG",
         "category_2": null,
@@ -1235,12 +1314,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/2f63a86a-e349-45f3-9516-f1bd21038440.webp"
+        "thumb": "assets/thumbs/2f63a86a-e349-45f3-9516-f1bd21038440.webp",
+        "md5": "730de990a2b6c7dc5b91016db2ff48c1"
     },
     {
         "id": "295",
         "name": "kbs-우리말겨루기-남편-초성-방송사고-1초전",
-        "file": "assets/png/3c04631b-d374-4085-90f4-3c1acebab89d.png",
+        "file": "assets/webp/3c04631b-d374-4085-90f4-3c1acebab89d.webp",
         "tag": "png, 우남쌩, 방송 사고 1초 전, Husband, Korean TV, Broadcast accident, Game show, Quiz show, Korean subtitles, 8, 구임순",
         "category_1": "PNG",
         "category_2": null,
@@ -1251,12 +1331,13 @@
         "situation": [
             "놀리기/드립"
         ],
-        "thumb": "assets/thumbs/3c04631b-d374-4085-90f4-3c1acebab89d.webp"
+        "thumb": "assets/thumbs/3c04631b-d374-4085-90f4-3c1acebab89d.webp",
+        "md5": "5a6b752e8ffe8ad9ab81056b24c9bfba"
     },
     {
         "id": "327",
         "name": "나너무많은일이있었어힘들다진짜",
-        "file": "assets/png/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.png",
+        "file": "assets/webp/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.webp",
         "tag": "png, Roronoa Zoro, ONE PIECE, manga panel, struggle, exhaustion, determination, pain, sweat, intense, hardship, 롤로노아 조로, 원피스, 만화 장면, 고군분투, 탈진, 결의, 고통, 땀, 강렬한, 어려움",
         "category_1": "PNG",
         "category_2": null,
@@ -1267,12 +1348,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.webp"
+        "thumb": "assets/thumbs/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.webp",
+        "md5": "bfa2062ae2a314f5621149ff96973985"
     },
     {
         "id": "328",
         "name": "우리식당정상영업합니다",
-        "file": "assets/png/33af1d26-d1a5-4497-8185-751a34da78dc.png",
+        "file": "assets/webp/33af1d26-d1a5-4497-8185-751a34da78dc.webp",
         "tag": "png, 건물 붕괴, 재난, 재해, 철거, 폐허, 재건, 재개, 안전, 재난 대비, 복구, Building collapse, Disaster, Calamity, Demolition, Ruins, Reconstruction, Reopening, Safety, Disaster preparedness, Recovery",
         "category_1": "PNG",
         "category_2": null,
@@ -1282,12 +1364,13 @@
         "situation": [
             "밥/먹방/술"
         ],
-        "thumb": "assets/thumbs/33af1d26-d1a5-4497-8185-751a34da78dc.webp"
+        "thumb": "assets/thumbs/33af1d26-d1a5-4497-8185-751a34da78dc.webp",
+        "md5": "067071d28f6b92f7e5b7f5147b891922"
     },
     {
         "id": "329",
         "name": "좋아쒀",
-        "file": "assets/png/4d443886-8283-4268-834c-f2417d8feb06.png",
+        "file": "assets/webp/4d443886-8283-4268-834c-f2417d8feb06.webp",
         "tag": "png, 놀라운 토요일, 황제성, 권혁수, 기세로 승부하는 경영자들, 좋아, 쭙, tvN, Korean variety show, funny faces, meme, reaction",
         "category_1": "PNG",
         "category_2": null,
@@ -1297,12 +1380,13 @@
         "situation": [
             "동의/긍정"
         ],
-        "thumb": "assets/thumbs/4d443886-8283-4268-834c-f2417d8feb06.webp"
+        "thumb": "assets/thumbs/4d443886-8283-4268-834c-f2417d8feb06.webp",
+        "md5": "cd186688d839d53ba5a67a7d49bd142e"
     },
     {
         "id": "296",
         "name": "나너무많은일이있었어힘들다진짜",
-        "file": "assets/png/37548075-b2f3-4de2-9487-b19f6fce6b84.png",
+        "file": "assets/webp/37548075-b2f3-4de2-9487-b19f6fce6b84.webp",
         "tag": "Roronoa Zoro, One Piece, Sore, Tired, Dialogue bubble, Manga, Korean text, Anime, Speech bubble, Meme",
         "category_1": "PNG",
         "category_2": null,
@@ -1313,12 +1397,13 @@
         "situation": [
             "신세한탄"
         ],
-        "thumb": "assets/thumbs/37548075-b2f3-4de2-9487-b19f6fce6b84.webp"
+        "thumb": "assets/thumbs/37548075-b2f3-4de2-9487-b19f6fce6b84.webp",
+        "md5": "bfa2062ae2a314f5621149ff96973985"
     },
     {
         "id": "297",
         "name": "우리식당정상영업합니다",
-        "file": "assets/png/c907c101-db32-4f63-9fb4-c82db6bf3767.png",
+        "file": "assets/webp/c907c101-db32-4f63-9fb4-c82db6bf3767.webp",
         "tag": "파괴, 건물, 잔해, 재난, 재건, 현수막, 안전, 복구, Demolition, Building, Rubble, Disaster, Reconstruction, Banner, Safety, Recovery",
         "category_1": "PNG",
         "category_2": null,
@@ -1328,12 +1413,13 @@
         "situation": [
             "밥/먹방/술"
         ],
-        "thumb": "assets/thumbs/c907c101-db32-4f63-9fb4-c82db6bf3767.webp"
+        "thumb": "assets/thumbs/c907c101-db32-4f63-9fb4-c82db6bf3767.webp",
+        "md5": "067071d28f6b92f7e5b7f5147b891922"
     },
     {
         "id": "298",
         "name": "주가에따라바뀌는내직업1",
-        "file": "assets/png/97eeec99-eb9a-4241-ad1f-3a72db521e24.png",
+        "file": "assets/webp/97eeec99-eb9a-4241-ad1f-3a72db521e24.webp",
         "thumb": "assets/thumbs/97eeec99-eb9a-4241-ad1f-3a72db521e24.webp",
         "emotion": [
             "웃김",
@@ -1342,12 +1428,13 @@
         "situation": [
             "신세한탄"
         ],
-        "tag": "주식, Stock, 투자, Investing, 밈툰, Webtoon meme, 분석가, Analyst, 경제전문가, Economist, 예언가, Prophet"
+        "tag": "주식, Stock, 투자, Investing, 밈툰, Webtoon meme, 분석가, Analyst, 경제전문가, Economist, 예언가, Prophet",
+        "md5": "e0dbc5ecf002eb08a4b1ae9e31d15978"
     },
     {
         "id": "299",
         "name": "주가에따라바뀌는내직업2",
-        "file": "assets/png/a5b215b6-236e-4272-921f-c0d2148bce7b.png",
+        "file": "assets/webp/a5b215b6-236e-4272-921f-c0d2148bce7b.webp",
         "thumb": "assets/thumbs/a5b215b6-236e-4272-921f-c0d2148bce7b.webp",
         "emotion": [
             "웃김",
@@ -1356,12 +1443,13 @@
         "situation": [
             "신세한탄"
         ],
-        "tag": "주식, Stock, 손절, Stop-loss, 장기투자자, Long-term investor, 성직자, Priest, 철학자, Philosopher"
+        "tag": "주식, Stock, 손절, Stop-loss, 장기투자자, Long-term investor, 성직자, Priest, 철학자, Philosopher",
+        "md5": "20444c14909ab583d957974a0b1ef42f"
     },
     {
         "id": "310",
         "name": "모든 게 피곤하기만 합니다",
-        "file": "assets/png/a9232c04-ba24-4648-b824-db7154f95636.png",
+        "file": "assets/webp/a9232c04-ba24-4648-b824-db7154f95636.webp",
         "thumb": "assets/thumbs/a9232c04-ba24-4648-b824-db7154f95636.webp",
         "emotion": [
             "지침/귀찮음",
@@ -1371,6 +1459,7 @@
             "신세한탄"
         ],
         "tag": "피곤, Tired, 여우, Fox, 티베트여우, Tibetan fox, 잠, Sleep, 내셔널지오그래픽, National Geographic",
-        "added": "2026-10-02"
+        "added": "2026-10-02",
+        "md5": "cd0f2f88f512161438f98c187ed154dc"
     }
 ]

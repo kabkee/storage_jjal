@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { generateThumbnail } = require('./generate-thumbnail');
+const { convertToWebp } = require('./webp-convert');
 
 const NEW_DIR = path.join(__dirname, '../new');
 const ASSETS_DIR = path.join(__dirname, '../../assets');
@@ -20,8 +21,11 @@ const EXT_MAP = {
 // 'YYYY-MM-DD' (로컬 날짜). '최근 추가' 판단용 — id는 옛 데이터 중복 정리로 재번호된 게 있어 순서를 믿을 수 없다.
 const today = () => new Date().toLocaleDateString('sv-SE');
 
-function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag, added = today() }) {
+function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag, added = today(), md5, animated }) {
     const normalize = (s) => (s || '').normalize('NFC');
+    const extra = {};
+    if (md5) extra.md5 = md5;
+    if (animated) extra.animated = true;
     return {
         id: String(id),
         name: normalize(name),
@@ -30,7 +34,8 @@ function buildRecord({ id, uuid, ext, folder, name, emotion, situation, tag, add
         emotion: (emotion || []).map(normalize),
         situation: (situation || []).map(normalize),
         tag: normalize(tag),
-        added
+        added,
+        ...extra
     };
 }
 
@@ -48,8 +53,8 @@ function getGlobalNextId(sourcesDir) {
     return max + 1;
 }
 
-// 파일 하나를 UUID 이름으로 옮기고 썸네일을 만든 뒤 sources/<type>.json 에 레코드를 추가한다.
-// srcPath 의 파일은 이동(rename)되므로 호출 뒤에는 원래 위치에 남지 않는다.
+// 파일 하나를 webp(UUID 이름)로 변환해 assets/webp/ 에 두고 썸네일을 만든 뒤 sources/<원본형식>.json 에 레코드를 추가한다.
+// 사이트는 webp 만 서빙한다(2026-11-21). 원본(srcPath)은 변환 후 지워진다. md5 는 원본 기준(중복 업로드 감지용).
 async function importOne({ srcPath, name, emotion, situation, tag }, { sourcesDir = SOURCES_DIR } = {}) {
     const ext = path.extname(srcPath).toLowerCase();
     const config = EXT_MAP[ext];
@@ -57,20 +62,21 @@ async function importOne({ srcPath, name, emotion, situation, tag }, { sourcesDi
     if (!fs.existsSync(srcPath)) throw new Error(`파일을 찾을 수 없음: ${srcPath}`);
 
     const uuid = crypto.randomUUID();
-    const targetDir = path.join(ASSETS_DIR, config.folder);
+    const targetDir = path.join(ASSETS_DIR, 'webp');
     fs.mkdirSync(targetDir, { recursive: true });
-    const destPath = path.join(targetDir, `${uuid}${ext}`);
-    fs.renameSync(srcPath, destPath);
+    const destPath = path.join(targetDir, `${uuid}.webp`);
+    const converted = await convertToWebp(srcPath, destPath);
 
     fs.mkdirSync(THUMBS_DIR, { recursive: true });
-    await generateThumbnail(destPath, path.join(THUMBS_DIR, `${uuid}.webp`));
+    await generateThumbnail(srcPath, path.join(THUMBS_DIR, `${uuid}.webp`));
+    fs.unlinkSync(srcPath);
 
     // id 는 파일 이동·썸네일 생성이 끝난 직후에 채번해서, 그 사이 다른 등록과 겹치지 않게 한다.
     const jsonPath = path.join(sourcesDir, config.json);
     const jsonData = fs.existsSync(jsonPath) ? JSON.parse(fs.readFileSync(jsonPath, 'utf8')) : [];
     const record = buildRecord({
-        id: getGlobalNextId(sourcesDir), uuid, ext, folder: config.folder,
-        name, emotion, situation, tag
+        id: getGlobalNextId(sourcesDir), uuid, ext: '.webp', folder: 'webp',
+        name, emotion, situation, tag, md5: converted.md5, animated: converted.animated
     });
     jsonData.push(record);
     fs.writeFileSync(jsonPath, JSON.stringify(jsonData, null, 4), 'utf8');

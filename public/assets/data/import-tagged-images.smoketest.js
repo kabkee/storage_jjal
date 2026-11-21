@@ -19,6 +19,13 @@ assert.deepStrictEqual(record.situation, ['거절/부정']);
 assert.match(record.added, /^\d{4}-\d{2}-\d{2}$/, 'added must default to today as YYYY-MM-DD');
 assert.strictEqual(buildRecord({ id: 1, uuid: 'y', ext: '.png', folder: 'png', added: '2026-10-02' }).added, '2026-10-02');
 
+// webp 전환 후: 원본 md5·animated 는 있을 때만 붙는다
+const conv = buildRecord({ id: 2, uuid: 'z', ext: '.webp', folder: 'webp', md5: 'abc', animated: true });
+assert.strictEqual(conv.file, 'assets/webp/z.webp');
+assert.strictEqual(conv.md5, 'abc');
+assert.strictEqual(conv.animated, true);
+assert.ok(!('animated' in record) && !('md5' in record), 'animated/md5 must be omitted when not given');
+
 const empty = buildRecord({ id: 1, uuid: 'x', ext: '.png', folder: 'png', name: '', emotion: undefined, situation: undefined, tag: undefined });
 assert.deepStrictEqual(empty.emotion, [], 'missing emotion defaults to empty array, not undefined');
 assert.deepStrictEqual(empty.situation, [], 'missing situation defaults to empty array, not undefined');
