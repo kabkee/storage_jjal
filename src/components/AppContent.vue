@@ -47,7 +47,7 @@
                     @click="motionFilter = v">{{ l }}</button>
             </div>
             <div class="spacer"></div>
-            <a v-if="showWinHelperLink" href="#" class="helper-link" title="움짤도 클릭 한 번으로 카톡에 보내는 「짤 복사 도우미」(Windows) 설치 안내"
+            <a v-if="showHelperLink" href="#" class="helper-link" :title="`움짤도 클릭 한 번으로 카톡에 보내는 「짤 복사 도우미」(${helperOsName}) 설치 안내`"
                 @click.prevent="openHelperGuide(null)">
                 <v-icon size="15">mdi-download</v-icon> 움짤 복사 도우미
             </a>
@@ -146,6 +146,18 @@
             </div>
         </div>
 
+        <!-- ── GIF 모드: 변환이 오래 걸려 바로 공유 창을 못 띄웠을 때(모바일) 한 번 더 누르는 창 ── -->
+        <div v-if="gifShare" class="dim" @click.self="gifShare = null">
+            <div class="settings gif-share" role="dialog" aria-modal="true" aria-label="GIF 공유">
+                <h2>GIF 준비됐어요 <button class="btn small" @click="gifShare = null">닫기</button></h2>
+                <div class="set-desc">「{{ gifShare.image.name }}」 GIF({{ (gifShare.blob.size / 1e6).toFixed(1) }}MB) — 공유하기를 눌러 카톡·텔레그램으로 보내세요.</div>
+                <div class="set-row">
+                    <button class="btn primary" @click="shareGifNow()">📤 공유하기</button>
+                    <button class="btn" @click="saveBlob(gifShare.blob, gifName(gifShare.image)); gifShare = null">⬇ 저장</button>
+                </div>
+            </div>
+        </div>
+
         <!-- ── 설정 ── -->
         <div v-if="settingsOpen" class="dim" @click.self="settingsOpen = false">
             <div class="settings" role="dialog" aria-modal="true" aria-label="설정">
@@ -205,7 +217,7 @@
             <button class="btn icon" aria-label="선택 끝" @click="exitSelectMode()">✕</button>
         </div>
 
-    <!-- 도우미 없이 움짤을 눌렀을 때 / 「움짤 복사 도우미」 링크: Save As 안내 + 윈도우 도우미 설치 안내 -->
+    <!-- 도우미 없이 움짤을 눌렀을 때 / 「움짤 복사 도우미」 링크: Save As 안내 + 도우미 설치 안내 (윈도우·맥 각각) -->
     <v-dialog v-model="helperGuide.show" max-width="520" scrollable>
         <v-card class="helper-guide" rounded="lg">
             <v-card-title class="d-flex align-center ga-2 pt-4 px-5">
@@ -246,11 +258,11 @@
                         그 창을 <b>카톡 대화창으로 끌어다 놓으면</b> 바로 전송돼요.
                     </p>
                     <div class="guide-step"><span class="step-no">1</span>
-                        <span>아래 <b>「도우미 받기」</b> 버튼으로 <code>JjalCopy.exe</code> 받기
+                        <span>아래 <b>「도우미 받기」</b> 버튼으로 설치 프로그램(<code>JjalCopySetup.exe</code>) 받기
                             <div class="step-note">브라우저가 「흔하지 않은 파일」이라며 막으면 → 다운로드 목록에서 <b>「유지」/「계속」</b></div>
                         </span></div>
                     <div class="guide-step"><span class="step-no">2</span>
-                        <span>받은 파일 실행
+                        <span>받은 파일 실행 → 설치
                             <div class="step-note">「Windows의 PC 보호」 파란 창이 뜨면 → <b>「추가 정보」 → 「실행」</b></div>
                         </span></div>
                     <div class="guide-step"><span class="step-no">3</span>
@@ -259,9 +271,35 @@
                         </span></div>
                 </div>
 
+                <!-- 방법 2: 도우미 설치 (맥) — 맥 카톡은 파일 붙여넣기를 받아서 끌어다 놓기 창 없이 ⌘V -->
+                <div v-if="isMac" class="guide-box guide-box--primary mt-3">
+                    <div class="guide-head">
+                        <v-chip size="small" color="primary" variant="flat" label>방법 2 · 추천</v-chip>
+                        <span>「짤 복사 도우미」(맥) 한 번 설치</span>
+                    </div>
+                    <p class="guide-desc">
+                        설치해 두면 움짤을 <b>클릭만 해도</b> 원본이 복사돼요.
+                        카톡 대화창에서 <b>⌘V</b> 하면 움직이는 그대로 전송돼요.
+                    </p>
+                    <div class="guide-step"><span class="step-no">1</span>
+                        <span>아래 <b>「도우미 받기」</b> 버튼으로 <code>JjalCopy-mac.zip</code> 받기
+                            <div class="step-note">다운로드 폴더에서 압축을 풀면 <b>JjalCopy</b> 앱이 나와요 → <b>「응용 프로그램」 폴더로 옮기기</b></div>
+                        </span></div>
+                    <div class="guide-step"><span class="step-no">2</span>
+                        <span>앱 열기
+                            <div class="step-note">「확인되지 않은 개발자」 경고가 뜨면 <b>「완료」</b> → <b>시스템 설정 → 개인정보 보호 및 보안</b> 맨 아래
+                                <b>「그래도 열기」</b> → 암호 입력 (처음 한 번만)</div>
+                        </span></div>
+                    <div class="guide-step"><span class="step-no">3</span>
+                        <span>화면 위 메뉴 막대에 아이콘이 생기면 끝!
+                            <div class="step-note">이 탭으로 돌아오면 자동으로 알아채요 — 다시 움짤을 눌러 보세요</div>
+                        </span></div>
+                </div>
+
                 <div class="text-caption text-medium-emphasis mt-3">
-                    💡 정지 이미지는 도우미와 상관없이 <b>클릭 → 카톡에서 Ctrl+V</b> 로 바로 보내져요.
+                    💡 정지 이미지는 도우미와 상관없이 <b>클릭 → 카톡에서 {{ pasteKey }}</b> 로 바로 보내져요.
                     <template v-if="isWindows">도우미 종료·제거는 트레이 아이콘 우클릭.</template>
+                    <template v-if="isMac">도우미 종료·자동 실행 설정은 메뉴 막대 아이콘 클릭.</template>
                 </div>
                 <v-checkbox v-if="helperGuide.name" v-model="helperGuide.mute" density="compact" hide-details
                     label="다음부터 이 창 대신 짧은 안내만 보기" class="mt-1"></v-checkbox>
@@ -271,9 +309,9 @@
             <v-card-actions class="px-5 py-3 ga-2">
                 <v-btn variant="outlined" size="large" @click="closeHelperGuide()">닫기</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn v-if="isWindows" color="primary" variant="flat" size="large" :href="WIN_HELPER_URL"
+                <v-btn v-if="helperDownloadUrl" color="primary" variant="flat" size="large" :href="helperDownloadUrl"
                     prepend-icon="mdi-download" class="px-6 font-weight-bold text-none">
-                    도우미 받기 (Windows)
+                    도우미 받기 ({{ helperOsName }})
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -549,6 +587,7 @@ const onKeydown = (e) => {
     if (e.key === '/' && !typing) { e.preventDefault(); searchInput.value?.focus(); }
     if (e.key === 'Escape') {
         if (detail.value) detail.value = null;
+        else if (gifShare.value) gifShare.value = null;
         else if (settingsOpen.value) settingsOpen.value = false;
         else openAxis.value = null;
     }
@@ -668,21 +707,28 @@ const addFavImage = (imageKey) => {
         favImageIdxs.value = [...newFavIdxs];
     }
 }
-// ── 움짤 원본 복사 (맥 WebPCap / 윈도우 짤 복사 도우미) ─────────────────────────
-// 로컬 도우미가 켜져 있으면(127.0.0.1:47321/ping 응답) 「움짤」 클릭 한 번에 원본 파일을 클립보드로 + 끌어다 놓기 창.
+// ── 움짤 원본 복사 (짤 복사 도우미: 윈도우 helper/windows · 맥 helper/mac) ─────────────────
+// 로컬 도우미가 켜져 있으면(127.0.0.1:47321/ping 응답) 「움짤」 클릭 한 번에 원본 파일을 클립보드로
+// (윈도우는 + 끌어다 놓기 창, 맥은 카톡이 파일 붙여넣기를 받아서 ⌘V 만).
+// 맥은 예전에 WebPCap(화면 캡처 앱)이 이 역할을 했지만 2026-11-21 부터 전용 도우미로 바꿨다 → app 이 JjalCopy 일 때만 인정.
 // 정지 이미지는 도우미를 쓰지 않는다: 파일로 넣으면 윈도우 카톡이 붙여넣기를 거부하므로 브라우저 PNG 복사가 낫다.
 // 브라우저는 클립보드에 파일을 넣을 수 없고, 드래그 앤 드롭은 Zen 이 파일을 다 쓰기 전에 넘겨 빈 파일이 되므로 이 경로를 쓴다.
-// 도우미가 없으면 움짤은 Save As 안내(윈도우 데스크톱은 도우미 설치 안내 창). 윈도우 데스크톱에서만 작은 안내 링크를 보여준다.
+// 도우미가 없으면 움짤은 설치 안내 창(윈도우·맥 데스크톱, 창 폭과 무관) / 그 밖은 Save As 안내.
 const WEBPCAP = 'http://127.0.0.1:47321';
-const HELPER_APPS = ['WebPCap', 'JjalCopy'];
+const HELPER_APPS = ['JjalCopy'];
 const WIN_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/latest/download/JjalCopySetup.exe';
+// 맥 도우미는 별도 태그(jjalcopy-mac-vX.Y.Z) — 「latest」 는 윈도우 릴리스라 버전을 고정해서 가리킨다. 새 버전 올리면 여기도 바꿀 것
+const MAC_HELPER_URL = 'https://github.com/kabkee/storage_jjal/releases/download/jjalcopy-mac-v1.0.0/JjalCopy-mac.zip';
 const webpcapReady = ref(false);
-const helperFeatures = ref([]);   // 윈도우 도우미 v1.4+ 는 ["copy-data"] (= GIF 모드로 바꾼 파일을 직접 받음)
+const helperFeatures = ref([]);   // 윈도우 도우미 v1.4+ · 맥 도우미는 ["copy-data"] (= GIF 모드로 바꾼 파일을 직접 받음)
 const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
 const isMac = /Mac/i.test(platformStr) && navigator.maxTouchPoints <= 1;   // iPad(데스크톱 모드) 제외
 const isWindows = /Win/i.test(platformStr);
 const pasteKey = isMac ? '⌘V' : 'Ctrl+V';
-const showWinHelperLink = computed(() => isWindows && !webpcapReady.value && !isMobileCustom.value);
+const helperDownloadUrl = isWindows ? WIN_HELPER_URL : isMac ? MAC_HELPER_URL : null;
+const helperOsName = isWindows ? 'Windows' : 'Mac';
+// 안내는 창 폭이 아니라 OS 로 판단한다(노트북에서 브라우저를 반만 띄워도 안내가 떠야 함)
+const showHelperLink = computed(() => !!helperDownloadUrl && !webpcapReady.value);
 const probeWebPCap = async () => {
     if (!isMac && !isWindows) return;
     try {
@@ -697,7 +743,7 @@ const probeWebPCap = async () => {
 };
 onMounted(() => {
     probeWebPCap();
-    window.addEventListener('focus', probeWebPCap);   // WebPCap 을 나중에 켜도 탭으로 돌아오면 감지
+    window.addEventListener('focus', probeWebPCap);   // 도우미를 나중에 켜도 탭으로 돌아오면 감지
 });
 onUnmounted(() => window.removeEventListener('focus', probeWebPCap));
 
@@ -731,7 +777,7 @@ const copyViaWebPCap = async (image, where) => {
 };
 
 // ── GIF 모드: 누른 움짤 하나만 브라우저에서 webp → GIF 로 바꿔 도우미에 넘기거나 파일로 저장 ──
-// 도우미(윈도우 v1.4+)가 /copy-data 를 지원하면 클립보드로, 아니면(맥 WebPCap·도우미 없음·모바일) GIF 파일 다운로드.
+// 도우미(윈도우 v1.4+·맥)가 /copy-data 를 지원하면 클립보드로, 아니면(도우미 없음·모바일) GIF 파일 다운로드.
 const gifCache = new Map();   // file → Promise<Blob> (최근 5개만)
 const getGif = (image) => {
     let p = gifCache.get(image.file);
@@ -770,6 +816,30 @@ const convertForGifMode = async (image) => {
         return null;
     }
 };
+// 안드로이드 등 모바일: GIF 파일을 시스템 공유 창(navigator.share)으로 넘긴다 → 카톡 대화창으로 바로 (예전 GIF 시절처럼)
+// 공유 창은 「방금 누른 직후」에만 열린다(크롬 약 5초). 변환이 길어 거절되면(NotAllowedError) 공유하기 버튼 창을 띄운다
+const isTouchDevice = navigator.maxTouchPoints > 0;
+const gifShare = ref(null);   // { image, blob }
+const gifFile = (image, blob) => new File([blob], gifName(image), { type: 'image/gif' });
+const canShareGif = (image, blob) =>
+    isTouchDevice && isMobileCustom.value && !!navigator.canShare?.({ files: [gifFile(image, blob)] });
+const shareGif = async (image, blob) => {
+    try {
+        await navigator.share({ files: [gifFile(image, blob)] });
+        return true;
+    } catch (e) {
+        if (e.name === 'AbortError') return true;   // 사용자가 공유 창을 닫음
+        if (e.name === 'NotAllowedError') { gifShare.value = { image, blob }; return true; }
+        appSnackbars.value.showSnackbar({ message: `공유 실패(${e.message}) — GIF 파일로 저장할게요`, type: 'warning' });
+        return false;
+    }
+};
+const shareGifNow = async () => {
+    const { image, blob } = gifShare.value;
+    gifShare.value = null;
+    if (!(await shareGif(image, blob))) saveBlob(blob, gifName(image));
+};
+
 let lastGifCopy = { file: '', at: 0 };
 const copyAsGif = async (image, where) => {
     const now = Date.now();
@@ -779,6 +849,10 @@ const copyAsGif = async (image, where) => {
     const blob = await convertForGifMode(image);
     if (!blob) return;
     const mb = (blob.size / 1e6).toFixed(1);
+    if (canShareGif(image, blob)) {
+        flashCopied(image, where);
+        if (await shareGif(image, blob)) return;
+    }
     if (webpcapReady.value && helperFeatures.value.includes('copy-data')) {
         try {
             const r = await fetch(`${WEBPCAP}/copy-data?name=${encodeURIComponent(gifName(image))}`, {
@@ -819,7 +893,7 @@ const copyImageToClipboard = async (image, where = 'g') => {
         if (webpcapReady.value) return copyViaWebPCap(image, where);
         // 짤톡 확장 프로그램이 설치돼 있으면(<html data-jjaltok>) 더블클릭으로 바로 저장되므로 안내하지 않는다
         if (document.documentElement.dataset.jjaltok) return;
-        if (isWindows && !isMobileCustom.value && !localStorage.getItem(HELPER_GUIDE_MUTE_KEY)) {
+        if (helperDownloadUrl && !localStorage.getItem(HELPER_GUIDE_MUTE_KEY)) {
             return openHelperGuide(image);
         }
         appSnackbars.value.showSnackbar({
