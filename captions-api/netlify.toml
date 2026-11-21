@@ -5,3 +5,7 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# 저장소 루트(Vue 사이트)의 package.json 을 보고 프레임워크를 잘못 짐작하지 않게 — 이 폴더는 정적 + 함수뿐
+[dev]
+  framework = "#static"

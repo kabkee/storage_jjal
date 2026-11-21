@@ -23,8 +23,10 @@
 
 ## 배포 (AI 가 실행할 때는 ~/docker/silverbullet/space/claude_works/rules/scripts.md §Netlify CLI 규칙대로)
 ```bash
-cd captions-api
-CI=1 timeout 600 netlify deploy --prod --dir=public --functions=netlify/functions --site <SITE_ID> --json --message "<설명>" < /dev/null
+captions-api/deploy.sh "<설명>"     # 사이트 jjal-captions-api (SITE_ID faa612b5-5237-40fa-a806-305218f5675f)
 ```
+저장소 안에서 `netlify deploy` 하면 루트 package.json 때문에 「Hydrogen, Remix 감지」 오류가 나서, 스크립트가 필요한 파일만 /tmp 로 복사해 올린다.
+환경변수를 바꾸면 **다시 배포해야** 함수에 반영된다. 무료 플랜은 환경변수 scopes 지정이 안 된다(API 에서 scopes 를 빼고 넣을 것).
+- 비공개 데이터 저장소: `kabkee/jjal-captions` (`captions.json`)
 시험: 저장소 루트에서 `yarn test` (lib 단위 + 함수 통합 — GitHub·구글을 가짜 fetch 로)
 사이트 쪽 설정: `src/config.js` (`CAPTIONS_API`, `GOOGLE_CLIENT_ID` — 공개값). 클라이언트 ID 가 비어 있으면 문구 모음·로그인을 숨긴다.
