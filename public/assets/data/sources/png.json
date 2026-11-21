@@ -1338,7 +1338,7 @@
         "id": "327",
         "name": "나너무많은일이있었어힘들다진짜",
         "file": "assets/webp/72c0cc42-155b-4b07-a26a-f2d7ed97a01c.webp",
-        "tag": "png, Roronoa Zoro, ONE PIECE, manga panel, struggle, exhaustion, determination, pain, sweat, intense, hardship, 롤로노아 조로, 원피스, 만화 장면, 고군분투, 탈진, 결의, 고통, 땀, 강렬한, 어려움",
+        "tag": "png, Roronoa Zoro, ONE PIECE, manga panel, struggle, exhaustion, determination, pain, sweat, intense, hardship, 롤로노아 조로, 원피스, 만화 장면, 고군분투, 탈진, 결의, 고통, 땀, 강렬한, 어려움, Sore, Tired, Dialogue bubble, Manga, Korean text, Anime, Speech bubble, Meme",
         "category_1": "PNG",
         "category_2": null,
         "emotion": [
@@ -1355,7 +1355,7 @@
         "id": "328",
         "name": "우리식당정상영업합니다",
         "file": "assets/webp/33af1d26-d1a5-4497-8185-751a34da78dc.webp",
-        "tag": "png, 건물 붕괴, 재난, 재해, 철거, 폐허, 재건, 재개, 안전, 재난 대비, 복구, Building collapse, Disaster, Calamity, Demolition, Ruins, Reconstruction, Reopening, Safety, Disaster preparedness, Recovery",
+        "tag": "png, 건물 붕괴, 재난, 재해, 철거, 폐허, 재건, 재개, 안전, 재난 대비, 복구, Building collapse, Disaster, Calamity, Demolition, Ruins, Reconstruction, Reopening, Safety, Disaster preparedness, Recovery, 파괴, 건물, 잔해, 현수막, Building, Rubble, Banner",
         "category_1": "PNG",
         "category_2": null,
         "emotion": [
@@ -1382,39 +1382,6 @@
         ],
         "thumb": "assets/thumbs/4d443886-8283-4268-834c-f2417d8feb06.webp",
         "md5": "cd186688d839d53ba5a67a7d49bd142e"
-    },
-    {
-        "id": "296",
-        "name": "나너무많은일이있었어힘들다진짜",
-        "file": "assets/webp/37548075-b2f3-4de2-9487-b19f6fce6b84.webp",
-        "tag": "Roronoa Zoro, One Piece, Sore, Tired, Dialogue bubble, Manga, Korean text, Anime, Speech bubble, Meme",
-        "category_1": "PNG",
-        "category_2": null,
-        "emotion": [
-            "지침/귀찮음",
-            "슬픔"
-        ],
-        "situation": [
-            "신세한탄"
-        ],
-        "thumb": "assets/thumbs/37548075-b2f3-4de2-9487-b19f6fce6b84.webp",
-        "md5": "bfa2062ae2a314f5621149ff96973985"
-    },
-    {
-        "id": "297",
-        "name": "우리식당정상영업합니다",
-        "file": "assets/webp/c907c101-db32-4f63-9fb4-c82db6bf3767.webp",
-        "tag": "파괴, 건물, 잔해, 재난, 재건, 현수막, 안전, 복구, Demolition, Building, Rubble, Disaster, Reconstruction, Banner, Safety, Recovery",
-        "category_1": "PNG",
-        "category_2": null,
-        "emotion": [
-            "황당"
-        ],
-        "situation": [
-            "밥/먹방/술"
-        ],
-        "thumb": "assets/thumbs/c907c101-db32-4f63-9fb4-c82db6bf3767.webp",
-        "md5": "067071d28f6b92f7e5b7f5147b891922"
     },
     {
         "id": "298",

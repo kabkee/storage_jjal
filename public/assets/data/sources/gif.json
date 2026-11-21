@@ -105,23 +105,6 @@
         "animated": true
     },
     {
-        "id": "203",
-        "name": "성만형",
-        "file": "assets/gif/0ad66525-d62b-4ab1-bc2a-b90887da4ad5.gif",
-        "tag": "gif, Dancing, 춤, Man, 남자, White outfit, 흰 옷, Stage, 무대, Kpop, 케이팝, 90s, 90년대",
-        "category_1": "GIF",
-        "category_2": null,
-        "emotion": [
-            "웃김"
-        ],
-        "situation": [
-            "자랑"
-        ],
-        "thumb": "assets/thumbs/0ad66525-d62b-4ab1-bc2a-b90887da4ad5.webp",
-        "md5": "657acdded9e4c8e560746781ab29dc2f",
-        "animated": true
-    },
-    {
         "id": "204",
         "name": "회사도착",
         "file": "assets/gif/76dc168a-f4fa-483c-ba8a-d11213c3fce7.gif",

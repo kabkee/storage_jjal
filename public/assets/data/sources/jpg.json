@@ -2196,7 +2196,7 @@
         "id": "319",
         "name": "사자야저거사자",
         "file": "assets/webp/0705ccc0-e10d-4448-a61f-33bdbd3f156e.webp",
-        "tag": "jpg, 사자, 맹수, 초원, 아기 사자, 친구, 포옹, 웃음, 한국어 텍스트, \"야 저거 사자\", 사자(2) / 사자, Lion cubs, Wild animal, Grassland, Friendship, Hug, Cute, Korean text, \"Hey, look at that lion\"",
+        "tag": "jpg, 사자, 맹수, 초원, 아기 사자, 친구, 포옹, 웃음, 한국어 텍스트, \"야 저거 사자\", 사자(2) / 사자, Lion cubs, Wild animal, Grassland, Friendship, Hug, Cute, Korean text, \"Hey, look at that lion\", 사자(2), 한국어, 밈, 귀여운, 형제, 야생, 초상화, 사파리, 코카콜라",
         "category_1": "JPG",
         "category_2": null,
         "emotion": [
@@ -2221,7 +2221,8 @@
             "웃김"
         ],
         "situation": [
-            "비난/지적"
+            "비난/지적",
+            "회사/업무"
         ],
         "thumb": "assets/thumbs/b8141690-3fa3-443a-8701-48add60d2a17.webp",
         "md5": "5e403449bf7a5556618b37c2693dbf52"
@@ -2276,38 +2277,6 @@
         ],
         "thumb": "assets/thumbs/914d4bf3-365f-4df8-9efb-b9d9269aef60.webp",
         "md5": "2774660e5ffe64333771f3363ef4828b"
-    },
-    {
-        "id": "283",
-        "name": "사자야저거사자",
-        "file": "assets/webp/750dda5b-db3e-4020-b3ef-25f1fb136722.webp",
-        "tag": "사자, 사자(2), 한국어, 밈, 귀여운, 형제, 야생, 초상화, 사파리, 코카콜라",
-        "category_1": "JPG",
-        "category_2": null,
-        "emotion": [
-            "웃김"
-        ],
-        "situation": [
-            "놀리기/드립"
-        ],
-        "thumb": "assets/thumbs/750dda5b-db3e-4020-b3ef-25f1fb136722.webp",
-        "md5": "3cd97cb517c77e316d0102c806c76957"
-    },
-    {
-        "id": "284",
-        "name": "자소서거짓말_직무내용거짓말",
-        "file": "assets/webp/040cc93a-541f-41e1-b0b0-cd572241b5c2.webp",
-        "tag": "This image is a meme comparing the applicant's resume lies to the company's lies about job content., The top panel shows a man pointing a gun at another man. Text above them reads: \"The lies I wrote on my resume.\", The bottom panel shows the same two men, but now the roles are reversed, and the man who was previously being threatened is now pointing a gun at the other man. Text above them reads: \"The lies the company wrote about the job.\", Here are 5-10 relevant tags:, Meme, Korean, Lie, Resume, Job, Company, Threat, Gun, Escalation, Humor, 자소서",
-        "category_1": "JPG",
-        "category_2": null,
-        "emotion": [
-            "황당"
-        ],
-        "situation": [
-            "회사/업무"
-        ],
-        "thumb": "assets/thumbs/040cc93a-541f-41e1-b0b0-cd572241b5c2.webp",
-        "md5": "5e403449bf7a5556618b37c2693dbf52"
     },
     {
         "id": "303",
