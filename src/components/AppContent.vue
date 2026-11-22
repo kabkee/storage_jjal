@@ -91,6 +91,9 @@
                         <img :src="img.thumb || img.file" :alt="img.name" loading="lazy">
                         <span v-if="isAnimated(img)" class="badge mini">▶</span>
                         <div v-if="copiedKey === img.id + 'r'" class="copied"><span class="check">✓</span></div>
+                        <!-- 최근 쓴 짤에서 하나씩 빼기 (짤 자체는 그대로) -->
+                        <button class="recent-x" :title="`최근 쓴 짤에서 빼기: ${img.name}`" :aria-label="`최근 쓴 짤에서 빼기: ${img.name}`"
+                            @click.stop="removeRecent(img)" @pointerdown.stop>×</button>
                     </div>
                 </div>
             </div>
@@ -574,6 +577,9 @@ const toggleAxis = (axis) => { openAxis.value = openAxis.value === axis ? null :
 // 「최근 쓴 짤」 띠: 검색·필터·공유 보기·선택 모드가 아닐 때만
 const showRecent = computed(() => !search.value && !activeFilterCount.value && motionFilter.value === 'all'
     && !sharedIds.value.length && !selectMode.value && favImages.value.length > 0);
+const removeRecent = (img) => {
+    favImageIdxs.value = favImageIdxs.value.filter(f => f !== img.file);
+};
 const clearRecent = () => {
     favImageIdxs.value = [];
     appSnackbars.value.showSnackbar({ message: '최근 쓴 짤을 지웠어요' });
@@ -1064,6 +1070,10 @@ a.btn { text-decoration: none; color: inherit; }
 .section-title { font-size: 13px; font-weight: 700; color: var(--sub); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
 .strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
 .strip .card { flex: 0 0 76px; scroll-snap-align: start; }
+.recent-x { position: absolute; right: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: rgba(0, 0, 0, .6) !important; color: #fff !important; font-size: 14px; line-height: 20px; padding: 0; opacity: 0; transition: opacity .15s; }
+.strip .card:hover .recent-x, .recent-x:focus-visible { opacity: 1; }
+.recent-x:hover { background: rgba(201, 42, 42, .9) !important; }
+@media (hover: none) { .recent-x { opacity: .85; } }   /* 터치 기기는 마우스를 올릴 수 없어서 항상 보이게 */
 
 /* ── 그리드 ── */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); min-width: 0; gap: 10px; padding-bottom: 120px; }
