@@ -2,6 +2,8 @@
 
 Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS Amplify(`jjal_kabkee` 브랜치, push 시 자동 배포)로 서비스 중.
 
+> 🚀 **배포 규칙 (2026-11-22 오너 결정)**: 이 저장소는 작업을 마치면 **확인을 묻지 말고 무조건 배포**한다 — `yarn test`·`yarn build` 통과 후 커밋하고 `git push origin jjal_kabkee`, Amplify 반영까지 확인. (문구 서버 `captions-api/` 를 고쳤으면 `captions-api/deploy.sh` 도 같이.)
+
 ## 로컬 관리 화면 (https://kabkee-main.tailfe017f.ts.net:8445/admin · Tailscale 전용)
 
 - 🔐 **https 주소로 쓸 것**: `tailscale serve --https=8445` → `http://100.64.25.50:3010` (tailnet only, 2026-11-21). 브라우저는 https(또는 localhost)에서만 클립보드에 그림을 넣게 해 줘서, `http://100.64.25.50:3010` 으로 열면 짤 클릭 복사가 「https 주소에서만 복사돼요」로 실패한다. 설정 확인 `tailscale serve status`, 끄기 `sudo tailscale serve --https=8445 off`. (8443 paperclip · 8444 l3 client · 8446 은 다른 서비스)
@@ -44,7 +46,7 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
 6. `yarn generate:data`로 `data.json`을 재생성한다.
 7. `yarn test`(vitest + 두 스모크테스트)와 `yarn build`로 검증한다.
 8. `yarn dev`로 띄워서 브라우저로 실제 확인한다(칩 필터, 검색, GIF 배지, 썸네일 애니메이션 등).
-9. 사용자에게 배포(`git push origin jjal_kabkee`) 여부를 확인받은 뒤 push한다 — push 즉시 Amplify가 자동 빌드/배포한다.
+9. 검증이 끝나면 **묻지 않고 바로** `git push origin jjal_kabkee` 로 배포한다 — push 즉시 Amplify가 자동 빌드/배포한다.
 
 ## 데이터 스키마
 
