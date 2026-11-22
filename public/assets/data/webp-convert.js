@@ -21,7 +21,9 @@ function kindOf(srcPath) {
 }
 
 async function encode(srcPath, quality, animated) {
+    // .rotate(): 휴대폰 사진의 EXIF 회전 정보대로 똑바로 세운다 (webp 는 EXIF 를 안 가져가서, 안 하면 옆으로 누운 채 저장됨 — 2026-11-22 #2 김오띠)
     return sharp(srcPath, { animated, limitInputPixels: false })
+        .rotate()
         .webp({ quality, alphaQuality: 90, effort: 4 })
         .toBuffer();
 }

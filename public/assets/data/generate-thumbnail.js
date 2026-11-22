@@ -10,6 +10,7 @@ async function generateThumbnail(srcPath, destPath) {
     const { pages = 1 } = await sharp(srcPath, { animated: true, limitInputPixels: false }).metadata();
     const animated = pages > 1;
     await sharp(srcPath, { animated, limitInputPixels: false })
+        .rotate()   // EXIF 회전 정보대로 세우기 (휴대폰 사진)
         .resize(THUMB_SIZE, THUMB_SIZE, { fit: 'cover' })
         .webp({ quality: animated ? 65 : 82 })
         .toFile(destPath);
