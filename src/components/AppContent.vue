@@ -93,7 +93,10 @@
                         <div v-if="copiedKey === img.id + 'r'" class="copied"><span class="check">✓</span></div>
                         <!-- 최근 쓴 짤에서 하나씩 빼기 (짤 자체는 그대로) -->
                         <button class="recent-x" :title="`최근 쓴 짤에서 빼기: ${img.name}`" :aria-label="`최근 쓴 짤에서 빼기: ${img.name}`"
-                            @click.stop="removeRecent(img)" @pointerdown.stop>×</button>
+                            @click.stop="removeRecent(img)" @pointerdown.stop>
+                            <!-- 글자 「×」 는 글꼴마다 위아래 여백이 달라 아래로 처져서, 선 두 개로 그려 정확히 가운데에 둔다 -->
+                            <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5" /></svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1070,10 +1073,15 @@ a.btn { text-decoration: none; color: inherit; }
 .section-title { font-size: 13px; font-weight: 700; color: var(--sub); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
 .strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
 .strip .card { flex: 0 0 76px; scroll-snap-align: start; }
-.recent-x { position: absolute; right: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: rgba(0, 0, 0, .6) !important; color: #fff !important; font-size: 14px; line-height: 20px; padding: 0; opacity: 0; transition: opacity .15s; }
+.recent-x { position: absolute; right: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: rgba(0, 0, 0, .6) !important; padding: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .15s; }
+.recent-x svg { width: 10px; height: 10px; display: block; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; fill: none; }
 .strip .card:hover .recent-x, .recent-x:focus-visible { opacity: 1; }
 .recent-x:hover { background: rgba(201, 42, 42, .9) !important; }
-@media (hover: none) { .recent-x { opacity: .85; } }   /* 터치 기기는 마우스를 올릴 수 없어서 항상 보이게 */
+/* 터치 기기(휴대폰·태블릿)는 마우스를 올릴 수 없어서 항상 보이게 + 손가락으로 누르기 쉽게 조금 크게 */
+@media (hover: none) {
+    .recent-x { opacity: .9; width: 24px; height: 24px; right: 2px; top: 2px; }
+    .recent-x svg { width: 11px; height: 11px; }
+}
 
 /* ── 그리드 ── */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); min-width: 0; gap: 10px; padding-bottom: 120px; }
