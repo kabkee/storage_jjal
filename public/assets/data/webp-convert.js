@@ -7,6 +7,9 @@ const crypto = require('crypto');
 const sharp = require('sharp');
 
 const QUALITY = { animated: 75, png: 90, jpg: 80, webp: 80, default: 80 };
+// 정지 짤은 긴 변을 1600px 까지만 (2026-11-22 오너 결정). 휴대폰 사진 원본(4032px)은 webp 로도 2MB 가까이 돼서.
+// 카톡도 보낼 때 이 정도로 줄이고, 짤로는 충분히 선명하다. 작은 그림은 키우지 않는다.
+const MAX_SIDE = 1600;
 
 const md5File = (p) => crypto.createHash('md5').update(fs.readFileSync(p)).digest('hex');
 
@@ -22,9 +25,9 @@ function kindOf(srcPath) {
 
 async function encode(srcPath, quality, animated) {
     // .rotate(): 휴대폰 사진의 EXIF 회전 정보대로 똑바로 세운다 (webp 는 EXIF 를 안 가져가서, 안 하면 옆으로 누운 채 저장됨 — 2026-11-22 #2 김오띠)
-    return sharp(srcPath, { animated, limitInputPixels: false })
-        .rotate()
-        .webp({ quality, alphaQuality: 90, effort: 4 })
+    let img = sharp(srcPath, { animated, limitInputPixels: false }).rotate();
+    if (!animated) img = img.resize({ width: MAX_SIDE, height: MAX_SIDE, fit: 'inside', withoutEnlargement: true });
+    return img.webp({ quality, alphaQuality: 90, effort: 4 })
         .toBuffer();
 }
 
@@ -47,4 +50,4 @@ async function convertToWebp(srcPath, destPath) {
     return { animated, md5: md5File(srcPath), srcBytes, webpBytes: buf.length, quality };
 }
 
-module.exports = { convertToWebp, isAnimated, md5File, QUALITY };
+module.exports = { convertToWebp, isAnimated, md5File, QUALITY, MAX_SIDE };

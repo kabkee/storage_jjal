@@ -37,7 +37,7 @@ Vue 3 + Vuetify 3 + Vite 짤(리액션 이미지) 저장/검색 사이트. AWS A
    - 자유 키워드(`tag` 필드)는 개념 하나당 한글/영어를 항상 짝으로 넣는다 (예: "고양이, Cat").
 4. `public/assets/data/new-images.manifest.json`에 `[{ sourceFilename, name, emotion: [...], situation: [...], tag }, ...]` 형태로 작성한다.
 5. `yarn import-images` 실행 → `public/assets/data/import-tagged-images.js`가:
-   - **정지 이미지는 webp 로 변환**해 `assets/webp/<UUID>.webp`(`webp-convert.js` — PNG q90·JPG q80), **움짤은 GIF 로** `assets/gif/<UUID>.gif` 에 둔다(원본이 GIF 면 다시 인코딩하지 않고 그대로, 움직이는 webp·png 면 GIF 로 변환). 원본은 지운다. 레코드는 원본 형식별 `sources/<gif|jpg|png|webp>.json` 에 들어가고 `md5`(원본 기준)·`animated`(움직이면 true)가 붙는다. 파일명은 UUID 라 한글이 경로에 남지 않는다 (과거 배포 후 "이미지 없음" 에러의 원인이었음)
+   - **정지 이미지는 webp 로 변환**해 `assets/webp/<UUID>.webp`(`webp-convert.js` — PNG q90·JPG q80, **긴 변 1600px 까지만**·EXIF 회전 반영 — 2026-11-22), **움짤은 GIF 로** `assets/gif/<UUID>.gif` 에 둔다(원본이 GIF 면 다시 인코딩하지 않고 그대로, 움직이는 webp·png 면 GIF 로 변환). 원본은 지운다. 레코드는 원본 형식별 `sources/<gif|jpg|png|webp>.json` 에 들어가고 `md5`(원본 기준)·`animated`(움직이면 true)가 붙는다. 파일명은 UUID 라 한글이 경로에 남지 않는다 (과거 배포 후 "이미지 없음" 에러의 원인이었음)
    - `generate-thumbnail.js`로 그리드용 썸네일을 `public/assets/thumbs/`에 생성 — **움직이는 이미지는 애니메이션을 유지한 움직이는 webp**로, 정지 이미지는 정지 webp로 만든다(240x240). 확장자가 아니라 실제 프레임 수로 판단한다. 움직이는 짤을 정지 프레임으로 만들면 용량은 별로 안 줄면서 움직임만 사라지므로 항상 animated webp로 유지할 것.
    - 모든 신규 레코드의 id를 `sources/*.json` 4개 파일 전체를 스캔한 전역 최대값+1로 채번한다(파일별로 따로 채번하면 다른 타입 파일과 id가 충돌할 수 있음).
    - 모든 한글 문자열을 `.normalize('NFC')`로 정규화해서 `public/assets/data/sources/<type>.json`에 레코드를 추가한다.

@@ -40,6 +40,19 @@ async function run() {
     assert.strictEqual(convMeta.pages, gifSourceMeta.pages, 'converted webp must keep all frames');
     assert.deepStrictEqual(convMeta.delay, gifSourceMeta.delay, 'converted webp must keep frame delays');
 
+    // 정지 짤은 긴 변 1600px 까지만 (작은 건 키우지 않음) + EXIF 회전 반영
+    const { MAX_SIDE } = require('./webp-convert');
+    const bigPng = path.join(tmpDir, 'big.png');
+    await sharp({ create: { width: 3000, height: 1200, channels: 3, background: '#88aa44' } }).png().toFile(bigPng);
+    await convertToWebp(bigPng, path.join(tmpDir, 'big.webp'));
+    const bigMeta = await sharp(fs.readFileSync(path.join(tmpDir, 'big.webp'))).metadata();
+    assert.deepStrictEqual([bigMeta.width, bigMeta.height], [MAX_SIDE, 640], 'still image must be capped to MAX_SIDE on the long side');
+    const rotJpg = path.join(tmpDir, 'rot.jpg');
+    await sharp({ create: { width: 400, height: 200, channels: 3, background: '#336699' } }).jpeg().withMetadata({ orientation: 6 }).toFile(rotJpg);
+    await convertToWebp(rotJpg, path.join(tmpDir, 'rot.webp'));
+    const rotMeta = await sharp(fs.readFileSync(path.join(tmpDir, 'rot.webp'))).metadata();
+    assert.deepStrictEqual([rotMeta.width, rotMeta.height], [200, 400], 'EXIF orientation must be applied (phone photos)');
+
     fs.rmSync(tmpDir, { recursive: true, force: true });
     console.log('✅ generate-thumbnail smoke test passed');
 }
